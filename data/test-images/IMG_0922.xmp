@@ -26,31 +26,28 @@
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic sky filled with large, dark cumulus clouds and patches of lighter white clouds. Small portions of blue sky peek through the cloud layers. The tops of trees and a chimney are visible at the bottom edge of the frame.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic sky filled with various cloud formations ranging from dark, heavy clouds to lighter, wispy ones. A small portion of a rooftop is visible in the bottom right corner.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Photograph</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
-          <rdf:li>chimney</rdf:li>
-          <rdf:li>tree tops</rdf:li>
+          <rdf:li>rooftop</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <lr:hierarchicalSubject>
         <rdf:Bag>
           <rdf:li>Medium|Photograph</rdf:li>
           <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Buildings|chimney</rdf:li>
-          <rdf:li>Nature|tree tops</rdf:li>
+          <rdf:li>Buildings|rooftop</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Photograph</rdf:li>
           <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Buildings/chimney</rdf:li>
-          <rdf:li>Nature/tree tops</rdf:li>
+          <rdf:li>Buildings/rooftop</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -62,23 +59,12 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="chimney">
+                mwg-rs:Name="rooftop">
               <mwg-rs:Area
-                stArea:x="0.939500"
+                stArea:x="0.941000"
                 stArea:y="0.948500"
-                stArea:w="0.069000"
+                stArea:w="0.072000"
                 stArea:h="0.103000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="tree tops">
-              <mwg-rs:Area
-                stArea:x="0.672500"
-                stArea:y="0.981500"
-                stArea:w="0.103000"
-                stArea:h="0.037000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

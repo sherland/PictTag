@@ -18,55 +18,58 @@
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.400"
       pictTag:EdgeDensity="0.700"
-      pictTag:CompositionNotes="prominent diagonal shadow"
+      pictTag:CompositionNotes="diagonal shadow across the foreground"
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Orange lawn mower on a field</rdf:li>
+          <rdf:li xml:lang="x-default">Orange lawnmower on a grassy field</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An orange and white lawn mower sits in a patch of dry grass. A large tree shadow stretches across the foreground, and a blue tarp is visible in the background near some trees.</rdf:li>
+          <rdf:li xml:lang="x-default">An orange lawnmower sits on a patch of dry, yellowish grass in an outdoor setting. In the background, there are several trees, houses, and a blue tarp spread out on the ground. A prominent diagonal shadow from a tree branch stretches across the foreground.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Photograph</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
-          <rdf:li>lawn mower</rdf:li>
+          <rdf:li>lawnmower</rdf:li>
           <rdf:li>blue tarp</rdf:li>
+          <rdf:li>truck</rdf:li>
           <rdf:li>house</rdf:li>
           <rdf:li>house</rdf:li>
-          <rdf:li>van</rdf:li>
-          <rdf:li>tree trunk</rdf:li>
-          <rdf:li>tree trunk</rdf:li>
+          <rdf:li>tree branches</rdf:li>
+          <rdf:li>tree</rdf:li>
+          <rdf:li>tree</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <lr:hierarchicalSubject>
         <rdf:Bag>
           <rdf:li>Medium|Photograph</rdf:li>
           <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Objects|lawn mower</rdf:li>
+          <rdf:li>Objects|lawnmower</rdf:li>
           <rdf:li>Objects|blue tarp</rdf:li>
+          <rdf:li>Vehicles|truck</rdf:li>
           <rdf:li>Buildings|house</rdf:li>
           <rdf:li>Buildings|house</rdf:li>
-          <rdf:li>Vehicles|van</rdf:li>
-          <rdf:li>Nature|tree trunk</rdf:li>
-          <rdf:li>Nature|tree trunk</rdf:li>
+          <rdf:li>Nature|tree branches</rdf:li>
+          <rdf:li>Nature|tree</rdf:li>
+          <rdf:li>Nature|tree</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Photograph</rdf:li>
           <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Objects/lawn mower</rdf:li>
+          <rdf:li>Objects/lawnmower</rdf:li>
           <rdf:li>Objects/blue tarp</rdf:li>
+          <rdf:li>Vehicles/truck</rdf:li>
           <rdf:li>Buildings/house</rdf:li>
           <rdf:li>Buildings/house</rdf:li>
-          <rdf:li>Vehicles/van</rdf:li>
-          <rdf:li>Nature/tree trunk</rdf:li>
-          <rdf:li>Nature/tree trunk</rdf:li>
+          <rdf:li>Nature/tree branches</rdf:li>
+          <rdf:li>Nature/tree</rdf:li>
+          <rdf:li>Nature/tree</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -78,12 +81,12 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="lawn mower">
+                mwg-rs:Name="lawnmower">
               <mwg-rs:Area
                 stArea:x="0.136500"
                 stArea:y="0.532500"
                 stArea:w="0.243000"
-                stArea:h="0.239000"
+                stArea:h="0.241000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -91,10 +94,21 @@
               <rdf:Description
                 mwg-rs:Name="blue tarp">
               <mwg-rs:Area
-                stArea:x="0.794000"
-                stArea:y="0.367500"
-                stArea:w="0.372000"
-                stArea:h="0.177000"
+                stArea:x="0.793500"
+                stArea:y="0.368000"
+                stArea:w="0.371000"
+                stArea:h="0.178000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="truck">
+              <mwg-rs:Area
+                stArea:x="0.065000"
+                stArea:y="0.206000"
+                stArea:w="0.102000"
+                stArea:h="0.210000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -102,10 +116,10 @@
               <rdf:Description
                 mwg-rs:Name="house">
               <mwg-rs:Area
-                stArea:x="0.221000"
-                stArea:y="0.086500"
+                stArea:x="0.220000"
+                stArea:y="0.090500"
                 stArea:w="0.226000"
-                stArea:h="0.173000"
+                stArea:h="0.181000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -114,42 +128,42 @@
                 mwg-rs:Name="house">
               <mwg-rs:Area
                 stArea:x="0.471000"
-                stArea:y="0.109000"
-                stArea:w="0.118000"
-                stArea:h="0.072000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="van">
-              <mwg-rs:Area
-                stArea:x="0.065500"
-                stArea:y="0.204000"
-                stArea:w="0.101000"
-                stArea:h="0.208000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="tree trunk">
-              <mwg-rs:Area
-                stArea:x="0.630500"
-                stArea:y="0.122500"
-                stArea:w="0.033000"
-                stArea:h="0.245000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="tree trunk">
-              <mwg-rs:Area
-                stArea:x="0.919000"
                 stArea:y="0.108500"
-                stArea:w="0.052000"
-                stArea:h="0.217000"
+                stArea:w="0.120000"
+                stArea:h="0.073000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="tree branches">
+              <mwg-rs:Area
+                stArea:x="0.177000"
+                stArea:y="0.414500"
+                stArea:w="0.322000"
+                stArea:h="0.829000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="tree">
+              <mwg-rs:Area
+                stArea:x="0.630000"
+                stArea:y="0.122000"
+                stArea:w="0.034000"
+                stArea:h="0.244000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="tree">
+              <mwg-rs:Area
+                stArea:x="0.916500"
+                stArea:y="0.109000"
+                stArea:w="0.063000"
+                stArea:h="0.218000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
