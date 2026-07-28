@@ -15,6 +15,45 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 {
     private const string ExecutableName = "exiftool";
 
+    // exiftool only recognizes namespaces it knows about (lr:, digiKam:, Iptc4xmpExt: are
+    // all built in) - a genuinely custom namespace like ours needs a -config file that
+    // defines it, or every -XMP-pictTag:... write is rejected as "doesn't exist or isn't
+    // writable". Verified empirically against the real binary.
+    private const string PictTagConfig = """
+        %Image::ExifTool::UserDefined::PictTag = (
+            GROUPS        => { 0 => 'XMP', 1 => 'XMP-pictTag', 2 => 'Image' },
+            NAMESPACE     => { 'pictTag' => 'https://github.com/sherland/PictTag/ns/1.0/' },
+            WRITABLE      => 'string',
+            Medium            => { },
+            ArtStyle          => { },
+            Setting           => { },
+            Symmetry          => { },
+            RuleOfThirds      => { },
+            ColorVariance     => { },
+            EdgeDensity       => { },
+            CompositionNotes  => { },
+        );
+
+        %Image::ExifTool::UserDefined = (
+            'Image::ExifTool::XMP::Main' => {
+                pictTag => {
+                    SubDirectory => {
+                        TagTable => 'Image::ExifTool::UserDefined::PictTag',
+                    },
+                },
+            },
+        );
+
+        1; #end
+        """;
+
+    private static readonly Lazy<string> ConfigFilePath = new(() =>
+    {
+        string path = Path.Combine(Path.GetTempPath(), "PictTag-exiftool.config");
+        File.WriteAllText(path, PictTagConfig);
+        return path;
+    });
+
     public static bool IsExifToolAvailable => TryGetVersion() is not null;
 
     public async Task<string> WriteSidecarAsync(
@@ -35,16 +74,20 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         if (sidecarExists)
         {
-            // dc:Subject is a list tag: "+=" only appends, so re-running against an existing
-            // sidecar would accumulate old and new labels together unless cleared first.
-            // (RegionInfo doesn't need this - setting it fresh always replaces the whole
-            // struct in one shot, verified empirically against the real exiftool binary.)
-            (int clearExit, string clearErr) = await RunAsync(["-overwrite_original", "-XMP-dc:Subject=", sidecarPath], ct);
+            // dc:Subject, lr:HierarchicalSubject and digiKam:TagsList are all list tags:
+            // "+=" only appends, so re-running against an existing sidecar would accumulate
+            // old and new values together unless cleared first. (RegionInfo, dc:Title,
+            // dc:Description and the pictTag fields don't need this - setting them fresh
+            // always replaces the value in one shot, verified empirically.)
+            (int clearExit, string clearErr) = await RunAsync(
+                ["-overwrite_original", "-XMP-dc:Subject=", "-XMP-lr:HierarchicalSubject=", "-XMP-digiKam:TagsList=", sidecarPath], ct);
             if (clearExit != 0)
             {
                 throw new InvalidOperationException($"exiftool exited with code {clearExit} while clearing existing tags: {clearErr}");
             }
         }
+
+        ImageMetadata metadata = result.Metadata;
 
         // -overwrite_original only makes sense (and only works) when the sidecar already
         // exists - passing it while creating a brand-new file makes exiftool expect one to
@@ -53,15 +96,59 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         // "clear to empty") - exiftool refuses to create a brand-new file when the only
         // operations given amount to no actual content, which happens whenever there are
         // zero detected entities. Verified empirically against the real binary.
-        List<string> args = ["-charset", "utf8", "-XMP-xmp:CreatorTool=PictTag"];
+        List<string> args =
+        [
+            "-config", ConfigFilePath.Value,
+            "-charset", "utf8",
+            "-XMP-xmp:CreatorTool=PictTag",
+            $"-XMP-dc:Title={metadata.Title}",
+            $"-XMP-dc:Description={metadata.Description}",
+            $"-XMP-pictTag:Medium={metadata.Medium}",
+            $"-XMP-pictTag:Symmetry={metadata.Composition.Symmetry}",
+            $"-XMP-pictTag:RuleOfThirds={metadata.Composition.RuleOfThirdsAdherence}",
+            $"-XMP-pictTag:ColorVariance={metadata.Composition.ColorVarianceEstimate.ToString("F3", CultureInfo.InvariantCulture)}",
+            $"-XMP-pictTag:EdgeDensity={metadata.Composition.EdgeDensityEstimate.ToString("F3", CultureInfo.InvariantCulture)}",
+        ];
+
         if (sidecarExists)
         {
             args.Add("-overwrite_original");
         }
 
+        if (metadata.ArtStyle is not null)
+        {
+            args.Add($"-XMP-pictTag:ArtStyle={metadata.ArtStyle}");
+        }
+
+        if (metadata.Setting is not null)
+        {
+            args.Add($"-XMP-pictTag:Setting={metadata.Setting}");
+        }
+
+        if (metadata.Composition.Notes is not null)
+        {
+            args.Add($"-XMP-pictTag:CompositionNotes={metadata.Composition.Notes}");
+        }
+
+        string? digitalSourceType = IptcDigitalSourceType.ForMedium(metadata.Medium);
+        if (digitalSourceType is not null)
+        {
+            args.Add($"-XMP-iptcExt:DigitalSourceType={digitalSourceType}");
+        }
+
+        // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
+        // properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
+        AppendHierarchicalTagArgs(args, "Medium", metadata.Medium.ToString());
+        if (metadata.ArtStyle is not null)
+        {
+            AppendHierarchicalTagArgs(args, "ArtStyle", metadata.ArtStyle);
+        }
+
+        AppendHierarchicalTagArgs(args, "Symmetry", metadata.Composition.Symmetry.ToString());
+
         foreach (DetectedEntity entity in result.Entities)
         {
-            args.Add($"-XMP-dc:Subject+={entity.Label}");
+            AppendHierarchicalTagArgs(args, entity.Category.ToString(), entity.Label);
         }
 
         if (result.Entities.Count > 0)
@@ -78,6 +165,13 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         }
 
         return sidecarPath;
+    }
+
+    private static void AppendHierarchicalTagArgs(List<string> args, string category, string leaf)
+    {
+        args.Add($"-XMP-dc:Subject+={leaf}");
+        args.Add($"-XMP-lr:HierarchicalSubject+={HierarchicalTagPath.Compose(category, leaf, '|')}");
+        args.Add($"-XMP-digiKam:TagsList+={HierarchicalTagPath.Compose(category, leaf, '/')}");
     }
 
     private static string BuildRegionInfoStruct(ImageAnalysisResult result, int imageWidth, int imageHeight)

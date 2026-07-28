@@ -9,6 +9,17 @@
 # Six Labors license file (personal/OSS license, must not be shared per license terms)
 sixlabors.lic
 
+# Bulk-downloaded art-style test fixtures (regenerable via Get-ArtStyleTestImages.ps1)
+data/test-images/art-styles/
+
+# Output of Test-ArtStyleDetection.ps1 - a one-off run report, not source
+art-style-detection-results.csv
+art-style-detection-run.log
+art-style-tests-run.log
+
+# digiKam trash marker created when browsing data/test-images/ in digiKam
+.dtrash/
+
 # User-specific files
 *.rsuser
 *.suo

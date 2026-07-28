@@ -4,21 +4,65 @@
     <rdf:Description rdf:about=""
         xmlns:xmp="http://ns.adobe.com/xap/1.0/"
         xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:pictTag="https://github.com/sherland/PictTag/ns/1.0/"
+        xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/"
+        xmlns:lr="http://ns.adobe.com/lightroom/1.0/"
+        xmlns:digiKam="http://www.digikam.org/ns/1.0/"
         xmlns:mwg-rs="http://www.metadataworkinggroup.com/schemas/regions/"
         xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
         xmlns:stArea="http://ns.adobe.com/xmp/sType/Area#"
-      xmp:CreatorTool="PictTag">
+      xmp:CreatorTool="PictTag"
+      pictTag:Medium="Photograph"
+      pictTag:Setting="Indoor"
+      pictTag:Symmetry="Asymmetrical"
+      pictTag:RuleOfThirds="False"
+      pictTag:ColorVariance="0.700"
+      pictTag:EdgeDensity="0.900"
+      pictTag:CompositionNotes="The image is rotated 90 degrees counter-clockwise."
+      Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
+      <dc:title>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">Masquerade Ball Crowd</rdf:li>
+        </rdf:Alt>
+      </dc:title>
+      <dc:description>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">A group of people dressed in elaborate costumes and wearing various decorative masquerade masks at an indoor event. The scene features grand architectural elements like large columns visible in the background.</rdf:li>
+        </rdf:Alt>
+      </dc:description>
       <dc:subject>
         <rdf:Bag>
-          <rdf:li>man in black suit with black mask</rdf:li>
+          <rdf:li>Photograph</rdf:li>
+          <rdf:li>Asymmetrical</rdf:li>
           <rdf:li>man with silver mask</rdf:li>
-          <rdf:li>person with black mask</rdf:li>
-          <rdf:li>person with gold/black mask</rdf:li>
-          <rdf:li>person with white/gold mask</rdf:li>
-          <rdf:li>person with dark mask</rdf:li>
-          <rdf:li>person with black mask</rdf:li>
+          <rdf:li>man with black eye mask</rdf:li>
+          <rdf:li>person in black mask</rdf:li>
+          <rdf:li>person with gold mask</rdf:li>
+          <rdf:li>person in dark mask</rdf:li>
         </rdf:Bag>
       </dc:subject>
+      <lr:hierarchicalSubject>
+        <rdf:Bag>
+          <rdf:li>Medium|Photograph</rdf:li>
+          <rdf:li>Symmetry|Asymmetrical</rdf:li>
+          <rdf:li>People|man with silver mask</rdf:li>
+          <rdf:li>People|man with black eye mask</rdf:li>
+          <rdf:li>People|person in black mask</rdf:li>
+          <rdf:li>People|person with gold mask</rdf:li>
+          <rdf:li>People|person in dark mask</rdf:li>
+        </rdf:Bag>
+      </lr:hierarchicalSubject>
+      <digiKam:TagsList>
+        <rdf:Seq>
+          <rdf:li>Medium/Photograph</rdf:li>
+          <rdf:li>Symmetry/Asymmetrical</rdf:li>
+          <rdf:li>People/man with silver mask</rdf:li>
+          <rdf:li>People/man with black eye mask</rdf:li>
+          <rdf:li>People/person in black mask</rdf:li>
+          <rdf:li>People/person with gold mask</rdf:li>
+          <rdf:li>People/person in dark mask</rdf:li>
+        </rdf:Seq>
+      </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
         <mwg-rs:AppliedToDimensions
           stDim:w="4000"
@@ -28,78 +72,56 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="man in black suit with black mask">
-              <mwg-rs:Area
-                stArea:x="0.717500"
-                stArea:y="0.500000"
-                stArea:w="0.565000"
-                stArea:h="1.000000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
                 mwg-rs:Name="man with silver mask">
               <mwg-rs:Area
-                stArea:x="0.742000"
-                stArea:y="0.803000"
-                stArea:w="0.430000"
-                stArea:h="0.390000"
+                stArea:x="0.751500"
+                stArea:y="0.804500"
+                stArea:w="0.445000"
+                stArea:h="0.391000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="person with black mask">
+                mwg-rs:Name="man with black eye mask">
               <mwg-rs:Area
-                stArea:x="0.533000"
-                stArea:y="0.450000"
-                stArea:w="0.244000"
-                stArea:h="0.210000"
+                stArea:x="0.558500"
+                stArea:y="0.244500"
+                stArea:w="0.243000"
+                stArea:h="0.241000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="person with gold/black mask">
+                mwg-rs:Name="person in black mask">
               <mwg-rs:Area
-                stArea:x="0.480500"
-                stArea:y="0.678500"
-                stArea:w="0.121000"
-                stArea:h="0.181000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="person with white/gold mask">
-              <mwg-rs:Area
-                stArea:x="0.384500"
-                stArea:y="0.662000"
-                stArea:w="0.101000"
-                stArea:h="0.138000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="person with dark mask">
-              <mwg-rs:Area
-                stArea:x="0.375000"
-                stArea:y="0.117500"
-                stArea:w="0.094000"
-                stArea:h="0.125000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="person with black mask">
-              <mwg-rs:Area
-                stArea:x="0.398000"
-                stArea:y="0.253000"
-                stArea:w="0.132000"
+                stArea:x="0.458500"
+                stArea:y="0.462000"
+                stArea:w="0.181000"
                 stArea:h="0.188000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="person with gold mask">
+              <mwg-rs:Area
+                stArea:x="0.383000"
+                stArea:y="0.684000"
+                stArea:w="0.102000"
+                stArea:h="0.166000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="person in dark mask">
+              <mwg-rs:Area
+                stArea:x="0.371000"
+                stArea:y="0.114000"
+                stArea:w="0.084000"
+                stArea:h="0.100000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

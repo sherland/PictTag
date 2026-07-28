@@ -3,7 +3,89 @@
   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <rdf:Description rdf:about=""
         xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-      xmp:CreatorTool="PictTag"/>
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:pictTag="https://github.com/sherland/PictTag/ns/1.0/"
+        xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/"
+        xmlns:lr="http://ns.adobe.com/lightroom/1.0/"
+        xmlns:digiKam="http://www.digikam.org/ns/1.0/"
+        xmlns:mwg-rs="http://www.metadataworkinggroup.com/schemas/regions/"
+        xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
+        xmlns:stArea="http://ns.adobe.com/xmp/sType/Area#"
+      xmp:CreatorTool="PictTag"
+      pictTag:Medium="Photograph"
+      pictTag:Setting="Outdoor"
+      pictTag:Symmetry="Asymmetrical"
+      pictTag:RuleOfThirds="False"
+      pictTag:ColorVariance="0.300"
+      pictTag:EdgeDensity="0.700"
+      Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
+      <dc:title>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">Cloudy Sky</rdf:li>
+        </rdf:Alt>
+      </dc:title>
+      <dc:description>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">A dramatic sky filled with large, dark cumulus clouds and patches of lighter white clouds. Small portions of blue sky peek through the cloud layers. The tops of trees and a chimney are visible at the bottom edge of the frame.</rdf:li>
+        </rdf:Alt>
+      </dc:description>
+      <dc:subject>
+        <rdf:Bag>
+          <rdf:li>Photograph</rdf:li>
+          <rdf:li>Asymmetrical</rdf:li>
+          <rdf:li>chimney</rdf:li>
+          <rdf:li>tree tops</rdf:li>
+        </rdf:Bag>
+      </dc:subject>
+      <lr:hierarchicalSubject>
+        <rdf:Bag>
+          <rdf:li>Medium|Photograph</rdf:li>
+          <rdf:li>Symmetry|Asymmetrical</rdf:li>
+          <rdf:li>Buildings|chimney</rdf:li>
+          <rdf:li>Nature|tree tops</rdf:li>
+        </rdf:Bag>
+      </lr:hierarchicalSubject>
+      <digiKam:TagsList>
+        <rdf:Seq>
+          <rdf:li>Medium/Photograph</rdf:li>
+          <rdf:li>Symmetry/Asymmetrical</rdf:li>
+          <rdf:li>Buildings/chimney</rdf:li>
+          <rdf:li>Nature/tree tops</rdf:li>
+        </rdf:Seq>
+      </digiKam:TagsList>
+      <mwg-rs:Regions rdf:parseType="Resource">
+        <mwg-rs:AppliedToDimensions
+          stDim:w="3072"
+          stDim:h="2048"
+          stDim:unit="pixel"/>
+        <mwg-rs:RegionList>
+          <rdf:Bag>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="chimney">
+              <mwg-rs:Area
+                stArea:x="0.939500"
+                stArea:y="0.948500"
+                stArea:w="0.069000"
+                stArea:h="0.103000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="tree tops">
+              <mwg-rs:Area
+                stArea:x="0.672500"
+                stArea:y="0.981500"
+                stArea:w="0.103000"
+                stArea:h="0.037000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+          </rdf:Bag>
+        </mwg-rs:RegionList>
+      </mwg-rs:Regions>
+    </rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>
                                                                                                     

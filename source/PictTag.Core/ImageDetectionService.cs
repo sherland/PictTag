@@ -20,12 +20,40 @@ public class ImageDetectionService
     ];
 
     private const string DetectionPrompt = """
-        Detect every distinct, salient object in this image (e.g. people, animals, vehicles,
-        furniture, notable items) - not the scene or background as a whole. Do not merge
-        multiple objects into one entry, and do not describe the sky, lighting, or overall
-        composition as if it were an object. For each detected object, give a short lowercase
-        label and its bounding box on a 0-1000 integer grid, where (0,0) is the top-left
-        corner and (1000,1000) is the bottom-right corner.
+        Analyze this image and respond with:
+
+        - title: a short, specific caption (a few words).
+        - description: 2-4 sentences describing what the image shows.
+        - medium: the visual medium of the image itself - Photograph, Screenshot, Painting,
+          Drawing, DigitalIllustration, ThreeDRender, or Other.
+        - artStyle: only if medium is an art form (Painting, Drawing, DigitalIllustration, or
+          ThreeDRender), a short description of the art style (e.g. "impressionism", "anime",
+          "pixel art"); otherwise omit it. Do not invent a style for a plain photograph.
+        - setting: whether the scene is Indoor, Outdoor, Studio, or Unknown if it cannot be
+          determined from the image.
+        - composition: your subjective visual impression of the image's composition, not a
+          precise measurement. Give:
+            - symmetry: Symmetrical, Asymmetrical, RadialSymmetry, or None if not applicable.
+            - ruleOfThirdsAdherence: true if the main subject/horizon roughly aligns with the
+              rule-of-thirds grid lines or intersections, false otherwise.
+            - colorVarianceEstimate: a rough 0.0-1.0 impression of how uniform (near 0.0) vs.
+              how colorful/varied (near 1.0) the palette looks.
+            - edgeDensityEstimate: a rough 0.0-1.0 impression of how visually simple/sparse
+              (near 0.0) vs. busy/detailed (near 1.0) the image looks.
+            - notes: an optional short phrase about anything else notable (e.g. "diagonal
+              leading lines", "centered subject"); omit if nothing stands out.
+          This applies to every image, not just paintings or drawings - photographs have
+          composition too.
+        - detections: every distinct, salient object in the image (e.g. people, animals,
+          vehicles, furniture, notable items) - not the scene or background as a whole. Do
+          not merge multiple objects into one entry, and do not describe the sky, lighting,
+          or overall composition as if it were an object. For each detected object, give:
+            - label: a short, specific, lowercase description (e.g. "golden retriever", not
+              just "animal").
+            - category: the single broad category it belongs to - People, Animals, Vehicles,
+              Buildings, Nature, Food, Objects, Text, Art, or Other.
+            - its bounding box on a 0-1000 integer grid, where (0,0) is the top-left corner
+              and (1000,1000) is the bottom-right corner.
         """;
 
     public async Task<ImageAnalysisResult> DetectAsync(
@@ -50,8 +78,8 @@ public class ImageDetectionService
         ChatOptions options = new()
         {
             ResponseFormat = ChatResponseFormat.ForJsonSchema<DetectionResponseDto>(
-                schemaName: "ObjectDetections",
-                schemaDescription: "Bounding boxes for every distinct object detected in the image."),
+                schemaName: "ImageAnalysis",
+                schemaDescription: "Title, description, medium/style, and every distinct object detected in the image."),
             Temperature = 0.2f,
             AdditionalProperties = new AdditionalPropertiesDictionary
             {
@@ -62,14 +90,24 @@ public class ImageDetectionService
         ChatResponse response = await client.GetResponseAsync(messages, options, ct);
 
         JsonSerializerOptions jsonOptions = new(JsonSerializerDefaults.Web);
+        jsonOptions.Converters.Add(new JsonStringEnumConverter());
         DetectionResponseDto parsed = JsonSerializer.Deserialize<DetectionResponseDto>(response.Text, jsonOptions)
             ?? throw new InvalidOperationException("Model returned no parseable detections.");
 
         List<DetectedEntity> entities = parsed.Detections
-            .Select(d => new DetectedEntity(d.Label, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)))
+            .Select(d => new DetectedEntity(d.Label, d.Category, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)))
             .ToList();
 
-        return new ImageAnalysisResult(entities);
+        ImageComposition composition = new(
+            parsed.Composition.Symmetry,
+            parsed.Composition.RuleOfThirdsAdherence,
+            parsed.Composition.ColorVarianceEstimate,
+            parsed.Composition.EdgeDensityEstimate,
+            parsed.Composition.Notes);
+
+        ImageMetadata metadata = new(parsed.Title, parsed.Description, parsed.Medium, parsed.ArtStyle, parsed.Setting, composition);
+
+        return new ImageAnalysisResult(metadata, entities);
     }
 
     public async Task<ImageAnalysisResult> ProcessAndAnnotateAsync(
@@ -143,10 +181,25 @@ public class ImageDetectionService
         _ => "image/jpeg",
     };
 
-    private record DetectionResponseDto(List<DetectionDto> Detections);
+    private record DetectionResponseDto(
+        string Title,
+        string Description,
+        ImageMedium Medium,
+        string? ArtStyle,
+        ImageSetting? Setting,
+        CompositionDto Composition,
+        List<DetectionDto> Detections);
+
+    private record CompositionDto(
+        CompositionSymmetry Symmetry,
+        bool RuleOfThirdsAdherence,
+        double ColorVarianceEstimate,
+        double EdgeDensityEstimate,
+        string? Notes);
 
     private record DetectionDto(
         string Label,
+        EntityCategory Category,
         [property: JsonPropertyName("ymin")] int YMin,
         [property: JsonPropertyName("xmin")] int XMin,
         [property: JsonPropertyName("ymax")] int YMax,

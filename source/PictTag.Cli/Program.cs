@@ -1,5 +1,6 @@
 using System.CommandLine;
 using System.CommandLine.Parsing;
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
@@ -141,9 +142,20 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
             continue;
         }
 
+        ImageMetadata metadata = result.Metadata;
+        Console.WriteLine($"Title: {metadata.Title}");
+        Console.WriteLine($"Description: {metadata.Description}");
+        Console.WriteLine($"Medium: {metadata.Medium}" + (metadata.ArtStyle is null ? "" : $" ({metadata.ArtStyle})"));
+        Console.WriteLine($"Setting: {metadata.Setting?.ToString() ?? "unknown"}");
+        Console.WriteLine(
+            $"Composition: {metadata.Composition.Symmetry}, ruleOfThirds={metadata.Composition.RuleOfThirdsAdherence}, "
+            + $"colorVariance={metadata.Composition.ColorVarianceEstimate.ToString("F2", CultureInfo.InvariantCulture)}, "
+            + $"edgeDensity={metadata.Composition.EdgeDensityEstimate.ToString("F2", CultureInfo.InvariantCulture)}"
+            + (metadata.Composition.Notes is null ? "" : $" ({metadata.Composition.Notes})"));
+
         foreach (DetectedEntity entity in result.Entities)
         {
-            Console.WriteLine($"{entity.Label}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
+            Console.WriteLine($"[{entity.Category}] {entity.Label}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
         }
 
         Console.WriteLine($"Annotated image saved to {effectiveOutputPath}");
