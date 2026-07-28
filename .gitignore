@@ -6,6 +6,9 @@
 # dotenv files
 .env
 
+# Six Labors license file (personal/OSS license, must not be shared per license terms)
+sixlabors.lic
+
 # User-specific files
 *.rsuser
 *.suo

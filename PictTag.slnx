@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/source/">
+    <Project Path="source/PictTag.Cli/PictTag.Cli.csproj" />
+    <Project Path="source/PictTag.Core/PictTag.Core.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,7 @@
+<Project>
+
+  <PropertyGroup>
+    <SixLaborsLicenseFile>$(MSBuildThisFileDirectory)sixlabors.lic</SixLaborsLicenseFile>
+  </PropertyGroup>
+
+</Project>
