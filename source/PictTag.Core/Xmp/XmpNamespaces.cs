@@ -8,9 +8,12 @@ internal static class XmpNamespaces
     /// <summary>digiKam's tag-list namespace. Values are '/'-separated paths.</summary>
     public const string DigiKam = "http://www.digikam.org/ns/1.0/";
 
-    /// <summary>IPTC Extension namespace, home of DigitalSourceType.</summary>
+    /// <summary>IPTC Extension namespace, home of DigitalSourceType, Genre, and ImageRegion.</summary>
     public const string IptcExt = "http://iptc.org/std/Iptc4xmpExt/2008-02-29/";
 
-    /// <summary>PictTag's own namespace for fields no XMP standard covers (medium, art style, setting).</summary>
+    /// <summary>IPTC Core namespace, home of Scene and the accessibility text fields.</summary>
+    public const string IptcCore = "http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/";
+
+    /// <summary>PictTag's own namespace for fields no XMP standard covers (medium, setting, composition).</summary>
     public const string PictTag = "https://github.com/sherland/PictTag/ns/1.0/";
 }

@@ -21,6 +21,7 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         registry.RegisterNamespace(XmpNamespaces.LightroomHierarchical, "lr");
         registry.RegisterNamespace(XmpNamespaces.DigiKam, "digiKam");
         registry.RegisterNamespace(XmpNamespaces.IptcExt, "Iptc4xmpExt");
+        registry.RegisterNamespace(XmpNamespaces.IptcCore, "Iptc4xmpCore");
         registry.RegisterNamespace(XmpNamespaces.PictTag, "pictTag");
 
         ImageInfo imageInfo = Image.Identify(imagePath);
@@ -31,11 +32,23 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         ImageMetadata metadata = result.Metadata;
         xmp.SetLocalizedText(XmpConstants.NsDC, "title", "", "x-default", metadata.Title, null);
         xmp.SetLocalizedText(XmpConstants.NsDC, "description", "", "x-default", metadata.Description, null);
+        xmp.SetLocalizedText(XmpNamespaces.IptcCore, "AltTextAccessibility", "", "x-default", metadata.AltText, null);
+        xmp.SetLocalizedText(XmpNamespaces.IptcCore, "ExtDescrAccessibility", "", "x-default", metadata.Description, null);
 
         xmp.SetProperty(XmpNamespaces.PictTag, "Medium", metadata.Medium.ToString());
         if (metadata.ArtStyle is not null)
         {
-            xmp.SetProperty(XmpNamespaces.PictTag, "ArtStyle", metadata.ArtStyle);
+            // Iptc4xmpExt:Genre is the real IPTC field for artistic/style genre - ArtStyle
+            // lives there instead of a custom pictTag property. Genre is a Bag of CVTerm
+            // structs, not plain text (verified empirically against exiftool - a bare string
+            // write fails with "Improperly formed structure"), so only the free-text
+            // CvTermName is populated; CvId/CvTermId/CvTermRefinedAbout are left unset since
+            // ArtStyle isn't sourced from a real controlled vocabulary with term IDs.
+            xmp.AppendArrayItem(XmpNamespaces.IptcExt, "Genre", new PropertyOptions { IsArray = true }, null, new PropertyOptions { IsStruct = true });
+            string genreItemPath = "Genre" + XmpPathFactory.ComposeArrayItemPath("", 1);
+            xmp.SetLocalizedText(
+                XmpNamespaces.IptcExt, genreItemPath + XmpPathFactory.ComposeStructFieldPath(XmpNamespaces.IptcExt, "CvTermName"),
+                "", "x-default", metadata.ArtStyle, null);
         }
 
         if (metadata.Setting is not null)
@@ -49,6 +62,8 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
             xmp.SetProperty(XmpNamespaces.IptcExt, "DigitalSourceType", digitalSourceType);
         }
 
+        WriteScene(xmp, metadata);
+
         ImageComposition composition = metadata.Composition;
         xmp.SetProperty(XmpNamespaces.PictTag, "Symmetry", composition.Symmetry.ToString());
         xmp.SetProperty(XmpNamespaces.PictTag, "RuleOfThirds", composition.RuleOfThirdsAdherence.ToString());
@@ -59,8 +74,8 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
             xmp.SetProperty(XmpNamespaces.PictTag, "CompositionNotes", composition.Notes);
         }
 
-        // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
-        // properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
+        // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*/
+        // Genre properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
         AppendHierarchicalTag(xmp, "Medium", metadata.Medium.ToString());
         if (metadata.ArtStyle is not null)
         {
@@ -77,6 +92,7 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         if (result.Entities.Count > 0)
         {
             WriteRegions(xmp, result, imageInfo.Width, imageInfo.Height);
+            WriteImageRegions(xmp, result);
         }
 
         string sidecarPath = SidecarPathResolver.Resolve(imagePath, namingConvention);
@@ -86,6 +102,26 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         }
 
         return Task.FromResult(sidecarPath);
+    }
+
+    private static void WriteScene(IXmpMeta xmp, ImageMetadata metadata)
+    {
+        // Distinct(), not a HashSet, so the model's own ordering is preserved (HashSet
+        // iteration order isn't guaranteed) - the Setting-derived code, if any, goes last.
+        List<SceneType> scenes = metadata.Scene.Distinct().ToList();
+        if (metadata.Setting == ImageSetting.Indoor && !scenes.Contains(SceneType.InteriorView))
+        {
+            scenes.Add(SceneType.InteriorView);
+        }
+        else if (metadata.Setting == ImageSetting.Outdoor && !scenes.Contains(SceneType.ExteriorView))
+        {
+            scenes.Add(SceneType.ExteriorView);
+        }
+
+        foreach (SceneType scene in scenes)
+        {
+            xmp.AppendArrayItem(XmpNamespaces.IptcCore, "Scene", new PropertyOptions { IsArray = true }, IptcSceneCode.ForSceneType(scene), null);
+        }
     }
 
     private static void AppendHierarchicalTag(IXmpMeta xmp, string category, string leaf)
@@ -130,6 +166,42 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
             xmp.SetProperty(mwgNs, areaPath + XmpPathFactory.ComposeStructFieldPath(MwgNamespaces.StArea, "w"), area.Width.ToString("F6", CultureInfo.InvariantCulture));
             xmp.SetProperty(mwgNs, areaPath + XmpPathFactory.ComposeStructFieldPath(MwgNamespaces.StArea, "h"), area.Height.ToString("F6", CultureInfo.InvariantCulture));
             xmp.SetProperty(mwgNs, areaPath + XmpPathFactory.ComposeStructFieldPath(MwgNamespaces.StArea, "unit"), "normalized");
+
+            index++;
+        }
+    }
+
+    /// <summary>
+    /// Iptc4xmpExt:ImageRegion - IPTC's own, more modern region structure, written alongside
+    /// (not instead of) mwg-rs:Regions above. Field names/types and the RegionBoundary
+    /// top-left-corner coordinate convention were verified empirically against exiftool's own
+    /// built-in tag tables and its maintained MWG&lt;-&gt;IPTC region conversion logic - not
+    /// guessed. rCtype/rRole (content-type/role sub-structs) are omitted: no real controlled
+    /// vocabulary URIs for them were verified, and guessing at IDs would be worse than leaving
+    /// them out.
+    /// </summary>
+    private static void WriteImageRegions(IXmpMeta xmp, ImageAnalysisResult result)
+    {
+        const string ns = XmpNamespaces.IptcExt;
+        xmp.SetProperty(ns, "ImageRegion", null, new PropertyOptions { IsArray = true });
+
+        int index = 1;
+        foreach (DetectedEntity entity in result.Entities)
+        {
+            string itemPath = "ImageRegion" + XmpPathFactory.ComposeArrayItemPath("", index);
+            xmp.SetProperty(ns, itemPath, null, new PropertyOptions { IsStruct = true });
+            xmp.SetProperty(ns, itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "rId"), index.ToString(CultureInfo.InvariantCulture));
+            xmp.SetLocalizedText(ns, itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "Name"), "", "x-default", entity.Label, null);
+
+            IptcRegionBoundary boundary = IptcRegionBoundary.FromBoundingBox(entity.Box);
+            string boundaryPath = itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "RegionBoundary");
+            xmp.SetProperty(ns, boundaryPath, null, new PropertyOptions { IsStruct = true });
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbShape"), "rectangle");
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbUnit"), "relative");
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbX"), boundary.X.ToString("F6", CultureInfo.InvariantCulture));
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbY"), boundary.Y.ToString("F6", CultureInfo.InvariantCulture));
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbW"), boundary.Width.ToString("F6", CultureInfo.InvariantCulture));
+            xmp.SetProperty(ns, boundaryPath + XmpPathFactory.ComposeStructFieldPath(ns, "rbH"), boundary.Height.ToString("F6", CultureInfo.InvariantCulture));
 
             index++;
         }

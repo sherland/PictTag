@@ -25,7 +25,6 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
             NAMESPACE     => { 'pictTag' => 'https://github.com/sherland/PictTag/ns/1.0/' },
             WRITABLE      => 'string',
             Medium            => { },
-            ArtStyle          => { },
             Setting           => { },
             Symmetry          => { },
             RuleOfThirds      => { },
@@ -80,7 +79,8 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
             // dc:Description and the pictTag fields don't need this - setting them fresh
             // always replaces the value in one shot, verified empirically.)
             (int clearExit, string clearErr) = await RunAsync(
-                ["-overwrite_original", "-XMP-dc:Subject=", "-XMP-lr:HierarchicalSubject=", "-XMP-digiKam:TagsList=", sidecarPath], ct);
+                ["-overwrite_original", "-XMP-dc:Subject=", "-XMP-lr:HierarchicalSubject=", "-XMP-digiKam:TagsList=",
+                    "-XMP-iptcExt:Genre=", "-XMP-iptcCore:Scene=", sidecarPath], ct);
             if (clearExit != 0)
             {
                 throw new InvalidOperationException($"exiftool exited with code {clearExit} while clearing existing tags: {clearErr}");
@@ -103,6 +103,8 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
             "-XMP-xmp:CreatorTool=PictTag",
             $"-XMP-dc:Title={metadata.Title}",
             $"-XMP-dc:Description={metadata.Description}",
+            $"-XMP-iptcCore:AltTextAccessibility={metadata.AltText}",
+            $"-XMP-iptcCore:ExtDescrAccessibility={metadata.Description}",
             $"-XMP-pictTag:Medium={metadata.Medium}",
             $"-XMP-pictTag:Symmetry={metadata.Composition.Symmetry}",
             $"-XMP-pictTag:RuleOfThirds={metadata.Composition.RuleOfThirdsAdherence}",
@@ -117,7 +119,13 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         if (metadata.ArtStyle is not null)
         {
-            args.Add($"-XMP-pictTag:ArtStyle={metadata.ArtStyle}");
+            // Iptc4xmpExt:Genre is the real IPTC field for artistic/style genre - ArtStyle
+            // lives there instead of a custom pictTag property. Genre is a Bag of CVTerm
+            // structs, not plain text (verified empirically - a bare string write fails with
+            // "Improperly formed structure"), so only the free-text CvTermName is populated;
+            // CvId/CvTermId/CvTermRefinedAbout are left unset since ArtStyle isn't sourced
+            // from a real controlled vocabulary with term IDs.
+            args.Add($"-XMP-iptcExt:Genre+={{CvTermName={EscapeStructValue(metadata.ArtStyle)}}}");
         }
 
         if (metadata.Setting is not null)
@@ -134,6 +142,23 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         if (digitalSourceType is not null)
         {
             args.Add($"-XMP-iptcExt:DigitalSourceType={digitalSourceType}");
+        }
+
+        // Distinct(), not a HashSet, so the model's own ordering is preserved (HashSet
+        // iteration order isn't guaranteed) - the Setting-derived code, if any, goes last.
+        List<SceneType> scenes = metadata.Scene.Distinct().ToList();
+        if (metadata.Setting == ImageSetting.Indoor && !scenes.Contains(SceneType.InteriorView))
+        {
+            scenes.Add(SceneType.InteriorView);
+        }
+        else if (metadata.Setting == ImageSetting.Outdoor && !scenes.Contains(SceneType.ExteriorView))
+        {
+            scenes.Add(SceneType.ExteriorView);
+        }
+
+        foreach (SceneType scene in scenes)
+        {
+            args.Add($"-XMP-iptcCore:Scene+={IptcSceneCode.ForSceneType(scene)}");
         }
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
@@ -154,6 +179,7 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         if (result.Entities.Count > 0)
         {
             args.Add($"-RegionInfo={BuildRegionInfoStruct(result, imageInfo.Width, imageInfo.Height)}");
+            args.Add($"-XMP-iptcExt:ImageRegion={BuildImageRegionStruct(result)}");
         }
 
         args.Add(sidecarPath);
@@ -200,6 +226,45 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         }
 
         sb.Append("]}");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Iptc4xmpExt:ImageRegion - IPTC's own, more modern region structure, written alongside
+    /// (not instead of) -RegionInfo/mwg-rs:Regions above. Field names/types and the
+    /// RegionBoundary top-left-corner coordinate convention were verified empirically against
+    /// exiftool's own built-in tag tables and its maintained MWG&lt;-&gt;IPTC region conversion
+    /// logic - not guessed. rCtype/rRole (content-type/role sub-structs) are omitted: no real
+    /// controlled vocabulary URIs for them were verified, and guessing at IDs would be worse
+    /// than leaving them out. Uses a plain "=" (not "+=") like -RegionInfo - the whole array
+    /// is replaced in one shot, so no separate clear-pass entry is needed for this field.
+    /// </summary>
+    private static string BuildImageRegionStruct(ImageAnalysisResult result)
+    {
+        StringBuilder sb = new();
+        sb.Append('[');
+
+        for (int i = 0; i < result.Entities.Count; i++)
+        {
+            if (i > 0)
+            {
+                sb.Append(',');
+            }
+
+            DetectedEntity entity = result.Entities[i];
+            IptcRegionBoundary boundary = IptcRegionBoundary.FromBoundingBox(entity.Box);
+
+            sb.Append("{RId=").Append(i + 1)
+              .Append(",Name=").Append(EscapeStructValue(entity.Label))
+              .Append(",RegionBoundary={RbShape=rectangle,RbUnit=relative")
+              .Append(",RbX=").Append(boundary.X.ToString("F6", CultureInfo.InvariantCulture))
+              .Append(",RbY=").Append(boundary.Y.ToString("F6", CultureInfo.InvariantCulture))
+              .Append(",RbW=").Append(boundary.Width.ToString("F6", CultureInfo.InvariantCulture))
+              .Append(",RbH=").Append(boundary.Height.ToString("F6", CultureInfo.InvariantCulture))
+              .Append("}}");
+        }
+
+        sb.Append(']');
         return sb.ToString();
     }
 

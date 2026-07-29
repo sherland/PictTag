@@ -24,6 +24,8 @@ public class ImageDetectionService
 
         - title: a short, specific caption (a few words).
         - description: 2-4 sentences describing what the image shows.
+        - altText: a short (one sentence, well under 250 characters) accessibility caption for
+          a screen reader - distinct from description, not just a truncated copy of it.
         - medium: the visual medium of the image itself - Photograph, Screenshot, Painting,
           Drawing, DigitalIllustration, ThreeDRender, or Other.
         - artStyle: only if medium is an art form (Painting, Drawing, DigitalIllustration, or
@@ -31,6 +33,12 @@ public class ImageDetectionService
           "pixel art"); otherwise omit it. Do not invent a style for a plain photograph.
         - setting: whether the scene is Indoor, Outdoor, Studio, or Unknown if it cannot be
           determined from the image.
+        - scene: zero or more terms describing how the image is framed/composed, from: Headshot,
+          HalfLength, FullLength, Profile, RearView, Single, Couple, Two, Group, GeneralView,
+          PanoramicView, AerialView, UnderWater, NightScene, Satellite, ExteriorView,
+          InteriorView, CloseUp, Action, Performing, Posing, Symbolic, OffBeat, MovieScene.
+          Pick every term that genuinely applies (e.g. a photo can be both Group and Posing);
+          leave empty if none clearly fit rather than forcing a weak match.
         - composition: your subjective visual impression of the image's composition, not a
           precise measurement. Give:
             - symmetry: Symmetrical, Asymmetrical, RadialSymmetry, or None if not applicable.
@@ -105,7 +113,8 @@ public class ImageDetectionService
             parsed.Composition.EdgeDensityEstimate,
             parsed.Composition.Notes);
 
-        ImageMetadata metadata = new(parsed.Title, parsed.Description, parsed.Medium, parsed.ArtStyle, parsed.Setting, composition);
+        ImageMetadata metadata = new(
+            parsed.Title, parsed.Description, parsed.AltText, parsed.Medium, parsed.ArtStyle, parsed.Setting, parsed.Scene, composition);
 
         return new ImageAnalysisResult(metadata, entities);
     }
@@ -184,9 +193,11 @@ public class ImageDetectionService
     private record DetectionResponseDto(
         string Title,
         string Description,
+        string AltText,
         ImageMedium Medium,
         string? ArtStyle,
         ImageSetting? Setting,
+        List<SceneType> Scene,
         CompositionDto Composition,
         List<DetectionDto> Detections);
 

@@ -81,6 +81,19 @@ public class XmpCoreSidecarWriterTests : IDisposable
         IXmpProperty catAreaY = xmp.GetStructField(MwgNamespaces.Regions, "Regions/mwg-rs:RegionList[1]/mwg-rs:Area", MwgNamespaces.StArea, "y");
         Assert.Equal(0.3, double.Parse(catAreaX.Value, CultureInfo.InvariantCulture), precision: 6);
         Assert.Equal(0.2, double.Parse(catAreaY.Value, CultureInfo.InvariantCulture), precision: 6);
+
+        // Iptc4xmpExt:ImageRegion is written alongside mwg-rs:Regions, with the *top-left*
+        // corner (unlike MWG's center point) - verified empirically against exiftool's own
+        // maintained MWG<->IPTC region conversion logic. cat box -> rbX=0.2, rbY=0.1.
+        Assert.Equal(2, xmp.CountArrayItems(XmpNamespaces.IptcExt, "ImageRegion"));
+        Assert.Equal("cat", xmp.GetLocalizedText(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:Name", "", "x-default").Value);
+        Assert.Equal("1", xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]", XmpNamespaces.IptcExt, "rId").Value);
+        Assert.Equal("rectangle", xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbShape").Value);
+        Assert.Equal("relative", xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbUnit").Value);
+        Assert.Equal(0.2, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbX").Value, CultureInfo.InvariantCulture), precision: 6);
+        Assert.Equal(0.1, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbY").Value, CultureInfo.InvariantCulture), precision: 6);
+        Assert.Equal(0.2, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbW").Value, CultureInfo.InvariantCulture), precision: 6);
+        Assert.Equal(0.2, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbH").Value, CultureInfo.InvariantCulture), precision: 6);
     }
 
     [Fact]
@@ -88,7 +101,7 @@ public class XmpCoreSidecarWriterTests : IDisposable
     {
         string imagePath = CreateTestImage();
         ImageAnalysisResult result = new(
-            new ImageMetadata("A Test Photo", "A description of the photo.", ImageMedium.Photograph, ArtStyle: null, ImageSetting.Indoor, TestData.SampleComposition()),
+            new ImageMetadata("A Test Photo", "A description of the photo.", "A test photo.", ImageMedium.Photograph, ArtStyle: null, ImageSetting.Indoor, [SceneType.CloseUp], TestData.SampleComposition()),
             []);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
@@ -102,12 +115,20 @@ public class XmpCoreSidecarWriterTests : IDisposable
 
         Assert.Equal("A Test Photo", xmp.GetLocalizedText(XmpConstants.NsDC, "title", "", "x-default").Value);
         Assert.Equal("A description of the photo.", xmp.GetLocalizedText(XmpConstants.NsDC, "description", "", "x-default").Value);
+        Assert.Equal("A test photo.", xmp.GetLocalizedText(XmpNamespaces.IptcCore, "AltTextAccessibility", "", "x-default").Value);
+        Assert.Equal("A description of the photo.", xmp.GetLocalizedText(XmpNamespaces.IptcCore, "ExtDescrAccessibility", "", "x-default").Value);
         Assert.Equal("Photograph", xmp.GetPropertyString(XmpNamespaces.PictTag, "Medium"));
         Assert.Equal("Indoor", xmp.GetPropertyString(XmpNamespaces.PictTag, "Setting"));
-        Assert.False(xmp.DoesPropertyExist(XmpNamespaces.PictTag, "ArtStyle"), "ArtStyle should be omitted when null");
+        Assert.False(xmp.DoesPropertyExist(XmpNamespaces.PictTag, "ArtStyle"), "ArtStyle no longer lives under pictTag - it moved to Iptc4xmpExt:Genre");
+        Assert.False(xmp.DoesPropertyExist(XmpNamespaces.IptcExt, "Genre"), "Genre should be omitted when ArtStyle is null");
         Assert.Equal(
             "https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture",
             xmp.GetPropertyString(XmpNamespaces.IptcExt, "DigitalSourceType"));
+
+        // CloseUp (model pick) + InteriorView (derived from Setting=Indoor).
+        Assert.Equal(2, xmp.CountArrayItems(XmpNamespaces.IptcCore, "Scene"));
+        Assert.Equal(IptcSceneCode.ForSceneType(SceneType.CloseUp), xmp.GetArrayItem(XmpNamespaces.IptcCore, "Scene", 1).Value);
+        Assert.Equal(IptcSceneCode.ForSceneType(SceneType.InteriorView), xmp.GetArrayItem(XmpNamespaces.IptcCore, "Scene", 2).Value);
 
         Assert.Equal("Asymmetrical", xmp.GetPropertyString(XmpNamespaces.PictTag, "Symmetry"));
         Assert.Equal("True", xmp.GetPropertyString(XmpNamespaces.PictTag, "RuleOfThirds"));
@@ -133,7 +154,11 @@ public class XmpCoreSidecarWriterTests : IDisposable
             xmp = XmpMetaFactory.Parse(stream);
         }
 
-        Assert.Equal("impressionism", xmp.GetPropertyString(XmpNamespaces.PictTag, "ArtStyle"));
+        Assert.False(xmp.DoesPropertyExist(XmpNamespaces.PictTag, "ArtStyle"), "ArtStyle no longer lives under pictTag - it moved to Iptc4xmpExt:Genre");
+        Assert.Equal(1, xmp.CountArrayItems(XmpNamespaces.IptcExt, "Genre"));
+        Assert.Equal(
+            "impressionism",
+            xmp.GetLocalizedText(XmpNamespaces.IptcExt, "Genre[1]/Iptc4xmpExt:CvTermName", "", "x-default").Value);
         // No IPTC DigitalSourceType code covers paintings, so it should be left unset.
         Assert.False(xmp.DoesPropertyExist(XmpNamespaces.IptcExt, "DigitalSourceType"));
 

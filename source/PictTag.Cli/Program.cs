@@ -145,8 +145,10 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
         ImageMetadata metadata = result.Metadata;
         Console.WriteLine($"Title: {metadata.Title}");
         Console.WriteLine($"Description: {metadata.Description}");
+        Console.WriteLine($"AltText: {metadata.AltText}");
         Console.WriteLine($"Medium: {metadata.Medium}" + (metadata.ArtStyle is null ? "" : $" ({metadata.ArtStyle})"));
         Console.WriteLine($"Setting: {metadata.Setting?.ToString() ?? "unknown"}");
+        Console.WriteLine($"Scene: {(metadata.Scene.Count == 0 ? "none" : string.Join(", ", metadata.Scene))}");
         Console.WriteLine(
             $"Composition: {metadata.Composition.Symmetry}, ruleOfThirds={metadata.Composition.RuleOfThirdsAdherence}, "
             + $"colorVariance={metadata.Composition.ColorVarianceEstimate.ToString("F2", CultureInfo.InvariantCulture)}, "
