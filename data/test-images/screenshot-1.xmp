@@ -23,33 +23,33 @@
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/screenCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Mobile app connection screen</rdf:li>
+          <rdf:li xml:lang="x-default">App connection loading screen</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A screenshot of a mobile application displaying a loading state for connecting to a device. The interface features Norwegian text "Kobler til enheten" and a central signal icon surrounded by concentric circles.</rdf:li>
+          <rdf:li xml:lang="x-default">A mobile app screenshot displaying a connecting status message in Norwegian, "Kobler til enheten," accompanied by the number "220." The interface features a central signal icon surrounded by concentric circles and navigation buttons at the top.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Screenshot</rdf:li>
           <rdf:li>RadialSymmetry</rdf:li>
-          <rdf:li>tilbake text</rdf:li>
-          <rdf:li>avbryt text</rdf:li>
-          <rdf:li>signal icon</rdf:li>
-          <rdf:li>kobler til enheten text</rdf:li>
-          <rdf:li>220 text</rdf:li>
+          <rdf:li>Signal Icon</rdf:li>
+          <rdf:li>"Tilbake" Text</rdf:li>
+          <rdf:li>"Avbryt" Text</rdf:li>
+          <rdf:li>"Kobler Til Enheten" Text</rdf:li>
+          <rdf:li>"220" Text</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Screenshot of an Android app showing a "connecting to device" message in Norwegian with a centered signal icon.</rdf:li>
+          <rdf:li xml:lang="x-default">Screenshot of an app's loading screen with a signal icon and Norwegian text indicating it is connecting to a device.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A screenshot of a mobile application displaying a loading state for connecting to a device. The interface features Norwegian text "Kobler til enheten" and a central signal icon surrounded by concentric circles.</rdf:li>
+          <rdf:li xml:lang="x-default">A mobile app screenshot displaying a connecting status message in Norwegian, "Kobler til enheten," accompanied by the number "220." The interface features a central signal icon surrounded by concentric circles and navigation buttons at the top.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -65,16 +65,16 @@
               Iptc4xmpExt:rId="1">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">tilbake text</rdf:li>
+                <rdf:li xml:lang="x-default">signal icon</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.043000"
-              Iptc4xmpExt:rbY="0.065000"
-              Iptc4xmpExt:rbW="0.224000"
-              Iptc4xmpExt:rbH="0.026000"/>
+              Iptc4xmpExt:rbX="0.426000"
+              Iptc4xmpExt:rbY="0.385000"
+              Iptc4xmpExt:rbW="0.148000"
+              Iptc4xmpExt:rbH="0.069000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -82,16 +82,16 @@
               Iptc4xmpExt:rId="2">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">avbryt text</rdf:li>
+                <rdf:li xml:lang="x-default">"Tilbake" text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.801000"
-              Iptc4xmpExt:rbY="0.065000"
-              Iptc4xmpExt:rbW="0.155000"
-              Iptc4xmpExt:rbH="0.026000"/>
+              Iptc4xmpExt:rbX="0.043000"
+              Iptc4xmpExt:rbY="0.072000"
+              Iptc4xmpExt:rbW="0.220000"
+              Iptc4xmpExt:rbH="0.023000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -99,16 +99,16 @@
               Iptc4xmpExt:rId="3">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">signal icon</rdf:li>
+                <rdf:li xml:lang="x-default">"Avbryt" text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.421000"
-              Iptc4xmpExt:rbY="0.386000"
-              Iptc4xmpExt:rbW="0.157000"
-              Iptc4xmpExt:rbH="0.071000"/>
+              Iptc4xmpExt:rbX="0.798000"
+              Iptc4xmpExt:rbY="0.072000"
+              Iptc4xmpExt:rbW="0.158000"
+              Iptc4xmpExt:rbH="0.023000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -116,16 +116,16 @@
               Iptc4xmpExt:rId="4">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">kobler til enheten text</rdf:li>
+                <rdf:li xml:lang="x-default">"Kobler til enheten" text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.247000"
-              Iptc4xmpExt:rbY="0.718000"
-              Iptc4xmpExt:rbW="0.506000"
-              Iptc4xmpExt:rbH="0.030000"/>
+              Iptc4xmpExt:rbX="0.250000"
+              Iptc4xmpExt:rbY="0.720000"
+              Iptc4xmpExt:rbW="0.500000"
+              Iptc4xmpExt:rbH="0.028000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -133,15 +133,15 @@
               Iptc4xmpExt:rId="5">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">220 text</rdf:li>
+                <rdf:li xml:lang="x-default">"220" text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.474000"
-              Iptc4xmpExt:rbY="0.769000"
-              Iptc4xmpExt:rbW="0.051000"
+              Iptc4xmpExt:rbY="0.773000"
+              Iptc4xmpExt:rbW="0.052000"
               Iptc4xmpExt:rbH="0.018000"/>
             </rdf:Description>
           </rdf:li>
@@ -151,22 +151,22 @@
         <rdf:Bag>
           <rdf:li>Medium|Screenshot</rdf:li>
           <rdf:li>Symmetry|RadialSymmetry</rdf:li>
-          <rdf:li>Text|tilbake text</rdf:li>
-          <rdf:li>Text|avbryt text</rdf:li>
-          <rdf:li>Objects|signal icon</rdf:li>
-          <rdf:li>Text|kobler til enheten text</rdf:li>
-          <rdf:li>Text|220 text</rdf:li>
+          <rdf:li>Objects|Icon|Signal Icon</rdf:li>
+          <rdf:li>Text|Text|"Tilbake" Text</rdf:li>
+          <rdf:li>Text|Text|"Avbryt" Text</rdf:li>
+          <rdf:li>Text|Text|"Kobler Til Enheten" Text</rdf:li>
+          <rdf:li>Text|Text|"220" Text</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Screenshot</rdf:li>
           <rdf:li>Symmetry/RadialSymmetry</rdf:li>
-          <rdf:li>Text/tilbake text</rdf:li>
-          <rdf:li>Text/avbryt text</rdf:li>
-          <rdf:li>Objects/signal icon</rdf:li>
-          <rdf:li>Text/kobler til enheten text</rdf:li>
-          <rdf:li>Text/220 text</rdf:li>
+          <rdf:li>Objects/Icon/Signal Icon</rdf:li>
+          <rdf:li>Text/Text/"Tilbake" Text</rdf:li>
+          <rdf:li>Text/Text/"Avbryt" Text</rdf:li>
+          <rdf:li>Text/Text/"Kobler Til Enheten" Text</rdf:li>
+          <rdf:li>Text/Text/"220" Text</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -178,55 +178,55 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="tilbake text">
-              <mwg-rs:Area
-                stArea:x="0.155000"
-                stArea:y="0.078000"
-                stArea:w="0.224000"
-                stArea:h="0.026000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="avbryt text">
-              <mwg-rs:Area
-                stArea:x="0.878500"
-                stArea:y="0.078000"
-                stArea:w="0.155000"
-                stArea:h="0.026000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
                 mwg-rs:Name="signal icon">
               <mwg-rs:Area
-                stArea:x="0.499500"
-                stArea:y="0.421500"
-                stArea:w="0.157000"
-                stArea:h="0.071000"
+                stArea:x="0.500000"
+                stArea:y="0.419500"
+                stArea:w="0.148000"
+                stArea:h="0.069000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="kobler til enheten text">
+                mwg-rs:Name="&quot;Tilbake&quot; text">
+              <mwg-rs:Area
+                stArea:x="0.153000"
+                stArea:y="0.083500"
+                stArea:w="0.220000"
+                stArea:h="0.023000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="&quot;Avbryt&quot; text">
+              <mwg-rs:Area
+                stArea:x="0.877000"
+                stArea:y="0.083500"
+                stArea:w="0.158000"
+                stArea:h="0.023000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="&quot;Kobler til enheten&quot; text">
               <mwg-rs:Area
                 stArea:x="0.500000"
-                stArea:y="0.733000"
-                stArea:w="0.506000"
-                stArea:h="0.030000"
+                stArea:y="0.734000"
+                stArea:w="0.500000"
+                stArea:h="0.028000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="220 text">
+                mwg-rs:Name="&quot;220&quot; text">
               <mwg-rs:Area
-                stArea:x="0.499500"
-                stArea:y="0.778000"
-                stArea:w="0.051000"
+                stArea:x="0.500000"
+                stArea:y="0.782000"
+                stArea:w="0.052000"
                 stArea:h="0.018000"
                 stArea:unit="normalized"/>
               </rdf:Description>

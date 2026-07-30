@@ -11,11 +11,21 @@ $ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
 try {
     $previewDir = Join-Path $env:TEMP 'PictTag-annotated-preview'
+    # dotnet run --project source/PictTag.Cli -- `
+    #     -i 'data/test-images/*.jpg' `
+    #     -o $previewDir `
+    #     --xmp `
+    #     --xmp-overwrite
+    # dotnet run --project source/PictTag.Cli -- `
+    #     -i 'data/test-images/art-styles/**/*.jpg' `
+    #     -o $previewDir `
+    #     --xmp `
+    #     --xmp-overwrite
     dotnet run --project source/PictTag.Cli -- `
-        -i 'data/test-images/*.jpg' `
+        -i 'data/test-images/**/*.jpg' `
         -o $previewDir `
         --xmp `
-        --xmp-overwrite
+        --xmp-overwrite        
 }
 finally {
     Pop-Location

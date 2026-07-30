@@ -17,45 +17,49 @@
       pictTag:Setting="Indoor"
       pictTag:Symmetry="Asymmetrical"
       pictTag:RuleOfThirds="False"
-      pictTag:ColorVariance="0.700"
-      pictTag:EdgeDensity="0.900"
-      pictTag:CompositionNotes="The image is oriented sideways."
+      pictTag:ColorVariance="0.600"
+      pictTag:EdgeDensity="0.800"
+      pictTag:CompositionNotes="Tilted perspective, crowded composition."
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Guests at a Masquerade Ball</rdf:li>
+          <rdf:li xml:lang="x-default">Masquerade Ball Group Photo</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people are gathered for a masquerade ball, wearing elaborate masks and formal attire. The foreground features individuals in tuxedos with black and silver masks, set against a backdrop of grand classical columns.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people dressed in formal attire and various masquerade masks pose for a photograph. The scene is crowded with individuals wearing different styles of eye masks, ranging from simple black ones to ornate silver and gold designs. The image is captured from an angled perspective within an indoor setting featuring classical columns.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Photograph</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
-          <rdf:li>man in black mask</rdf:li>
-          <rdf:li>man in silver mask</rdf:li>
-          <rdf:li>woman in black and gold attire</rdf:li>
+          <rdf:li>Man In Black Eye Mask</rdf:li>
+          <rdf:li>Man In Silver Mask</rdf:li>
+          <rdf:li>Woman In Black Eye Mask</rdf:li>
+          <rdf:li>Person In Ornate Gown</rdf:li>
+          <rdf:li>Person In Ornate Mask</rdf:li>
+          <rdf:li>Woman In Gold Mask</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A close-up view of several people wearing decorative masquerade masks and formal clothing at an indoor event.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people at a masquerade event, many wearing decorative eye masks and formal clothing.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people are gathered for a masquerade ball, wearing elaborate masks and formal attire. The foreground features individuals in tuxedos with black and silver masks, set against a backdrop of grand classical columns.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people dressed in formal attire and various masquerade masks pose for a photograph. The scene is crowded with individuals wearing different styles of eye masks, ranging from simple black ones to ornate silver and gold designs. The image is captured from an angled perspective within an indoor setting featuring classical columns.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
         <rdf:Bag>
           <rdf:li>010900</rdf:li>
           <rdf:li>012100</rdf:li>
-          <rdf:li>011800</rdf:li>
           <rdf:li>011700</rdf:li>
+          <rdf:li>011800</rdf:li>
+          <rdf:li>011000</rdf:li>
         </rdf:Bag>
       </Iptc4xmpCore:Scene>
       <Iptc4xmpExt:ImageRegion>
@@ -65,16 +69,16 @@
               Iptc4xmpExt:rId="1">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">man in black mask</rdf:li>
+                <rdf:li xml:lang="x-default">man in black eye mask</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.438000"
+              Iptc4xmpExt:rbX="0.436000"
               Iptc4xmpExt:rbY="0.125000"
-              Iptc4xmpExt:rbW="0.562000"
-              Iptc4xmpExt:rbH="0.342000"/>
+              Iptc4xmpExt:rbW="0.309000"
+              Iptc4xmpExt:rbH="0.254000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -89,9 +93,9 @@
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.525000"
-              Iptc4xmpExt:rbY="0.605000"
+              Iptc4xmpExt:rbY="0.580000"
               Iptc4xmpExt:rbW="0.450000"
-              Iptc4xmpExt:rbH="0.395000"/>
+              Iptc4xmpExt:rbH="0.420000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -99,16 +103,67 @@
               Iptc4xmpExt:rId="3">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">woman in black and gold attire</rdf:li>
+                <rdf:li xml:lang="x-default">woman in black eye mask</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.365000"
-              Iptc4xmpExt:rbY="0.365000"
-              Iptc4xmpExt:rbW="0.175000"
-              Iptc4xmpExt:rbH="0.190000"/>
+              Iptc4xmpExt:rbY="0.364000"
+              Iptc4xmpExt:rbW="0.183000"
+              Iptc4xmpExt:rbH="0.193000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="4">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">person in ornate gown</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.409000"
+              Iptc4xmpExt:rbY="0.472000"
+              Iptc4xmpExt:rbW="0.399000"
+              Iptc4xmpExt:rbH="0.199000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="5">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">person in ornate mask</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.425000"
+              Iptc4xmpExt:rbY="0.632000"
+              Iptc4xmpExt:rbW="0.115000"
+              Iptc4xmpExt:rbH="0.137000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="6">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">woman in gold mask</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.333000"
+              Iptc4xmpExt:rbY="0.613000"
+              Iptc4xmpExt:rbW="0.105000"
+              Iptc4xmpExt:rbH="0.155000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
@@ -117,18 +172,24 @@
         <rdf:Bag>
           <rdf:li>Medium|Photograph</rdf:li>
           <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>People|man in black mask</rdf:li>
-          <rdf:li>People|man in silver mask</rdf:li>
-          <rdf:li>People|woman in black and gold attire</rdf:li>
+          <rdf:li>People|Person|Man In Black Eye Mask</rdf:li>
+          <rdf:li>People|Person|Man In Silver Mask</rdf:li>
+          <rdf:li>People|Person|Woman In Black Eye Mask</rdf:li>
+          <rdf:li>People|Person|Person In Ornate Gown</rdf:li>
+          <rdf:li>People|Person|Person In Ornate Mask</rdf:li>
+          <rdf:li>People|Person|Woman In Gold Mask</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Photograph</rdf:li>
           <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>People/man in black mask</rdf:li>
-          <rdf:li>People/man in silver mask</rdf:li>
-          <rdf:li>People/woman in black and gold attire</rdf:li>
+          <rdf:li>People/Person/Man In Black Eye Mask</rdf:li>
+          <rdf:li>People/Person/Man In Silver Mask</rdf:li>
+          <rdf:li>People/Person/Woman In Black Eye Mask</rdf:li>
+          <rdf:li>People/Person/Person In Ornate Gown</rdf:li>
+          <rdf:li>People/Person/Person In Ornate Mask</rdf:li>
+          <rdf:li>People/Person/Woman In Gold Mask</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -140,12 +201,12 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="man in black mask">
+                mwg-rs:Name="man in black eye mask">
               <mwg-rs:Area
-                stArea:x="0.719000"
-                stArea:y="0.296000"
-                stArea:w="0.562000"
-                stArea:h="0.342000"
+                stArea:x="0.590500"
+                stArea:y="0.252000"
+                stArea:w="0.309000"
+                stArea:h="0.254000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -154,20 +215,53 @@
                 mwg-rs:Name="man in silver mask">
               <mwg-rs:Area
                 stArea:x="0.750000"
-                stArea:y="0.802500"
+                stArea:y="0.790000"
                 stArea:w="0.450000"
-                stArea:h="0.395000"
+                stArea:h="0.420000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="woman in black and gold attire">
+                mwg-rs:Name="woman in black eye mask">
               <mwg-rs:Area
-                stArea:x="0.452500"
-                stArea:y="0.460000"
-                stArea:w="0.175000"
-                stArea:h="0.190000"
+                stArea:x="0.456500"
+                stArea:y="0.460500"
+                stArea:w="0.183000"
+                stArea:h="0.193000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="person in ornate gown">
+              <mwg-rs:Area
+                stArea:x="0.608500"
+                stArea:y="0.571500"
+                stArea:w="0.399000"
+                stArea:h="0.199000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="person in ornate mask">
+              <mwg-rs:Area
+                stArea:x="0.482500"
+                stArea:y="0.700500"
+                stArea:w="0.115000"
+                stArea:h="0.137000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="woman in gold mask">
+              <mwg-rs:Area
+                stArea:x="0.385500"
+                stArea:y="0.690500"
+                stArea:w="0.105000"
+                stArea:h="0.155000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

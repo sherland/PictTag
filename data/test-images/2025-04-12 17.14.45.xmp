@@ -18,39 +18,39 @@
       pictTag:Symmetry="Asymmetrical"
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.400"
-      pictTag:EdgeDensity="0.700"
-      pictTag:CompositionNotes="long shadows from trees"
+      pictTag:EdgeDensity="0.600"
+      pictTag:CompositionNotes="diagonal shadows from trees"
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Orange lawn mower in a yard</rdf:li>
+          <rdf:li xml:lang="x-default">Lawn maintenance in a yard</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An orange lawn mower sits on a patch of dry grass in a backyard setting. In the background, several trees, houses, and a blue tarp are visible under bright sunlight.</rdf:li>
+          <rdf:li xml:lang="x-default">An orange lawnmower sits on a patch of dry grass next to some bare branches. A blue tarp is spread across another part of the yard, and houses and trees are visible in the background under bright sunlight.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Photograph</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
-          <rdf:li>orange lawn mower</rdf:li>
-          <rdf:li>blue tarp</rdf:li>
-          <rdf:li>truck</rdf:li>
-          <rdf:li>house</rdf:li>
-          <rdf:li>tree trunk</rdf:li>
-          <rdf:li>tree trunk</rdf:li>
+          <rdf:li>Lawnmower</rdf:li>
+          <rdf:li>Blue Tarp</rdf:li>
+          <rdf:li>Red House</rdf:li>
+          <rdf:li>Yellow House</rdf:li>
+          <rdf:li>Van</rdf:li>
+          <rdf:li>Tree Branches</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An orange lawn mower rests on a sunlit, patchy grass lawn with trees and houses in the background.</rdf:li>
+          <rdf:li xml:lang="x-default">An orange lawnmower rests on a dry, grassy lawn with a blue tarp nearby and houses in the distance.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An orange lawn mower sits on a patch of dry grass in a backyard setting. In the background, several trees, houses, and a blue tarp are visible under bright sunlight.</rdf:li>
+          <rdf:li xml:lang="x-default">An orange lawnmower sits on a patch of dry grass next to some bare branches. A blue tarp is spread across another part of the yard, and houses and trees are visible in the background under bright sunlight.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -66,16 +66,16 @@
               Iptc4xmpExt:rId="1">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">orange lawn mower</rdf:li>
+                <rdf:li xml:lang="x-default">lawnmower</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.013000"
-              Iptc4xmpExt:rbY="0.385000"
-              Iptc4xmpExt:rbW="0.246000"
-              Iptc4xmpExt:rbH="0.269000"/>
+              Iptc4xmpExt:rbY="0.485000"
+              Iptc4xmpExt:rbW="0.244000"
+              Iptc4xmpExt:rbH="0.167000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -89,10 +89,10 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.608000"
-              Iptc4xmpExt:rbY="0.278000"
-              Iptc4xmpExt:rbW="0.371000"
-              Iptc4xmpExt:rbH="0.179000"/>
+              Iptc4xmpExt:rbX="0.607000"
+              Iptc4xmpExt:rbY="0.279000"
+              Iptc4xmpExt:rbW="0.372000"
+              Iptc4xmpExt:rbH="0.177000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -100,16 +100,16 @@
               Iptc4xmpExt:rId="3">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">truck</rdf:li>
+                <rdf:li xml:lang="x-default">red house</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.013000"
-              Iptc4xmpExt:rbY="0.097000"
-              Iptc4xmpExt:rbW="0.105000"
-              Iptc4xmpExt:rbH="0.211000"/>
+              Iptc4xmpExt:rbX="0.108000"
+              Iptc4xmpExt:rbY="0.000000"
+              Iptc4xmpExt:rbW="0.226000"
+              Iptc4xmpExt:rbH="0.176000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -117,16 +117,16 @@
               Iptc4xmpExt:rId="4">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">house</rdf:li>
+                <rdf:li xml:lang="x-default">yellow house</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.107000"
-              Iptc4xmpExt:rbY="0.000000"
-              Iptc4xmpExt:rbW="0.229000"
-              Iptc4xmpExt:rbH="0.174000"/>
+              Iptc4xmpExt:rbX="0.411000"
+              Iptc4xmpExt:rbY="0.073000"
+              Iptc4xmpExt:rbW="0.117000"
+              Iptc4xmpExt:rbH="0.073000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -134,16 +134,16 @@
               Iptc4xmpExt:rId="5">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">tree trunk</rdf:li>
+                <rdf:li xml:lang="x-default">van</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.612000"
-              Iptc4xmpExt:rbY="0.000000"
-              Iptc4xmpExt:rbW="0.034000"
-              Iptc4xmpExt:rbH="0.240000"/>
+              Iptc4xmpExt:rbX="0.013000"
+              Iptc4xmpExt:rbY="0.098000"
+              Iptc4xmpExt:rbW="0.104000"
+              Iptc4xmpExt:rbH="0.211000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -151,16 +151,16 @@
               Iptc4xmpExt:rId="6">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">tree trunk</rdf:li>
+                <rdf:li xml:lang="x-default">tree branches</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.889000"
+              Iptc4xmpExt:rbX="0.013000"
               Iptc4xmpExt:rbY="0.000000"
-              Iptc4xmpExt:rbW="0.057000"
-              Iptc4xmpExt:rbH="0.217000"/>
+              Iptc4xmpExt:rbW="0.322000"
+              Iptc4xmpExt:rbH="0.825000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
@@ -169,24 +169,24 @@
         <rdf:Bag>
           <rdf:li>Medium|Photograph</rdf:li>
           <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Objects|orange lawn mower</rdf:li>
-          <rdf:li>Objects|blue tarp</rdf:li>
-          <rdf:li>Vehicles|truck</rdf:li>
-          <rdf:li>Buildings|house</rdf:li>
-          <rdf:li>Nature|tree trunk</rdf:li>
-          <rdf:li>Nature|tree trunk</rdf:li>
+          <rdf:li>Objects|Object|Lawnmower</rdf:li>
+          <rdf:li>Objects|Object|Blue Tarp</rdf:li>
+          <rdf:li>Buildings|Building|Red House</rdf:li>
+          <rdf:li>Buildings|Building|Yellow House</rdf:li>
+          <rdf:li>Vehicles|Vehicle|Van</rdf:li>
+          <rdf:li>Nature|Nature|Tree Branches</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Photograph</rdf:li>
           <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Objects/orange lawn mower</rdf:li>
-          <rdf:li>Objects/blue tarp</rdf:li>
-          <rdf:li>Vehicles/truck</rdf:li>
-          <rdf:li>Buildings/house</rdf:li>
-          <rdf:li>Nature/tree trunk</rdf:li>
-          <rdf:li>Nature/tree trunk</rdf:li>
+          <rdf:li>Objects/Object/Lawnmower</rdf:li>
+          <rdf:li>Objects/Object/Blue Tarp</rdf:li>
+          <rdf:li>Buildings/Building/Red House</rdf:li>
+          <rdf:li>Buildings/Building/Yellow House</rdf:li>
+          <rdf:li>Vehicles/Vehicle/Van</rdf:li>
+          <rdf:li>Nature/Nature/Tree Branches</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -198,12 +198,12 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="orange lawn mower">
+                mwg-rs:Name="lawnmower">
               <mwg-rs:Area
-                stArea:x="0.136000"
-                stArea:y="0.519500"
-                stArea:w="0.246000"
-                stArea:h="0.269000"
+                stArea:x="0.135000"
+                stArea:y="0.568500"
+                stArea:w="0.244000"
+                stArea:h="0.167000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -211,54 +211,54 @@
               <rdf:Description
                 mwg-rs:Name="blue tarp">
               <mwg-rs:Area
-                stArea:x="0.793500"
+                stArea:x="0.793000"
                 stArea:y="0.367500"
-                stArea:w="0.371000"
-                stArea:h="0.179000"
+                stArea:w="0.372000"
+                stArea:h="0.177000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="truck">
+                mwg-rs:Name="red house">
               <mwg-rs:Area
-                stArea:x="0.065500"
-                stArea:y="0.202500"
-                stArea:w="0.105000"
+                stArea:x="0.221000"
+                stArea:y="0.088000"
+                stArea:w="0.226000"
+                stArea:h="0.176000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="yellow house">
+              <mwg-rs:Area
+                stArea:x="0.469500"
+                stArea:y="0.109500"
+                stArea:w="0.117000"
+                stArea:h="0.073000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="van">
+              <mwg-rs:Area
+                stArea:x="0.065000"
+                stArea:y="0.203500"
+                stArea:w="0.104000"
                 stArea:h="0.211000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="house">
+                mwg-rs:Name="tree branches">
               <mwg-rs:Area
-                stArea:x="0.221500"
-                stArea:y="0.087000"
-                stArea:w="0.229000"
-                stArea:h="0.174000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="tree trunk">
-              <mwg-rs:Area
-                stArea:x="0.629000"
-                stArea:y="0.120000"
-                stArea:w="0.034000"
-                stArea:h="0.240000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="tree trunk">
-              <mwg-rs:Area
-                stArea:x="0.917500"
-                stArea:y="0.108500"
-                stArea:w="0.057000"
-                stArea:h="0.217000"
+                stArea:x="0.174000"
+                stArea:y="0.412500"
+                stArea:w="0.322000"
+                stArea:h="0.825000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
