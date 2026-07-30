@@ -27,7 +27,7 @@
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky featuring heavy, dark clouds mixed with lighter, white ones. Patches of blue sky are visible through the cloud cover, and a small portion of a building's chimney is seen in the bottom right corner.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky with large, dark cumulus clouds and patches of blue. The bottom edge shows a small portion of a rooftop and chimney.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -39,12 +39,12 @@
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Large, dark and light cumulus clouds filling much of the sky.</rdf:li>
+          <rdf:li xml:lang="x-default">Large grey and white clouds filling a blue sky.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky featuring heavy, dark clouds mixed with lighter, white ones. Patches of blue sky are visible through the cloud cover, and a small portion of a building's chimney is seen in the bottom right corner.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky with large, dark cumulus clouds and patches of blue. The bottom edge shows a small portion of a rooftop and chimney.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -67,9 +67,9 @@
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.906000"
-              Iptc4xmpExt:rbY="0.898000"
+              Iptc4xmpExt:rbY="0.897000"
               Iptc4xmpExt:rbW="0.069000"
-              Iptc4xmpExt:rbH="0.102000"/>
+              Iptc4xmpExt:rbH="0.103000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
@@ -78,14 +78,14 @@
         <rdf:Bag>
           <rdf:li>Medium|Photograph</rdf:li>
           <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Buildings|Building Part|Chimney</rdf:li>
+          <rdf:li>Artifact|Way|Passage|Conduit|Flue|Chimney</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Photograph</rdf:li>
           <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Buildings/Building Part/Chimney</rdf:li>
+          <rdf:li>Artifact/Way/Passage/Conduit/Flue/Chimney</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -100,9 +100,9 @@
                 mwg-rs:Name="chimney">
               <mwg-rs:Area
                 stArea:x="0.940500"
-                stArea:y="0.949000"
+                stArea:y="0.948500"
                 stArea:w="0.069000"
-                stArea:h="0.102000"
+                stArea:h="0.103000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

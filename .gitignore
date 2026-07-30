@@ -12,6 +12,9 @@ sixlabors.lic
 # Bulk-downloaded art-style test fixtures (regenerable via Get-ArtStyleTestImages.ps1)
 data/test-images/art-styles/
 
+# Full-graph debug dumps from PictTag.TaxonomyBuilder --debug-out (regenerable, not source)
+data/wordnet/build-debug/
+
 # Output of Test-ArtStyleDetection.ps1 - a one-off run report, not source
 art-style-detection-results.csv
 art-style-detection-run.log

@@ -1,0 +1,37 @@
+[
+  {
+    "lemma": "child",
+    "synsetId": "n09917593",
+    "comment": "sense 1 of 4 ('a young person of either sex'); disambiguated by gloss against index.noun's other 3 senses (none of which fit)."
+  },
+  {
+    "lemma": "angel",
+    "synsetId": "n09538915",
+    "comment": "sense 1 of 4 ('spiritual being attendant upon God') - the literal religious-figure case documented in docs/XMP-SCHEMA.md."
+  },
+  {
+    "lemma": "musical instrument",
+    "synsetId": "n03800933",
+    "comment": "sense 1 of 1 - the general instrument category; specific instruments mostly come from ImageNet-1k leaves already, this just anchors the shared parent."
+  },
+  {
+    "lemma": "work of art",
+    "synsetId": "n04601690",
+    "comment": "sense 1 of 1 ('art that is a product of one of the fine arts, especially a painting or sculpture')."
+  },
+  {
+    "lemma": "body of water",
+    "synsetId": "n09225146",
+    "comment": "sense 1 of 1 ('the part of the earth's surface covered with water')."
+  },
+  {
+    "lemma": "chimney",
+    "synsetId": "n03017428",
+    "comment": "sense 1 of 2 ('a vertical flue that provides a path through which smoke from a fire is carried away') - the building-architecture sense, not sense 2 (a glass lamp chimney). Found empirically: a real test photo of a rooftop chimney had no exact match at all and the embedding tier's best guess (~0.58 similarity) was below threshold, correctly falling back to the raw tag shape rather than a wrong forced match - but 'chimney' is common enough in photos (and already cited in docs/XMP-SCHEMA.md's own hierarchical-tag example) to deserve an exact node."
+  },
+  {
+    "lemma": "push button",
+    "synsetId": "n04027023",
+    "comment": "sense 2 of 7 ('push_button, push, button' - an electrical switch operated by pressing). Found empirically: a screenshot's 'back button'/'cancel button' UI elements semantically matched the WRONG WordNet sense of 'button' (an unopened flower bud, swept in incidentally by the plant-part domain expansion) because no mechanical/UI button sense existed anywhere in the taxonomy to compete with it. This node's own third lemma is literally 'button', so seeding it also gives the exact-match tier a second 'button' candidate to disambiguate via categoryHint (this one resolves to Objects; the flower-bud sense resolves to Nature)."
+  }
+]

@@ -163,17 +163,17 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
         // properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTagArgs(args, ["Medium", metadata.Medium.ToString()]);
+        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["Medium", metadata.Medium.ToString()]));
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTagArgs(args, ["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]);
+            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
         }
 
-        AppendHierarchicalTagArgs(args, ["Symmetry", metadata.Composition.Symmetry.ToString()]);
+        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["Symmetry", metadata.Composition.Symmetry.ToString()]));
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(entity.Category.ToString(), entity.Group, entity.Label));
+            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildEntitySegments(entity));
         }
 
         if (result.Entities.Count > 0)
@@ -221,7 +221,7 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
               .Append(",Y=").Append(area.Y.ToString("F6", CultureInfo.InvariantCulture))
               .Append(",W=").Append(area.Width.ToString("F6", CultureInfo.InvariantCulture))
               .Append(",H=").Append(area.Height.ToString("F6", CultureInfo.InvariantCulture))
-              .Append(",Unit=normalized},Name=").Append(EscapeStructValue(entity.Label))
+              .Append(",Unit=normalized},Name=").Append(EscapeStructValue(entity.Raw.Label))
               .Append('}');
         }
 
@@ -255,7 +255,7 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
             IptcRegionBoundary boundary = IptcRegionBoundary.FromBoundingBox(entity.Box);
 
             sb.Append("{RId=").Append(i + 1)
-              .Append(",Name=").Append(EscapeStructValue(entity.Label))
+              .Append(",Name=").Append(EscapeStructValue(entity.Raw.Label))
               .Append(",RegionBoundary={RbShape=rectangle,RbUnit=relative")
               .Append(",RbX=").Append(boundary.X.ToString("F6", CultureInfo.InvariantCulture))
               .Append(",RbY=").Append(boundary.Y.ToString("F6", CultureInfo.InvariantCulture))

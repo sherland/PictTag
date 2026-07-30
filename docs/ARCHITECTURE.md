@@ -10,7 +10,16 @@ ImageDetectionService.DetectAsync()          [source/PictTag.Core/ImageDetection
    │  sends the image + DetectionPrompt to Ollama, requesting a JSON response
    │  constrained to DetectionResponseDto's schema (ChatResponseFormat.ForJsonSchema)
    ▼
+one RawDetection per detected object       [Models.cs]
+   │
+   ▼
+EntityTaxonomyResolver.ResolveAsync()        [source/PictTag.Core/Taxonomy/EntityTaxonomyResolver.cs]
+   │  resolves each RawDetection against the WordNet-derived taxonomy - see
+   │  "Taxonomy resolution" below and docs/TAXONOMY.md for the full picture
+   ▼
 ImageAnalysisResult { ImageMetadata, List<DetectedEntity> }     [Models.cs]
+   │  each DetectedEntity carries both the raw LLM output and the resolved
+   │  TaxonomyMatch (or null, if nothing resolved confidently)
    │
    ├─▶ ProcessAndAnnotateAsync() draws bounding boxes + labels onto a copy of the
    │    image (ImageSharp) and saves it — the "annotated preview" the CLI produces.
@@ -31,10 +40,14 @@ optionally calls the selected `IXmpSidecarWriter`.
 - **`ImageMetadata`** — whole-image facts: `Title`, `Description`, `AltText`, `Medium`
   (`ImageMedium`), `ArtStyle` (nullable — only set for non-photographic media), `Setting`
   (`ImageSetting`, nullable), `Scene` (`List<SceneType>`), `Composition` (`ImageComposition`).
-- **`DetectedEntity`** — one detected object: `Label` (specific, e.g. "angel"), `Group` (a step
-  more general, e.g. "religious figure" — see [XMP-SCHEMA.md](XMP-SCHEMA.md#hierarchical-tags)
-  for why this exists as its own field), `Category` (`EntityCategory`, broad), `Box`
-  (`BoundingBox`, a 0–1000 normalized grid regardless of the image's actual pixel dimensions).
+- **`DetectedEntity`** — one detected object: `Raw` (`RawDetection` — exactly what the model
+  returned, never modified: `Label` specific e.g. "angel", `Group` a step more general e.g.
+  "religious figure", `Category` broad/`EntityCategory`), `Taxonomy` (`TaxonomyMatch?` — the
+  resolved WordNet ancestor chain, or null if nothing resolved confidently; see "Taxonomy
+  resolution" below), `Box` (`BoundingBox`, a 0–1000 normalized grid regardless of the image's
+  actual pixel dimensions). Raw and resolved are kept as separate fields deliberately — `Raw` is
+  what actually shipped in the model's response (useful for debugging/search), `Taxonomy` is the
+  normalized, cross-image-consistent form the XMP writers prefer when it's available.
 - **`ImageComposition`** — `Symmetry`, `RuleOfThirdsAdherence`, `ColorVarianceEstimate`,
   `EdgeDensityEstimate` (both 0.0–1.0 *impressions*, not measured statistics — the model is asked
   for a subjective read, not to run a histogram), and an optional free-text `Notes`.
@@ -49,6 +62,12 @@ in `DetectionPrompt` that spell out each enum's valid options for the model (e.g
 Asymmetrical, RadialSymmetry, or None") are plain prompt text, not generated from the enum — those
 still need a manual edit alongside the C# change, or the model won't know the new option exists
 even though the schema would accept it.
+
+A third thing needs to stay loosely in sync for the same reason: `EntityCategory`'s members and
+the taxonomy build pipeline's `rootCollapseAnchors` (`data/wordnet/seeds/trim-config.json`, one
+WordNet synset per category — see [TAXONOMY.md](TAXONOMY.md)). Adding an `EntityCategory` member
+without a matching anchor just means that category never gets a resolved taxonomy chain (entities
+tagged with it always fall back to the raw shape) - not a compile error, so it's easy to miss.
 
 ## The detection call
 
@@ -69,6 +88,35 @@ instruction in that prompt.
 
 Two things are currently hardcoded rather than configurable: the model name (`gemma4:26b`) and
 the JSON schema/prompt text. Only the Ollama server URL is a CLI option.
+
+## Taxonomy resolution
+
+An LLM is an open-vocabulary generator: the same golden retriever might get labeled "dog",
+"canine", or "pet" across different photos, which defeats consistent tag-based browsing. Rather
+than trying to force the model into a closed vocabulary (impractical — a real taxonomy has
+thousands of terms, far too many for a JSON-schema enum or a prompt), `RawDetection`'s free text
+is resolved *after* the model responds, against a WordNet-derived taxonomy shipped with
+`PictTag.Core`. See **[docs/TAXONOMY.md](TAXONOMY.md)** for the full picture (how the taxonomy
+data is built, how to extend it, and the offline `PictTag.TaxonomyBuilder` tool) — this section
+covers just the runtime pieces, in `source/PictTag.Core/Taxonomy/`:
+
+- **`ITaxonomyProvider`** / **`WordNetTaxonomyProvider`** — exact-lemma lookup and ancestor-chain
+  queries against the embedded `taxonomy.json`.
+- **`ITaxonomyEmbeddingIndex`** / **`OllamaTaxonomyEmbeddingIndex`** — semantic fallback (a local
+  embedding model, `nomic-embed-text` by default) for free text that doesn't literally match any
+  WordNet lemma, via a brute-force cosine-similarity scan over the embedded
+  `taxonomy-embeddings.bin`.
+- **`EntityTaxonomyResolver`** — the actual per-entity pipeline: try an exact match on `Label`,
+  then `Group`; if neither hits, try the embedding index the same way. Returns null (unresolved)
+  if nothing clears the similarity threshold - `DetectedEntity.Taxonomy` is then null, and both
+  XMP writers fall back to the raw `Category`/`Group`/`Label` shape for that entity rather than
+  dropping it or guessing. This is the feature's *only* fallback path, not a legacy-compatibility
+  concern — it's what keeps taxonomy resolution strictly additive.
+
+`ImageDetectionService`'s constructor takes an optional `ITaxonomyProvider`/`ITaxonomyEmbeddingIndex`
+pair, defaulting to lazy shared singletons so the embedded data and the embedding client are built
+once, not per `DetectAsync` call. Swap in different instances to use a different/tuned dataset or
+a non-default Ollama server without touching detection logic.
 
 ## Two writer engines
 
@@ -94,8 +142,12 @@ Both engines share small, focused helper types in `source/PictTag.Core/Xmp/` rat
 duplicating logic:
 
 - `SidecarPathResolver` — turns an image path + `XmpSidecarNamingConvention` into a sidecar path.
-- `HierarchicalTagPath` — builds and sanitizes the `Category > Group > Label` tag path segments
-  both engines write into `dc:subject`/`lr:hierarchicalSubject`/`digiKam:TagsList`.
+- `HierarchicalTagPath` — builds and sanitizes the hierarchical tag path segments both engines
+  write into `dc:subject`/`lr:hierarchicalSubject`/`digiKam:TagsList`. `BuildEntitySegments` picks
+  a resolved taxonomy ancestor chain (arbitrary depth, e.g. `Animal > Chordate > ... > Retriever >
+  Golden Retriever`) when available, or the raw `Category`/`Group`/`Label` shape otherwise;
+  `BuildSegments` (a variable-length collapse of adjacent duplicate segments) and `Compose`
+  (separator-safe joining) are the shared primitives both paths go through.
 - `MwgRegionArea` / `IptcRegionBoundary` — convert a `BoundingBox` into each region schema's own
   coordinate convention (center-based vs. top-left-corner-based — see XMP-SCHEMA.md).
 - `IptcDigitalSourceType` / `IptcSceneCode` — map PictTag's own enums to IPTC controlled-

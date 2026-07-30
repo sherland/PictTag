@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
+using PictTag.Core.Taxonomy;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -18,6 +19,20 @@ public class ImageDetectionService
     [
         "Segoe UI", "Arial", "Liberation Sans", "DejaVu Sans", "Verdana",
     ];
+
+    private readonly EntityTaxonomyResolver _taxonomyResolver;
+
+    /// <summary>
+    /// Defaults to the shared WordNet-derived taxonomy and its Ollama-backed embedding fallback
+    /// (see PictTag.Core.Taxonomy) - pass explicit instances to use a different/tuned dataset or
+    /// a non-default Ollama server without touching detection logic.
+    /// </summary>
+    public ImageDetectionService(ITaxonomyProvider? taxonomyProvider = null, ITaxonomyEmbeddingIndex? embeddingIndex = null)
+    {
+        _taxonomyResolver = new EntityTaxonomyResolver(
+            taxonomyProvider ?? WordNetTaxonomyProvider.Shared.Value,
+            embeddingIndex ?? OllamaTaxonomyEmbeddingIndex.Shared.Value);
+    }
 
     private const string DetectionPrompt = """
         Analyze this image and respond with:
@@ -57,7 +72,11 @@ public class ImageDetectionService
           not merge multiple objects into one entry, and do not describe the sky, lighting,
           or overall composition as if it were an object. For each detected object, give:
             - label: a short, specific, lowercase description (e.g. "golden retriever", not
-              just "animal").
+              just "animal"). Prefer the standard dictionary/common name for the object as it
+              would appear in a field guide or catalog (e.g. "golden retriever" over "dog with
+              golden fur"; a single standard noun over an invented compound phrase when one
+              exists) - this label is looked up against a fixed vocabulary afterward, so
+              standard naming matters more than creative phrasing.
             - group: a more general term for what kind of thing this specifically is - broader
               than label, narrower than category (e.g. "golden retriever" -> "dog", "angel" ->
               "religious figure"). Repeat the label if nothing more general genuinely applies.
@@ -105,9 +124,13 @@ public class ImageDetectionService
         DetectionResponseDto parsed = JsonSerializer.Deserialize<DetectionResponseDto>(response.Text, jsonOptions)
             ?? throw new InvalidOperationException("Model returned no parseable detections.");
 
-        List<DetectedEntity> entities = parsed.Detections
-            .Select(d => new DetectedEntity(d.Label, d.Group, d.Category, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)))
-            .ToList();
+        List<DetectedEntity> entities = [];
+        foreach (DetectionDto d in parsed.Detections)
+        {
+            RawDetection raw = new(d.Label, d.Group, d.Category);
+            TaxonomyMatch? taxonomy = await _taxonomyResolver.ResolveAsync(raw, ct);
+            entities.Add(new DetectedEntity(raw, taxonomy, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)));
+        }
 
         ImageComposition composition = new(
             parsed.Composition.Symmetry,
@@ -148,7 +171,7 @@ public class ImageDetectionService
                 {
                     PointF labelPosition = new(rect.Location.X, Math.Max(0, rect.Location.Y - labelFont.Size - 4));
                     RichTextOptions textOptions = new(labelFont) { Origin = labelPosition };
-                    canvas.DrawText(textOptions, entity.Label, labelBrush, pen: null);
+                    canvas.DrawText(textOptions, entity.Raw.Label, labelBrush, pen: null);
                 }
             }
         }));

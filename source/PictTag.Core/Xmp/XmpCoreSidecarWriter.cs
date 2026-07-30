@@ -76,17 +76,17 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*/
         // Genre properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTag(xmp, ["Medium", metadata.Medium.ToString()]);
+        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["Medium", metadata.Medium.ToString()]));
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTag(xmp, ["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]);
+            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
         }
 
-        AppendHierarchicalTag(xmp, ["Symmetry", composition.Symmetry.ToString()]);
+        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["Symmetry", composition.Symmetry.ToString()]));
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(entity.Category.ToString(), entity.Group, entity.Label));
+            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildEntitySegments(entity));
         }
 
         if (result.Entities.Count > 0)
@@ -156,7 +156,7 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         {
             string itemPath = regionListPath + XmpPathFactory.ComposeArrayItemPath("", index);
             xmp.SetProperty(mwgNs, itemPath, null, new PropertyOptions { IsStruct = true });
-            xmp.SetProperty(mwgNs, itemPath + XmpPathFactory.ComposeStructFieldPath(mwgNs, "Name"), entity.Label);
+            xmp.SetProperty(mwgNs, itemPath + XmpPathFactory.ComposeStructFieldPath(mwgNs, "Name"), entity.Raw.Label);
 
             MwgRegionArea area = MwgRegionArea.FromBoundingBox(entity.Box);
             string areaPath = itemPath + XmpPathFactory.ComposeStructFieldPath(mwgNs, "Area");
@@ -191,7 +191,7 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
             string itemPath = "ImageRegion" + XmpPathFactory.ComposeArrayItemPath("", index);
             xmp.SetProperty(ns, itemPath, null, new PropertyOptions { IsStruct = true });
             xmp.SetProperty(ns, itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "rId"), index.ToString(CultureInfo.InvariantCulture));
-            xmp.SetLocalizedText(ns, itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "Name"), "", "x-default", entity.Label, null);
+            xmp.SetLocalizedText(ns, itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "Name"), "", "x-default", entity.Raw.Label, null);
 
             IptcRegionBoundary boundary = IptcRegionBoundary.FromBoundingBox(entity.Box);
             string boundaryPath = itemPath + XmpPathFactory.ComposeStructFieldPath(ns, "RegionBoundary");

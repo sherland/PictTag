@@ -157,7 +157,8 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            Console.WriteLine($"[{entity.Category}] {entity.Group} > {entity.Label}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
+            string taxonomyNote = entity.Taxonomy is { } t ? $" [{t.Quality}: {string.Join(" > ", t.Ancestors.Select(a => a.Name))}]" : "";
+            Console.WriteLine($"[{entity.Raw.Category}] {entity.Raw.Group} > {entity.Raw.Label}{taxonomyNote}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
         }
 
         Console.WriteLine($"Annotated image saved to {effectiveOutputPath}");

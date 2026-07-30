@@ -118,21 +118,40 @@ composition logic lives in `HierarchicalTagPath.cs`, shared by both writers.
 its tag tree correctly from this field when it's a `Seq` — as a `Bag` it silently flattens.
 Verified empirically against real digiKam, not just against the docs.
 
-### `Category > Group > Label`
+### Variable-depth taxonomy chain (entities), or `Category > Group > Label` (fallback)
 
-Every detected entity carries three levels: a broad `EntityCategory` (`Art`, `People`, `Objects`,
-...), a `Group` — a step more general than the label (e.g. "religious figure" for an "angel", "dog"
-for a "golden retriever") — and the specific `Label`. `HierarchicalTagPath.BuildSegments` title-
-cases `Group`/`Label` and joins them with `Category` into an ordered path, e.g. `Art > Religious
-Figure > Angel`. If the title-cased `Group` and `Label` turn out equal (the model is told to
-repeat the label when nothing more general genuinely applies), it collapses to a 2-level `Category
-> Label` instead of writing a redundant `X > X` level.
+Each detected entity's tag path comes from `HierarchicalTagPath.BuildEntitySegments`, which picks
+one of two shapes depending on whether taxonomy resolution (see
+[ARCHITECTURE.md](ARCHITECTURE.md#taxonomy-resolution) and [TAXONOMY.md](TAXONOMY.md)) found a
+confident match:
 
-`Medium` and `Symmetry` use the same machinery but as a plain 2-level `Category > Label` with no
-group — and deliberately **without** title-casing, since their `Label` is already a PascalCase
-enum token like `ThreeDRender` or `DigitalIllustration` that has no word boundaries to title-case
-against; running it through `TitleCase` (which lowercases first) would collapse it to
+- **Resolved** (`DetectedEntity.Taxonomy` non-null): the full WordNet ancestor chain, title-cased,
+  of whatever depth WordNet actually has for that concept — e.g. a golden retriever becomes
+  `Animal > Chordate > Vertebrate > Mammal > Carnivore > Canine > Dog > Retriever > Golden
+  Retriever`, and a chimney becomes `Artifact > Way > Passage > Conduit > Flue > Chimney` (WordNet
+  classifies a chimney as a kind of conduit, not literally a "building part", even though that was
+  the old raw-category guess for it). There's no fixed depth - the chain is exactly as deep as
+  WordNet's real hypernym graph, once cut at the category's configured root anchor.
+- **Unresolved** (`Taxonomy` is null): the original 3-level (or 2-level, if collapsed) shape - a
+  broad `EntityCategory` (`Art`, `People`, `Objects`, ...), a `Group` a step more general than the
+  label (e.g. "religious figure" for an "angel"), and the specific `Label`. This is the entity's
+  only fallback, not a legacy-compatibility path - it exists so a detection the resolver can't
+  confidently place is tagged exactly as well as it always was, never worse.
+
+Either way, adjacent identical segments collapse (the model is told to repeat the label as its
+group when nothing more general genuinely applies, and a resolved chain can likewise end in two
+identical node names) - `HierarchicalTagPath.BuildSegments` handles this generically for a chain of
+any length, not just a hardcoded 2-vs-3-level check.
+
+`Medium` and `Symmetry` use the same `BuildSegments` machinery but as a plain 2-level `Category >
+Label` with no group — and deliberately **without** title-casing, since their `Label` is already a
+PascalCase enum token like `ThreeDRender` or `DigitalIllustration` that has no word boundaries to
+title-case against; running it through `TitleCase` (which lowercases first) would collapse it to
 `Threedrender`. `ArtStyle` *is* free text, so it does get `TitleCase`d, still with no group level.
+
+Regions (`mwg-rs:Regions`/`Iptc4xmpExt:ImageRegion`, below) always use the entity's raw `Label`
+text, never the taxonomy chain's node name — a region's name is meant to read as what the model
+actually saw in that spot, not its normalized category.
 
 `dc:subject` only ever gets the leaf-most segment (the specific `Label`) as a flat keyword —
 `Category`/`Group` are never added to `dc:subject` on their own, matching how `Medium`'s category

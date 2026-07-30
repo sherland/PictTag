@@ -15,9 +15,14 @@ reference.
 ## Features
 
 - **Title, description, and accessibility alt text** for the image as a whole.
-- **Object detection** — every salient object gets a label, a bounding box, and a three-level tag
-  (`Category > Group > Label`, e.g. `Art > Religious Figure > Angel`), written both as MWG regions
-  and as IPTC `ImageRegion` structs.
+- **Object detection** — every salient object gets a label, a bounding box, and a normalized
+  hierarchical tag written both as MWG regions and as IPTC `ImageRegion` structs. Tags are resolved
+  against a WordNet-derived taxonomy for cross-photo consistency (the same golden retriever tags
+  the same way whether the model calls it "dog", "canine", or "golden retriever"), producing a
+  chain as deep as WordNet's real ancestry (e.g. `Animal > Chordate > ... > Retriever > Golden
+  Retriever`) rather than a fixed 3 levels — falling back to a `Category > Group > Label` shape for
+  whatever a fixed local taxonomy can't confidently place. See
+  [`docs/TAXONOMY.md`](docs/TAXONOMY.md).
 - **Hierarchical keyword tags** compatible with digiKam's tag tree and Lightroom's keyword
   hierarchy, plus flat `dc:subject` keywords for apps that only read those.
 - **Medium and art-style/genre detection** (photograph, painting, screenshot, digital
@@ -39,6 +44,8 @@ reference.
   [`ImageDetectionService.cs`](source/PictTag.Core/ImageDetectionService.cs) (`gemma4:26b`) — pull
   it with `ollama pull gemma4:26b`. There is no CLI flag to change the model yet; only the server
   URL is configurable (`--ollama-url`).
+- The same Ollama server also needs a small embedding model pulled for taxonomy resolution's
+  semantic fallback (see [`docs/TAXONOMY.md`](docs/TAXONOMY.md)): `ollama pull nomic-embed-text`.
 - A free [SixLabors](https://sixlabors.com) license file for `ImageSharp`/`ImageSharp.Drawing`
   (used to draw the annotated preview image), saved as `sixlabors.lic` in the repo root. It's
   git-ignored on purpose — obtain your own from SixLabors and drop it there; `Directory.Build.props`
@@ -73,8 +80,8 @@ Setting: Indoor
 Scene: InteriorView, GeneralView, Group, Symbolic
 Composition: Asymmetrical, ruleOfThirds=False, colorVariance=0.60, edgeDensity=0.70 (diagonal
 lines created by the archway and pillar)
-[Art] Religious Figure > Angel: ymin=215 xmin=438 ymax=507 xmax=619
-[People] Person > Praying Woman: ymin=408 xmin=255 ymax=704 xmax=365
+[Art] religious figure > angel: ymin=215 xmin=438 ymax=507 xmax=619
+[People] person > praying woman: ymin=408 xmin=255 ymax=704 xmax=365
 Annotated image saved to annotated_photo.jpg
 XMP sidecar written to path/to/photo.xmp
 ```
@@ -108,22 +115,31 @@ Run `dotnet run --project source/PictTag.Cli -- --help` for the full, generated 
 
 ```
 source/
-  PictTag.Core/           Detection service + XMP sidecar writers (the library)
-    ImageDetectionService.cs   Ollama call, prompt, JSON schema, entity/composition mapping
-    Models.cs                   ImageMetadata, DetectedEntity, and every enum the model can return
-    Xmp/                        Two IXmpSidecarWriter implementations + XMP schema helpers
-  PictTag.Cli/             System.CommandLine entry point (Program.cs)
-  PictTag.Core.Tests/       xUnit v3 test suite (see docs/TESTING.md)
+  PictTag.Core/                 Detection service + taxonomy resolution + XMP sidecar writers
+    ImageDetectionService.cs      Ollama call, prompt, JSON schema, entity/composition mapping
+    Models.cs                     ImageMetadata, DetectedEntity, RawDetection/TaxonomyMatch, enums
+    Taxonomy/                     ITaxonomyProvider/ITaxonomyEmbeddingIndex + EntityTaxonomyResolver
+    Taxonomy/taxonomy.json,       Embedded, WordNet-derived taxonomy data (built offline, see below)
+      taxonomy-embeddings.bin
+    Xmp/                           Two IXmpSidecarWriter implementations + XMP schema helpers
+  PictTag.Cli/                   System.CommandLine entry point (Program.cs)
+  PictTag.Core.Tests/             xUnit v3 test suite (see docs/TESTING.md)
+  PictTag.TaxonomyBuilder/        Offline pipeline that builds Taxonomy/taxonomy.json (see docs/TAXONOMY.md)
+  PictTag.TaxonomyBuilder.Tests/  Its test suite
 data/
   test-images/              Checked-in fixture photos + their generated .xmp sidecars
   test-images/art-styles/   Bulk-downloaded art-style fixtures (git-ignored, regenerable)
   art-styles-manifest.json  37 art movements used to drive art-style fixture download + testing
+  wordnet/raw/              Committed WordNet 3.0 + ImageNet-1k source data (see docs/TAXONOMY.md)
+  wordnet/seeds/            Hand-authored seed/trim config for the taxonomy build
 Get-ArtStyleTestImages.ps1  Downloads freely-licensed art-style images from Wikimedia Commons
+Get-WordNetData.ps1         Downloads/verifies the WordNet + ImageNet-1k source data
 Test-ArtStyleDetection.ps1  Runs detection over the art-style fixtures and summarizes accuracy
 Update-TestImageTags.ps1    Regenerates the checked-in data/test-images/*.xmp fixtures
 docs/
   ARCHITECTURE.md           How detection and XMP writing fit together, and why
   XMP-SCHEMA.md             Full field-by-field XMP reference, with the empirical gotchas
+  TAXONOMY.md               Where the taxonomy data comes from, how to extend/retune it
   TESTING.md                Test categories, how to run each, and the fixture scripts
 ```
 
@@ -131,22 +147,25 @@ docs/
 
 ```bash
 dotnet test source/PictTag.Core.Tests
+dotnet test source/PictTag.TaxonomyBuilder.Tests
 ```
 
-runs the fast unit-test suite (no external dependencies). Two more test categories exist and are
+runs the fast unit-test suites (no external dependencies). Two more test categories exist and are
 skipped by default — one needs `exiftool` on `PATH`, the other needs a real Ollama server and
 downloaded fixtures. See [`docs/TESTING.md`](docs/TESTING.md) for how to run them.
 
 ## Further reading
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the detection → metadata → XMP pipeline, why
-  there are two sidecar writer engines, and the project's "standards first" design principle.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the detection → taxonomy resolution → metadata
+  → XMP pipeline, why there are two sidecar writer engines, and the project's "standards first"
+  design principle.
 - [`docs/XMP-SCHEMA.md`](docs/XMP-SCHEMA.md) — every XMP property PictTag writes, which namespace
   it lives in, and the non-obvious, empirically-verified quirks behind several of them (e.g. why
   `digiKam:TagsList` has to be an `rdf:Seq`, why `Iptc4xmpExt:Genre` has to be a struct, and why
   hierarchical tag segments are sanitized and title-cased).
-- [`docs/TESTING.md`](docs/TESTING.md) — the three test categories and the fixture-management
-  scripts.
+- [`docs/TAXONOMY.md`](docs/TAXONOMY.md) — where the WordNet-derived taxonomy data comes from, how
+  the offline build pipeline works, and how to add a seed or retune it.
+- [`docs/TESTING.md`](docs/TESTING.md) — the test categories and the fixture-management scripts.
 
 ## License
 

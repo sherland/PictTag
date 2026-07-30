@@ -1,0 +1,23 @@
+{
+  "rootCollapseAnchors": {
+    "People": ["n00007846"],
+    "Animals": ["n00015388"],
+    "Vehicles": ["n04524313"],
+    "Buildings": ["n04341686"],
+    "Nature": ["n00017222", "n00019128", "n09225146"],
+    "Food": ["n07555863"],
+    "Objects": ["n00021939"],
+    "Text": ["n06387980"],
+    "Art": ["n02743547"],
+    "Other": []
+  },
+  "rootCollapseAnchorsComment": "One entry per EntityCategory enum member (Models.cs), each the WordNet synset id(s) at which an ancestor chain is cut, dropping WordNet's abstract upper ontology (entity -> physical_entity -> object -> whole -> living_thing -> organism -> ...) from the emitted chain. Most categories map to exactly one WordNet synset: People=person.n.01 (n00007846), Animals=animal.n.01 (n00015388), Vehicles=vehicle.n.01 (n04524313), Food=food.n.02/solid_food (n07555863), Objects=artifact.n.01 (n00021939, man-made objects - deliberately narrower than the more generic object.n.01, which would also swallow natural objects that belong under Nature instead), Text=text.n.01/textual_matter (n06387980), Art=art.n.02/fine_art (n02743547). Buildings=structure.n.01/construction (n04341686), NOT building.n.01 (n02913152) - found empirically: 'house' (a dwelling) resolved to the wrong WordNet sense ('house' as in theater/playhouse) because the correct dwelling sense's real hypernym chain is house -> dwelling -> housing -> structure -> artifact, which never passes through building.n.01 at all (WordNet treats 'building' and 'housing/dwelling' as sibling hyponyms of 'structure', not parent/child, despite the colloquial expectation that a house IS a building). structure.n.01 is building.n.01's own hypernym, so anchoring there covers both houses and buildings correctly, with 'building' becoming an ordinary intermediate node in the chain instead of the anchor itself. Nature has no single WordNet ancestor common to all its subjects (trees, rocks, water, sky don't share one hypernym) so it lists multiple anchors instead: plant.n.01/flora (n00017222), natural_object.n.01 (n00019128, covers geological formations etc.), body_of_water (n09225146). Other intentionally has none - 'Other' entities have no natural WordNet anchor by design and fall back to the raw Category/Group/Label tag shape when unresolved.",
+
+  "excludeSynsets": [],
+  "excludeSubtrees": [],
+
+  "excludeComment": "Both lists start empty by design (see plan §2 step 3: 'sanity-check against real fixture data before considering complete'). Populate these after reviewing real regenerated .xmp fixtures (docs/TESTING.md) - e.g. WordNet's biological taxonomy inserts several obligatory single-child ranks between a category anchor and a common photographed subject (Animals -> Chordate -> Vertebrate -> Mammal -> Placental -> Carnivore -> Canine -> Dog -> ...) that a casual photo tagger may not want as separate tag levels; add the synset ids for ranks like these to excludeSynsets once real output shows they add noise rather than value. excludeSubtrees only affects the downward domain expansion in expand-domains.json (skips a hyponym subtree entirely, e.g. to keep an expansion from sweeping in an unwanted specialist branch).",
+
+  "stripLatinLemmas": true,
+  "stripLatinLemmasComment": "Drops WordNet's Latin binomial-nomenclature lemmas (e.g. 'Canis familiaris') from a synset's alias list, keeping only common names for exact-match/embedding purposes. A synset never loses ALL its lemmas this way - if every lemma looks like a binomial, the original list is kept as-is rather than emitting an empty alias list."
+}

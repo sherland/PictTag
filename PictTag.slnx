@@ -3,5 +3,7 @@
     <Project Path="source/PictTag.Cli/PictTag.Cli.csproj" />
     <Project Path="source/PictTag.Core.Tests/PictTag.Core.Tests.csproj" />
     <Project Path="source/PictTag.Core/PictTag.Core.csproj" />
+    <Project Path="source/PictTag.TaxonomyBuilder/PictTag.TaxonomyBuilder.csproj" />
+    <Project Path="source/PictTag.TaxonomyBuilder.Tests/PictTag.TaxonomyBuilder.Tests.csproj" />
   </Folder>
 </Solution>

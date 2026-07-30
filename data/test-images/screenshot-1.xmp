@@ -19,37 +19,39 @@
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.100"
       pictTag:EdgeDensity="0.200"
-      pictTag:CompositionNotes="Centered subject"
+      pictTag:CompositionNotes="centered subject"
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/screenCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">App connection loading screen</rdf:li>
+          <rdf:li xml:lang="x-default">Mobile app connection screen</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A mobile app screenshot displaying a connecting status message in Norwegian, "Kobler til enheten," accompanied by the number "220." The interface features a central signal icon surrounded by concentric circles and navigation buttons at the top.</rdf:li>
+          <rdf:li xml:lang="x-default">A screenshot of a smartphone application showing a loading state while connecting to a device. The interface features Norwegian text and a central signal icon surrounded by concentric circles.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
         <rdf:Bag>
           <rdf:li>Screenshot</rdf:li>
           <rdf:li>RadialSymmetry</rdf:li>
+          <rdf:li>Back Button Text</rdf:li>
+          <rdf:li>Cancel Button Text</rdf:li>
           <rdf:li>Signal Icon</rdf:li>
-          <rdf:li>"Tilbake" Text</rdf:li>
-          <rdf:li>"Avbryt" Text</rdf:li>
-          <rdf:li>"Kobler Til Enheten" Text</rdf:li>
-          <rdf:li>"220" Text</rdf:li>
+          <rdf:li>Connecting Message Text</rdf:li>
+          <rdf:li>Number 220</rdf:li>
+          <rdf:li>Clock</rdf:li>
+          <rdf:li>Battery Percentage</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Screenshot of an app's loading screen with a signal icon and Norwegian text indicating it is connecting to a device.</rdf:li>
+          <rdf:li xml:lang="x-default">A screenshot of a mobile app displaying a "connecting to device" message in Norwegian with a central signal icon.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A mobile app screenshot displaying a connecting status message in Norwegian, "Kobler til enheten," accompanied by the number "220." The interface features a central signal icon surrounded by concentric circles and navigation buttons at the top.</rdf:li>
+          <rdf:li xml:lang="x-default">A screenshot of a smartphone application showing a loading state while connecting to a device. The interface features Norwegian text and a central signal icon surrounded by concentric circles.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -65,16 +67,16 @@
               Iptc4xmpExt:rId="1">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">signal icon</rdf:li>
+                <rdf:li xml:lang="x-default">back button text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.426000"
-              Iptc4xmpExt:rbY="0.385000"
-              Iptc4xmpExt:rbW="0.148000"
-              Iptc4xmpExt:rbH="0.069000"/>
+              Iptc4xmpExt:rbX="0.043000"
+              Iptc4xmpExt:rbY="0.065000"
+              Iptc4xmpExt:rbW="0.218000"
+              Iptc4xmpExt:rbH="0.024000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -82,16 +84,16 @@
               Iptc4xmpExt:rId="2">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">"Tilbake" text</rdf:li>
+                <rdf:li xml:lang="x-default">cancel button text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.043000"
-              Iptc4xmpExt:rbY="0.072000"
-              Iptc4xmpExt:rbW="0.220000"
-              Iptc4xmpExt:rbH="0.023000"/>
+              Iptc4xmpExt:rbX="0.796000"
+              Iptc4xmpExt:rbY="0.065000"
+              Iptc4xmpExt:rbW="0.160000"
+              Iptc4xmpExt:rbH="0.024000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -99,16 +101,16 @@
               Iptc4xmpExt:rId="3">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">"Avbryt" text</rdf:li>
+                <rdf:li xml:lang="x-default">signal icon</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.798000"
-              Iptc4xmpExt:rbY="0.072000"
-              Iptc4xmpExt:rbW="0.158000"
-              Iptc4xmpExt:rbH="0.023000"/>
+              Iptc4xmpExt:rbX="0.377000"
+              Iptc4xmpExt:rbY="0.364000"
+              Iptc4xmpExt:rbW="0.245000"
+              Iptc4xmpExt:rbH="0.127000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -116,16 +118,16 @@
               Iptc4xmpExt:rId="4">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">"Kobler til enheten" text</rdf:li>
+                <rdf:li xml:lang="x-default">connecting message text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.250000"
-              Iptc4xmpExt:rbY="0.720000"
-              Iptc4xmpExt:rbW="0.500000"
-              Iptc4xmpExt:rbH="0.028000"/>
+              Iptc4xmpExt:rbX="0.247000"
+              Iptc4xmpExt:rbY="0.718000"
+              Iptc4xmpExt:rbW="0.505000"
+              Iptc4xmpExt:rbH="0.029000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -133,15 +135,49 @@
               Iptc4xmpExt:rId="5">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">"220" text</rdf:li>
+                <rdf:li xml:lang="x-default">number 220</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.474000"
-              Iptc4xmpExt:rbY="0.773000"
-              Iptc4xmpExt:rbW="0.052000"
+              Iptc4xmpExt:rbX="0.473000"
+              Iptc4xmpExt:rbY="0.769000"
+              Iptc4xmpExt:rbW="0.053000"
+              Iptc4xmpExt:rbH="0.018000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="6">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">time display</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.033000"
+              Iptc4xmpExt:rbY="0.012000"
+              Iptc4xmpExt:rbW="0.102000"
+              Iptc4xmpExt:rbH="0.016000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="7">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">battery percentage</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.874000"
+              Iptc4xmpExt:rbY="0.010000"
+              Iptc4xmpExt:rbW="0.092000"
               Iptc4xmpExt:rbH="0.018000"/>
             </rdf:Description>
           </rdf:li>
@@ -151,22 +187,26 @@
         <rdf:Bag>
           <rdf:li>Medium|Screenshot</rdf:li>
           <rdf:li>Symmetry|RadialSymmetry</rdf:li>
+          <rdf:li>Text|Back Button Text</rdf:li>
+          <rdf:li>Text|Cancel Button Text</rdf:li>
           <rdf:li>Objects|Icon|Signal Icon</rdf:li>
-          <rdf:li>Text|Text|"Tilbake" Text</rdf:li>
-          <rdf:li>Text|Text|"Avbryt" Text</rdf:li>
-          <rdf:li>Text|Text|"Kobler Til Enheten" Text</rdf:li>
-          <rdf:li>Text|Text|"220" Text</rdf:li>
+          <rdf:li>Text|Connecting Message Text</rdf:li>
+          <rdf:li>Text|Number 220</rdf:li>
+          <rdf:li>Artifact|Instrumentality|Device|Instrument|Measuring Instrument|Timepiece|Clock</rdf:li>
+          <rdf:li>Text|Battery Percentage</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
           <rdf:li>Medium/Screenshot</rdf:li>
           <rdf:li>Symmetry/RadialSymmetry</rdf:li>
+          <rdf:li>Text/Back Button Text</rdf:li>
+          <rdf:li>Text/Cancel Button Text</rdf:li>
           <rdf:li>Objects/Icon/Signal Icon</rdf:li>
-          <rdf:li>Text/Text/"Tilbake" Text</rdf:li>
-          <rdf:li>Text/Text/"Avbryt" Text</rdf:li>
-          <rdf:li>Text/Text/"Kobler Til Enheten" Text</rdf:li>
-          <rdf:li>Text/Text/"220" Text</rdf:li>
+          <rdf:li>Text/Connecting Message Text</rdf:li>
+          <rdf:li>Text/Number 220</rdf:li>
+          <rdf:li>Artifact/Instrumentality/Device/Instrument/Measuring Instrument/Timepiece/Clock</rdf:li>
+          <rdf:li>Text/Battery Percentage</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -178,55 +218,77 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
+                mwg-rs:Name="back button text">
+              <mwg-rs:Area
+                stArea:x="0.152000"
+                stArea:y="0.077000"
+                stArea:w="0.218000"
+                stArea:h="0.024000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="cancel button text">
+              <mwg-rs:Area
+                stArea:x="0.876000"
+                stArea:y="0.077000"
+                stArea:w="0.160000"
+                stArea:h="0.024000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
                 mwg-rs:Name="signal icon">
               <mwg-rs:Area
-                stArea:x="0.500000"
-                stArea:y="0.419500"
-                stArea:w="0.148000"
-                stArea:h="0.069000"
+                stArea:x="0.499500"
+                stArea:y="0.427500"
+                stArea:w="0.245000"
+                stArea:h="0.127000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="&quot;Tilbake&quot; text">
+                mwg-rs:Name="connecting message text">
               <mwg-rs:Area
-                stArea:x="0.153000"
-                stArea:y="0.083500"
-                stArea:w="0.220000"
-                stArea:h="0.023000"
+                stArea:x="0.499500"
+                stArea:y="0.732500"
+                stArea:w="0.505000"
+                stArea:h="0.029000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="&quot;Avbryt&quot; text">
+                mwg-rs:Name="number 220">
               <mwg-rs:Area
-                stArea:x="0.877000"
-                stArea:y="0.083500"
-                stArea:w="0.158000"
-                stArea:h="0.023000"
+                stArea:x="0.499500"
+                stArea:y="0.778000"
+                stArea:w="0.053000"
+                stArea:h="0.018000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="&quot;Kobler til enheten&quot; text">
+                mwg-rs:Name="time display">
               <mwg-rs:Area
-                stArea:x="0.500000"
-                stArea:y="0.734000"
-                stArea:w="0.500000"
-                stArea:h="0.028000"
+                stArea:x="0.084000"
+                stArea:y="0.020000"
+                stArea:w="0.102000"
+                stArea:h="0.016000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="&quot;220&quot; text">
+                mwg-rs:Name="battery percentage">
               <mwg-rs:Area
-                stArea:x="0.500000"
-                stArea:y="0.782000"
-                stArea:w="0.052000"
+                stArea:x="0.920000"
+                stArea:y="0.019000"
+                stArea:w="0.092000"
                 stArea:h="0.018000"
                 stArea:unit="normalized"/>
               </rdf:Description>

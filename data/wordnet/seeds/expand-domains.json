@@ -1,0 +1,38 @@
+[
+  {
+    "anchorSynsetId": "n02858304",
+    "anchorLemma": "boat",
+    "depth": 3,
+    "comment": "Sweeps in WordNet's own boat subtypes (canoe, rowboat/dinghy, sailboat, motorboat -> speedboat, houseboat, ...) automatically, instead of hand-listing each one. Motivated by the concrete 'kayak/speedboat/wooden boat/RIB' completeness question raised during planning. Depth 3, not 2: kayak specifically sits 3 levels below boat (boat -> small boat -> canoe -> kayak) - verified empirically against the real data - so depth 2 would have silently missed it despite it being the example the question raised."
+  },
+  {
+    "anchorSynsetId": "n03405725",
+    "anchorLemma": "furniture",
+    "depth": 1,
+    "comment": "Sweeps in common furniture subtypes (chair, table, cabinet, ...) - a domain ImageNet-1k barely covers."
+  },
+  {
+    "anchorSynsetId": "n03800933",
+    "anchorLemma": "musical instrument",
+    "depth": 1,
+    "comment": "Sweeps in common instrument subtypes beyond ImageNet-1k's few specific instrument classes."
+  },
+  {
+    "anchorSynsetId": "n00017222",
+    "anchorLemma": "plant",
+    "depth": 3,
+    "comment": "Found empirically: a photo of a plain tree resolved to nothing exact and fell through to the embedding tier, which wrongly matched it to 'tree squirrel' (an ImageNet-1k class) purely on shared substring/lexical overlap - because 'tree' itself was never seeded at all (ImageNet-1k barely covers plants). Depth 3 specifically because the real chain is plant -> vascular_plant -> woody_plant -> tree; stopping at exactly that depth captures general terms (tree, shrub, herb, vine) without exploding into individual species one level further down, which would reintroduce the same over-representation problem this design avoids for dog breeds/fish species."
+  },
+  {
+    "anchorSynsetId": "n00019128",
+    "anchorLemma": "natural object",
+    "depth": 2,
+    "comment": "Sweeps in general natural-object categories (rock, stone, geological formation, ...) - ImageNet-1k has almost no non-living natural objects."
+  },
+  {
+    "anchorSynsetId": "n09225146",
+    "anchorLemma": "body of water",
+    "depth": 2,
+    "comment": "Found empirically: this anchor had zero reachable descendants at all before this expansion - nothing seeded a chain through it, so any photo of a lake/river/ocean/sea would have had no exact match whatsoever. Sweeps in the common water-body types (river, lake, sea, ocean, bay, pond, stream, ...)."
+  }
+]

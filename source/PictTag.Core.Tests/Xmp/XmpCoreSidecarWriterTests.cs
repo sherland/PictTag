@@ -28,9 +28,11 @@ public class XmpCoreSidecarWriterTests : IDisposable
             TestData.SampleMetadata(),
             [
                 // group "Cat" title-cases equal to label "cat" -> collapses to a 2-level tag.
-                new DetectedEntity("cat", "Cat", EntityCategory.Animals, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
+                // Taxonomy is null (unresolved) throughout this suite - these tests exercise the
+                // raw Category/Group/Label fallback shape, not taxonomy resolution.
+                new DetectedEntity(new RawDetection("cat", "Cat", EntityCategory.Animals), null, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
                 // group "furniture" is distinct from label "sofa" -> stays a 3-level tag.
-                new DetectedEntity("sofa", "furniture", EntityCategory.Objects, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
+                new DetectedEntity(new RawDetection("sofa", "furniture", EntityCategory.Objects), null, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
             ]);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
@@ -96,6 +98,38 @@ public class XmpCoreSidecarWriterTests : IDisposable
         Assert.Equal(0.1, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbY").Value, CultureInfo.InvariantCulture), precision: 6);
         Assert.Equal(0.2, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbW").Value, CultureInfo.InvariantCulture), precision: 6);
         Assert.Equal(0.2, double.Parse(xmp.GetStructField(XmpNamespaces.IptcExt, "ImageRegion[1]/Iptc4xmpExt:RegionBoundary", XmpNamespaces.IptcExt, "rbH").Value, CultureInfo.InvariantCulture), precision: 6);
+    }
+
+    [Fact]
+    public async Task WriteSidecarAsync_ResolvedTaxonomyChain_WritesTheDeepChainAcrossAllThreeProperties()
+    {
+        string imagePath = CreateTestImage();
+        TaxonomyMatch taxonomy = new(
+            [new TaxonomyNode("n1", "animal"), new TaxonomyNode("n2", "dog"), new TaxonomyNode("n3", "retriever"), new TaxonomyNode("n4", "golden retriever")],
+            TaxonomyMatchQuality.Exact, 1.0, "golden retriever");
+        ImageAnalysisResult result = new(
+            TestData.SampleMetadata(),
+            [new DetectedEntity(new RawDetection("golden retriever", "dog", EntityCategory.Animals), taxonomy, new BoundingBox(0, 0, 500, 500))]);
+
+        IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
+        string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
+
+        IXmpMeta xmp;
+        using (FileStream stream = File.OpenRead(sidecarPath))
+        {
+            xmp = XmpMetaFactory.Parse(stream);
+        }
+
+        // Medium/Symmetry come first (indices 1-2), the resolved chain's leaf is dc:subject #3.
+        Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
+        Assert.Equal("Golden Retriever", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
+
+        Assert.Equal("Animal|Dog|Retriever|Golden Retriever", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("Animal/Dog/Retriever/Golden Retriever", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+
+        // Regions keep the model's own specific label text, not the taxonomy's node name (they
+        // happen to be the same word here, but sourced from entity.Raw.Label, not the chain).
+        Assert.Equal("golden retriever", xmp.GetStructField(MwgNamespaces.Regions, "Regions/mwg-rs:RegionList[1]", MwgNamespaces.Regions, "Name").Value);
     }
 
     [Fact]
