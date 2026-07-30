@@ -163,13 +163,13 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
         // properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["Medium", metadata.Medium.ToString()]));
+        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "Medium", metadata.Medium.ToString()]));
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
+            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
         }
 
-        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(["Symmetry", metadata.Composition.Symmetry.ToString()]));
+        AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "Symmetry", metadata.Composition.Symmetry.ToString()]));
 
         foreach (DetectedEntity entity in result.Entities)
         {

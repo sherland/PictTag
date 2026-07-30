@@ -59,8 +59,8 @@ public class ExifToolSidecarWriterTests : IDisposable
         Assert.Equal("Sofa", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 4).Value);
 
         Assert.Equal(4, xmp.CountArrayItems(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject"));
-        Assert.Equal("Animals|Cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
-        Assert.Equal("Objects/Furniture/Sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
+        Assert.Equal("PictTag|Animals|Cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("PictTag/Objects/Furniture/Sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
 
         // digiKam only builds its tag hierarchy from TagsList when it's an ordered rdf:Seq -
         // exiftool's own tag table already gets this right natively, verified empirically.
@@ -105,8 +105,8 @@ public class ExifToolSidecarWriterTests : IDisposable
 
         Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
         Assert.Equal("Golden Retriever", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
-        Assert.Equal("Animal|Dog|Retriever|Golden Retriever", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
-        Assert.Equal("Animal/Dog/Retriever/Golden Retriever", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+        Assert.Equal("PictTag|Animal|Dog|Retriever|Golden Retriever", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("PictTag/Animal/Dog/Retriever/Golden Retriever", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
 
         // Regions keep the model's own specific label text, not the taxonomy's node name.
         Assert.Equal("golden retriever", xmp.GetStructField(MwgNamespaces.Regions, "Regions/mwg-rs:RegionList[1]", MwgNamespaces.Regions, "Name").Value);
@@ -189,8 +189,8 @@ public class ExifToolSidecarWriterTests : IDisposable
         Assert.Equal("Painting", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 1).Value);
         Assert.Equal("Impressionism", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 2).Value);
         Assert.Equal("Asymmetrical", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
-        Assert.Equal("ArtStyle|Impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
-        Assert.Equal("ArtStyle/Impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
+        Assert.Equal("PictTag|ArtStyle|Impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
+        Assert.Equal("PictTag/ArtStyle/Impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
     }
 
     [Fact]
@@ -248,9 +248,9 @@ public class ExifToolSidecarWriterTests : IDisposable
         // exactly 3 items (Medium, Symmetry, dog), not 6.
         Assert.Equal("Dog", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
-        Assert.Equal("Animals|Dog", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("PictTag|Animals|Dog", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject"));
-        Assert.Equal("Animals/Dog", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+        Assert.Equal("PictTag/Animals/Dog", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpNamespaces.DigiKam, "TagsList"));
         Assert.False(File.Exists(sidecarPath + "_original"), "exiftool should not leave an _original backup file behind");
     }

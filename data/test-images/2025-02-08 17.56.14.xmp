@@ -19,16 +19,16 @@
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.700"
       pictTag:EdgeDensity="0.900"
-      pictTag:CompositionNotes="The image is rotated 90 degrees counter-clockwise."
+      pictTag:CompositionNotes="The image is rotated 90 degrees clockwise."
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Masquerade Attendees</rdf:li>
+          <rdf:li xml:lang="x-default">Masquerade crowd in line</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people wearing elaborate costumes and masquerade masks are lined up in an indoor setting. In the foreground, two individuals with prominent black and silver masks are captured in a close-up view. The background shows a long queue of costumed guests near classical columns.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people, including many children, are lined up wearing various decorative masks and elaborate costumes. They appear to be part of a masquerade event or parade, set within a grand indoor space with classical columns. The image is oriented sideways.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -38,17 +38,16 @@
           <rdf:li>Person</rdf:li>
           <rdf:li>Person</rdf:li>
           <rdf:li>Child</rdf:li>
-          <rdf:li>Column</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A crowd of people in ornate masquerade costumes and masks standing in line inside a grand hall.</rdf:li>
+          <rdf:li xml:lang="x-default">A group of people in festive masquerade attire and masks, lined up in an indoor hall with large columns.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people wearing elaborate costumes and masquerade masks are lined up in an indoor setting. In the foreground, two individuals with prominent black and silver masks are captured in a close-up view. The background shows a long queue of costumed guests near classical columns.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people, including many children, are lined up wearing various decorative masks and elaborate costumes. They appear to be part of a masquerade event or parade, set within a grand indoor space with classical columns. The image is oriented sideways.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -56,7 +55,6 @@
           <rdf:li>010900</rdf:li>
           <rdf:li>012100</rdf:li>
           <rdf:li>011700</rdf:li>
-          <rdf:li>011800</rdf:li>
         </rdf:Bag>
       </Iptc4xmpCore:Scene>
       <Iptc4xmpExt:ImageRegion>
@@ -72,10 +70,10 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.435000"
-              Iptc4xmpExt:rbY="0.000000"
-              Iptc4xmpExt:rbW="0.565000"
-              Iptc4xmpExt:rbH="0.628000"/>
+              Iptc4xmpExt:rbX="0.438000"
+              Iptc4xmpExt:rbY="0.125000"
+              Iptc4xmpExt:rbW="0.562000"
+              Iptc4xmpExt:rbH="0.242000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -83,16 +81,16 @@
               Iptc4xmpExt:rId="2">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">person</rdf:li>
+                <rdf:li xml:lang="x-default">man</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.529000"
-              Iptc4xmpExt:rbY="0.607000"
-              Iptc4xmpExt:rbW="0.405000"
-              Iptc4xmpExt:rbH="0.393000"/>
+              Iptc4xmpExt:rbX="0.534000"
+              Iptc4xmpExt:rbY="0.605000"
+              Iptc4xmpExt:rbW="0.441000"
+              Iptc4xmpExt:rbH="0.395000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -108,47 +106,28 @@
               Iptc4xmpExt:rbUnit="relative"
               Iptc4xmpExt:rbX="0.368000"
               Iptc4xmpExt:rbY="0.368000"
-              Iptc4xmpExt:rbW="0.174000"
-              Iptc4xmpExt:rbH="0.189000"/>
-            </rdf:Description>
-          </rdf:li>
-          <rdf:li>
-            <rdf:Description
-              Iptc4xmpExt:rId="4">
-            <Iptc4xmpExt:Name>
-              <rdf:Alt>
-                <rdf:li xml:lang="x-default">column</rdf:li>
-              </rdf:Alt>
-            </Iptc4xmpExt:Name>
-            <Iptc4xmpExt:RegionBoundary
-              Iptc4xmpExt:rbShape="rectangle"
-              Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.017000"
-              Iptc4xmpExt:rbY="0.498000"
-              Iptc4xmpExt:rbW="0.127000"
-              Iptc4xmpExt:rbH="0.332000"/>
+              Iptc4xmpExt:rbW="0.274000"
+              Iptc4xmpExt:rbH="0.186000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
       </Iptc4xmpExt:ImageRegion>
       <lr:hierarchicalSubject>
         <rdf:Bag>
-          <rdf:li>Medium|Photograph</rdf:li>
-          <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Person</rdf:li>
-          <rdf:li>Person</rdf:li>
-          <rdf:li>Person|Juvenile|Child</rdf:li>
-          <rdf:li>Structure|Column</rdf:li>
+          <rdf:li>PictTag|Medium|Photograph</rdf:li>
+          <rdf:li>PictTag|Symmetry|Asymmetrical</rdf:li>
+          <rdf:li>PictTag|Person</rdf:li>
+          <rdf:li>PictTag|Person</rdf:li>
+          <rdf:li>PictTag|Person|Juvenile|Child</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
-          <rdf:li>Medium/Photograph</rdf:li>
-          <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Person</rdf:li>
-          <rdf:li>Person</rdf:li>
-          <rdf:li>Person/Juvenile/Child</rdf:li>
-          <rdf:li>Structure/Column</rdf:li>
+          <rdf:li>PictTag/Medium/Photograph</rdf:li>
+          <rdf:li>PictTag/Symmetry/Asymmetrical</rdf:li>
+          <rdf:li>PictTag/Person</rdf:li>
+          <rdf:li>PictTag/Person</rdf:li>
+          <rdf:li>PictTag/Person/Juvenile/Child</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -162,21 +141,21 @@
               <rdf:Description
                 mwg-rs:Name="man">
               <mwg-rs:Area
-                stArea:x="0.717500"
-                stArea:y="0.314000"
-                stArea:w="0.565000"
-                stArea:h="0.628000"
+                stArea:x="0.719000"
+                stArea:y="0.246000"
+                stArea:w="0.562000"
+                stArea:h="0.242000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="person">
+                mwg-rs:Name="man">
               <mwg-rs:Area
-                stArea:x="0.731500"
-                stArea:y="0.803500"
-                stArea:w="0.405000"
-                stArea:h="0.393000"
+                stArea:x="0.754500"
+                stArea:y="0.802500"
+                stArea:w="0.441000"
+                stArea:h="0.395000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -184,21 +163,10 @@
               <rdf:Description
                 mwg-rs:Name="child">
               <mwg-rs:Area
-                stArea:x="0.455000"
-                stArea:y="0.462500"
-                stArea:w="0.174000"
-                stArea:h="0.189000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="column">
-              <mwg-rs:Area
-                stArea:x="0.080500"
-                stArea:y="0.664000"
-                stArea:w="0.127000"
-                stArea:h="0.332000"
+                stArea:x="0.505000"
+                stArea:y="0.461000"
+                stArea:w="0.274000"
+                stArea:h="0.186000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

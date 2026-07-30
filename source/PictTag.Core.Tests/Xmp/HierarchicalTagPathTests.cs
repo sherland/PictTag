@@ -75,7 +75,7 @@ public class HierarchicalTagPathTests
 
         string[] segments = HierarchicalTagPath.BuildEntitySegments(entity);
 
-        Assert.Equal(["Animal", "Dog", "Golden Retriever"], segments);
+        Assert.Equal(["PictTag", "Animal", "Dog", "Golden Retriever"], segments);
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class HierarchicalTagPathTests
 
         string[] segments = HierarchicalTagPath.BuildEntitySegments(entity);
 
-        Assert.Equal(["Buildings", "Chimney"], segments); // group==label collapses, same as always
+        Assert.Equal(["PictTag", "Buildings", "Chimney"], segments); // group==label collapses, same as always
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class HierarchicalTagPathTests
 
         string[] segments = HierarchicalTagPath.BuildEntitySegments(entity);
 
-        Assert.Equal(["Art", "Religious Figure", "Angel"], segments);
+        Assert.Equal(["PictTag", "Art", "Religious Figure", "Angel"], segments);
     }
 
     [Fact]

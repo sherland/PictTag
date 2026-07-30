@@ -27,7 +27,7 @@
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky with large, dark cumulus clouds and patches of blue. The bottom edge shows a small portion of a rooftop and chimney.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic view of a sky filled with various cloud formations. Large, dark clouds contrast with lighter, more wispy clouds, with patches of blue sky visible in between.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -39,12 +39,12 @@
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Large grey and white clouds filling a blue sky.</rdf:li>
+          <rdf:li xml:lang="x-default">A wide shot of a cloudy sky featuring large, dark cumulus clouds and lighter white clouds against a blue background.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a cloudy sky with large, dark cumulus clouds and patches of blue. The bottom edge shows a small portion of a rooftop and chimney.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic view of a sky filled with various cloud formations. Large, dark clouds contrast with lighter, more wispy clouds, with patches of blue sky visible in between.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -76,16 +76,16 @@
       </Iptc4xmpExt:ImageRegion>
       <lr:hierarchicalSubject>
         <rdf:Bag>
-          <rdf:li>Medium|Photograph</rdf:li>
-          <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Artifact|Way|Passage|Conduit|Flue|Chimney</rdf:li>
+          <rdf:li>PictTag|Medium|Photograph</rdf:li>
+          <rdf:li>PictTag|Symmetry|Asymmetrical</rdf:li>
+          <rdf:li>PictTag|Artifact|Way|Passage|Conduit|Flue|Chimney</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
-          <rdf:li>Medium/Photograph</rdf:li>
-          <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Artifact/Way/Passage/Conduit/Flue/Chimney</rdf:li>
+          <rdf:li>PictTag/Medium/Photograph</rdf:li>
+          <rdf:li>PictTag/Symmetry/Asymmetrical</rdf:li>
+          <rdf:li>PictTag/Artifact/Way/Passage/Conduit/Flue/Chimney</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">

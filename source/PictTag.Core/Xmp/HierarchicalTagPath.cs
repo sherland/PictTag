@@ -6,6 +6,14 @@ namespace PictTag.Core.Xmp;
 internal static class HierarchicalTagPath
 {
     /// <summary>
+    /// Every hierarchical tag PictTag writes nests under this top-level tag, keeping PictTag's
+    /// own tags visually separated in digiKam's/Lightroom's tag tree from digiKam's own built-in
+    /// AI auto-tagging feature (which creates its own top-level "auto" tag) and from any tags the
+    /// user creates manually in the same tree.
+    /// </summary>
+    public const string RootTagName = "PictTag";
+
+    /// <summary>
     /// Title-cases free text (e.g. "angel" -> "Angel"). Lowercasing first avoids .NET's
     /// "leave ALL-CAPS words alone" acronym behavior in <see cref="TextInfo.ToTitleCase"/>.
     /// Only ever apply this to genuine natural-language text (entity label/group/taxonomy node
@@ -51,11 +59,11 @@ internal static class HierarchicalTagPath
     /// </summary>
     public static string[] BuildEntitySegments(DetectedEntity entity)
     {
-        IReadOnlyList<string> segments = entity.Taxonomy is { Ancestors.Count: > 0 } taxonomy
-            ? taxonomy.Ancestors.Select(n => TitleCase(n.Name)).ToArray()
+        IEnumerable<string> segments = entity.Taxonomy is { Ancestors.Count: > 0 } taxonomy
+            ? taxonomy.Ancestors.Select(n => TitleCase(n.Name))
             : [entity.Raw.Category.ToString(), TitleCase(entity.Raw.Group), TitleCase(entity.Raw.Label)];
 
-        return BuildSegments(segments);
+        return BuildSegments([RootTagName, .. segments]);
     }
 
     // '|' (lr:HierarchicalSubject) and '/' (digiKam:TagsList) are both used as hierarchy

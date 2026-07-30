@@ -56,16 +56,16 @@ public class XmpCoreSidecarWriterTests : IDisposable
         Assert.Equal("Sofa", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 4).Value);
 
         Assert.Equal(4, xmp.CountArrayItems(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject"));
-        Assert.Equal("Medium|Photograph", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 1).Value);
-        Assert.Equal("Symmetry|Asymmetrical", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
-        Assert.Equal("Animals|Cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
-        Assert.Equal("Objects|Furniture|Sofa", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 4).Value);
+        Assert.Equal("PictTag|Medium|Photograph", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 1).Value);
+        Assert.Equal("PictTag|Symmetry|Asymmetrical", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
+        Assert.Equal("PictTag|Animals|Cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("PictTag|Objects|Furniture|Sofa", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 4).Value);
 
         Assert.Equal(4, xmp.CountArrayItems(XmpNamespaces.DigiKam, "TagsList"));
-        Assert.Equal("Medium/Photograph", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 1).Value);
-        Assert.Equal("Symmetry/Asymmetrical", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
-        Assert.Equal("Animals/Cat", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
-        Assert.Equal("Objects/Furniture/Sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
+        Assert.Equal("PictTag/Medium/Photograph", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 1).Value);
+        Assert.Equal("PictTag/Symmetry/Asymmetrical", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
+        Assert.Equal("PictTag/Animals/Cat", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+        Assert.Equal("PictTag/Objects/Furniture/Sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
 
         // Per the exiv2 digiKam namespace reference, TagsList must be an ordered rdf:Seq (unlike
         // dc:subject/lr:hierarchicalSubject, which are rdf:Bag) - digiKam only builds its tag
@@ -124,8 +124,8 @@ public class XmpCoreSidecarWriterTests : IDisposable
         Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
         Assert.Equal("Golden Retriever", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
 
-        Assert.Equal("Animal|Dog|Retriever|Golden Retriever", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
-        Assert.Equal("Animal/Dog/Retriever/Golden Retriever", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+        Assert.Equal("PictTag|Animal|Dog|Retriever|Golden Retriever", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("PictTag/Animal/Dog/Retriever/Golden Retriever", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
 
         // Regions keep the model's own specific label text, not the taxonomy's node name (they
         // happen to be the same word here, but sourced from entity.Raw.Label, not the chain).
@@ -204,8 +204,8 @@ public class XmpCoreSidecarWriterTests : IDisposable
         Assert.Equal("Painting", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 1).Value);
         Assert.Equal("Impressionism", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 2).Value);
         Assert.Equal("Asymmetrical", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
-        Assert.Equal("ArtStyle|Impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
-        Assert.Equal("ArtStyle/Impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
+        Assert.Equal("PictTag|ArtStyle|Impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
+        Assert.Equal("PictTag/ArtStyle/Impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
     }
 
     [Fact]

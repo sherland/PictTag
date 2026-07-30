@@ -112,6 +112,15 @@ already picked it) — so the standard `Scene` field always carries that signal 
 thing: `Medium`, `ArtStyle` (if present), `Symmetry`, and every detected entity. All the real
 composition logic lives in `HierarchicalTagPath.cs`, shared by both writers.
 
+**Every hierarchical tag nests under a top-level `PictTag` tag** (`HierarchicalTagPath.RootTagName`)
+— e.g. `PictTag > Animal > Chordate > ... > Golden Retriever`, `PictTag > Medium > Photograph`.
+This keeps PictTag's own tags visually separated in digiKam's/Lightroom's tag tree from digiKam's
+own built-in AI auto-tagging feature (which creates its own top-level `auto` tag, populated with
+flat COCO-style category names as it scans photos - entirely unrelated to PictTag) and from any
+tags the user creates manually in the same tree. `dc:subject` is unaffected by this - it only ever
+holds the leaf-most keyword (see below), which never included the root/category level to begin
+with.
+
 **`digiKam:TagsList` must be an ordered `rdf:Seq`, not `rdf:Bag`** (unlike `dc:subject` and
 `lr:hierarchicalSubject`, which are ordinary `Bag`s). Per the
 [exiv2 digiKam namespace reference](https://exiv2.org/tags-xmp-digiKam.html), digiKam only builds
@@ -127,11 +136,12 @@ confident match:
 
 - **Resolved** (`DetectedEntity.Taxonomy` non-null): the full WordNet ancestor chain, title-cased,
   of whatever depth WordNet actually has for that concept — e.g. a golden retriever becomes
-  `Animal > Chordate > Vertebrate > Mammal > Carnivore > Canine > Dog > Retriever > Golden
-  Retriever`, and a chimney becomes `Artifact > Way > Passage > Conduit > Flue > Chimney` (WordNet
-  classifies a chimney as a kind of conduit, not literally a "building part", even though that was
-  the old raw-category guess for it). There's no fixed depth - the chain is exactly as deep as
-  WordNet's real hypernym graph, once cut at the category's configured root anchor.
+  `PictTag > Animal > Chordate > Vertebrate > Mammal > Carnivore > Canine > Dog > Retriever >
+  Golden Retriever`, and a chimney becomes `PictTag > Artifact > Way > Passage > Conduit > Flue >
+  Chimney` (WordNet classifies a chimney as a kind of conduit, not literally a "building part",
+  even though that was the old raw-category guess for it). There's no fixed depth (beyond the
+  leading `PictTag` root) - the chain is exactly as deep as WordNet's real hypernym graph, once cut
+  at the category's configured root anchor.
 - **Unresolved** (`Taxonomy` is null): the original 3-level (or 2-level, if collapsed) shape - a
   broad `EntityCategory` (`Art`, `People`, `Objects`, ...), a `Group` a step more general than the
   label (e.g. "religious figure" for an "angel"), and the specific `Label`. This is the entity's

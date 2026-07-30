@@ -18,16 +18,16 @@
       pictTag:Symmetry="Asymmetrical"
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.300"
-      pictTag:EdgeDensity="0.600"
-      pictTag:CompositionNotes="Centered title and structured table layout.">
+      pictTag:EdgeDensity="0.700"
+      pictTag:CompositionNotes="Organized table layout with a centered title.">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Pizza oven setting guidelines</rdf:li>
+          <rdf:li xml:lang="x-default">Pizza Oven Setting Guidelines</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An informational infographic providing temperature settings for three different pizza oven models (P234H, P134H, and P134HA) based on dough hydration levels from 63% to 78%. It also includes instructions regarding the appropriate flour type for specific hydration ranges.</rdf:li>
+          <rdf:li xml:lang="x-default">An informational graphic providing temperature settings for three different pizza oven models (P234H, P134H, and P134HA). The chart details recommended 'SETTINGS' and 'STONE TEMP.' based on varying dough hydration levels from 63% to 78%.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -35,22 +35,24 @@
           <rdf:li>DigitalIllustration</rdf:li>
           <rdf:li>Infographic</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
-          <rdf:li>Oven</rdf:li>
-          <rdf:li>Oven</rdf:li>
-          <rdf:li>Oven</rdf:li>
           <rdf:li>Text</rdf:li>
           <rdf:li>Text</rdf:li>
-          <rdf:li>Logo</rdf:li>
+          <rdf:li>Oven</rdf:li>
+          <rdf:li>Text</rdf:li>
+          <rdf:li>Oven</rdf:li>
+          <rdf:li>Text</rdf:li>
+          <rdf:li>Oven</rdf:li>
+          <rdf:li>Text</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An informational chart titled "SETTING GUIDELINES" showing temperature settings for three pizza oven models (P234H, P134H, and P134HA) based on dough hydration levels from 63% to 78%.</rdf:li>
+          <rdf:li xml:lang="x-default">An infographic displaying temperature instructions for three pizza oven models across different dough hydration percentages.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">An informational infographic providing temperature settings for three different pizza oven models (P234H, P134H, and P134HA) based on dough hydration levels from 63% to 78%. It also includes instructions regarding the appropriate flour type for specific hydration ranges.</rdf:li>
+          <rdf:li xml:lang="x-default">An informational graphic providing temperature settings for three different pizza oven models (P234H, P134H, and P134HA). The chart details recommended 'SETTINGS' and 'STONE TEMP.' based on varying dough hydration levels from 63% to 78%.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -63,7 +65,7 @@
           <rdf:li rdf:parseType="Resource">
             <Iptc4xmpExt:CvTermName>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">Infographic</rdf:li>
+                <rdf:li xml:lang="x-default">infographic</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:CvTermName>
           </rdf:li>
@@ -76,16 +78,16 @@
               Iptc4xmpExt:rId="1">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">pizza oven</rdf:li>
+                <rdf:li xml:lang="x-default">text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.223000"
-              Iptc4xmpExt:rbY="0.256000"
-              Iptc4xmpExt:rbW="0.220000"
-              Iptc4xmpExt:rbH="0.097000"/>
+              Iptc4xmpExt:rbX="0.098000"
+              Iptc4xmpExt:rbY="0.035000"
+              Iptc4xmpExt:rbW="0.826000"
+              Iptc4xmpExt:rbH="0.071000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -93,16 +95,16 @@
               Iptc4xmpExt:rId="2">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">pizza oven</rdf:li>
+                <rdf:li xml:lang="x-default">text</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.479000"
-              Iptc4xmpExt:rbY="0.258000"
-              Iptc4xmpExt:rbW="0.196000"
-              Iptc4xmpExt:rbH="0.092000"/>
+              Iptc4xmpExt:rbX="0.194000"
+              Iptc4xmpExt:rbY="0.127000"
+              Iptc4xmpExt:rbW="0.630000"
+              Iptc4xmpExt:rbH="0.047000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -116,10 +118,10 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.714000"
-              Iptc4xmpExt:rbY="0.258000"
-              Iptc4xmpExt:rbW="0.214000"
-              Iptc4xmpExt:rbH="0.092000"/>
+              Iptc4xmpExt:rbX="0.224000"
+              Iptc4xmpExt:rbY="0.256000"
+              Iptc4xmpExt:rbW="0.216000"
+              Iptc4xmpExt:rbH="0.099000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -133,15 +135,32 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.097000"
-              Iptc4xmpExt:rbY="0.035000"
-              Iptc4xmpExt:rbW="0.821000"
-              Iptc4xmpExt:rbH="0.071000"/>
+              Iptc4xmpExt:rbX="0.238000"
+              Iptc4xmpExt:rbY="0.371000"
+              Iptc4xmpExt:rbW="0.188000"
+              Iptc4xmpExt:rbH="0.035000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
             <rdf:Description
               Iptc4xmpExt:rId="5">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">pizza oven</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.482000"
+              Iptc4xmpExt:rbY="0.261000"
+              Iptc4xmpExt:rbW="0.197000"
+              Iptc4xmpExt:rbH="0.093000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="6">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
                 <rdf:li xml:lang="x-default">text</rdf:li>
@@ -150,55 +169,76 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.188000"
-              Iptc4xmpExt:rbY="0.124000"
-              Iptc4xmpExt:rbW="0.640000"
-              Iptc4xmpExt:rbH="0.051000"/>
+              Iptc4xmpExt:rbX="0.505000"
+              Iptc4xmpExt:rbY="0.371000"
+              Iptc4xmpExt:rbW="0.153000"
+              Iptc4xmpExt:rbH="0.035000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
             <rdf:Description
-              Iptc4xmpExt:rId="6">
+              Iptc4xmpExt:rId="7">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">logo</rdf:li>
+                <rdf:li xml:lang="x-default">pizza oven</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.475000"
-              Iptc4xmpExt:rbY="0.932000"
-              Iptc4xmpExt:rbW="0.050000"
-              Iptc4xmpExt:rbH="0.043000"/>
+              Iptc4xmpExt:rbX="0.714000"
+              Iptc4xmpExt:rbY="0.257000"
+              Iptc4xmpExt:rbW="0.216000"
+              Iptc4xmpExt:rbH="0.098000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="8">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">text</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.728000"
+              Iptc4xmpExt:rbY="0.371000"
+              Iptc4xmpExt:rbW="0.167000"
+              Iptc4xmpExt:rbH="0.035000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
       </Iptc4xmpExt:ImageRegion>
       <lr:hierarchicalSubject>
         <rdf:Bag>
-          <rdf:li>Medium|DigitalIllustration</rdf:li>
-          <rdf:li>ArtStyle|Infographic</rdf:li>
-          <rdf:li>Symmetry|Asymmetrical</rdf:li>
-          <rdf:li>Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
-          <rdf:li>Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
-          <rdf:li>Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
-          <rdf:li>Text</rdf:li>
-          <rdf:li>Text</rdf:li>
-          <rdf:li>Other|Brand Mark|Logo</rdf:li>
+          <rdf:li>PictTag|Medium|DigitalIllustration</rdf:li>
+          <rdf:li>PictTag|ArtStyle|Infographic</rdf:li>
+          <rdf:li>PictTag|Symmetry|Asymmetrical</rdf:li>
+          <rdf:li>PictTag|Text</rdf:li>
+          <rdf:li>PictTag|Text</rdf:li>
+          <rdf:li>PictTag|Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
+          <rdf:li>PictTag|Text</rdf:li>
+          <rdf:li>PictTag|Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
+          <rdf:li>PictTag|Text</rdf:li>
+          <rdf:li>PictTag|Artifact|Commodity|Consumer Goods|Durables|Appliance|Home Appliance|Kitchen Appliance|Oven</rdf:li>
+          <rdf:li>PictTag|Text</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
         <rdf:Seq>
-          <rdf:li>Medium/DigitalIllustration</rdf:li>
-          <rdf:li>ArtStyle/Infographic</rdf:li>
-          <rdf:li>Symmetry/Asymmetrical</rdf:li>
-          <rdf:li>Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
-          <rdf:li>Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
-          <rdf:li>Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
-          <rdf:li>Text</rdf:li>
-          <rdf:li>Text</rdf:li>
-          <rdf:li>Other/Brand Mark/Logo</rdf:li>
+          <rdf:li>PictTag/Medium/DigitalIllustration</rdf:li>
+          <rdf:li>PictTag/ArtStyle/Infographic</rdf:li>
+          <rdf:li>PictTag/Symmetry/Asymmetrical</rdf:li>
+          <rdf:li>PictTag/Text</rdf:li>
+          <rdf:li>PictTag/Text</rdf:li>
+          <rdf:li>PictTag/Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
+          <rdf:li>PictTag/Text</rdf:li>
+          <rdf:li>PictTag/Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
+          <rdf:li>PictTag/Text</rdf:li>
+          <rdf:li>PictTag/Artifact/Commodity/Consumer Goods/Durables/Appliance/Home Appliance/Kitchen Appliance/Oven</rdf:li>
+          <rdf:li>PictTag/Text</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -210,44 +250,11 @@
           <rdf:Bag>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="pizza oven">
-              <mwg-rs:Area
-                stArea:x="0.333000"
-                stArea:y="0.304500"
-                stArea:w="0.220000"
-                stArea:h="0.097000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="pizza oven">
-              <mwg-rs:Area
-                stArea:x="0.577000"
-                stArea:y="0.304000"
-                stArea:w="0.196000"
-                stArea:h="0.092000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
-                mwg-rs:Name="pizza oven">
-              <mwg-rs:Area
-                stArea:x="0.821000"
-                stArea:y="0.304000"
-                stArea:w="0.214000"
-                stArea:h="0.092000"
-                stArea:unit="normalized"/>
-              </rdf:Description>
-            </rdf:li>
-            <rdf:li>
-              <rdf:Description
                 mwg-rs:Name="text">
               <mwg-rs:Area
-                stArea:x="0.507500"
+                stArea:x="0.511000"
                 stArea:y="0.070500"
-                stArea:w="0.821000"
+                stArea:w="0.826000"
                 stArea:h="0.071000"
                 stArea:unit="normalized"/>
               </rdf:Description>
@@ -256,21 +263,76 @@
               <rdf:Description
                 mwg-rs:Name="text">
               <mwg-rs:Area
-                stArea:x="0.508000"
-                stArea:y="0.149500"
-                stArea:w="0.640000"
-                stArea:h="0.051000"
+                stArea:x="0.509000"
+                stArea:y="0.150500"
+                stArea:w="0.630000"
+                stArea:h="0.047000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="logo">
+                mwg-rs:Name="pizza oven">
               <mwg-rs:Area
-                stArea:x="0.500000"
-                stArea:y="0.953500"
-                stArea:w="0.050000"
-                stArea:h="0.043000"
+                stArea:x="0.332000"
+                stArea:y="0.305500"
+                stArea:w="0.216000"
+                stArea:h="0.099000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="text">
+              <mwg-rs:Area
+                stArea:x="0.332000"
+                stArea:y="0.388500"
+                stArea:w="0.188000"
+                stArea:h="0.035000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="pizza oven">
+              <mwg-rs:Area
+                stArea:x="0.580500"
+                stArea:y="0.307500"
+                stArea:w="0.197000"
+                stArea:h="0.093000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="text">
+              <mwg-rs:Area
+                stArea:x="0.581500"
+                stArea:y="0.388500"
+                stArea:w="0.153000"
+                stArea:h="0.035000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="pizza oven">
+              <mwg-rs:Area
+                stArea:x="0.822000"
+                stArea:y="0.306000"
+                stArea:w="0.216000"
+                stArea:h="0.098000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="text">
+              <mwg-rs:Area
+                stArea:x="0.811500"
+                stArea:y="0.388500"
+                stArea:w="0.167000"
+                stArea:h="0.035000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

@@ -76,13 +76,13 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*/
         // Genre properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["Medium", metadata.Medium.ToString()]));
+        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "Medium", metadata.Medium.ToString()]));
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
+            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]));
         }
 
-        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(["Symmetry", composition.Symmetry.ToString()]));
+        AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments([HierarchicalTagPath.RootTagName, "Symmetry", composition.Symmetry.ToString()]));
 
         foreach (DetectedEntity entity in result.Entities)
         {
