@@ -46,10 +46,13 @@ try {
             $ns = New-Object System.Xml.XmlNamespaceManager($xmp.NameTable)
             $ns.AddNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
             $ns.AddNamespace('pictTag', 'https://github.com/sherland/PictTag/ns/1.0/')
+            $ns.AddNamespace('Iptc4xmpExt', 'http://iptc.org/std/Iptc4xmpExt/2008-02-29/')
 
             $desc = $xmp.SelectSingleNode('//rdf:Description', $ns)
             $medium = $desc.GetAttribute('Medium', 'https://github.com/sherland/PictTag/ns/1.0/')
-            $artStyle = $desc.GetAttribute('ArtStyle', 'https://github.com/sherland/PictTag/ns/1.0/')
+            # ArtStyle moved from a pictTag: attribute to the standard Iptc4xmpExt:Genre/CvTermName
+            # structure (see ARCHITECTURE.md's "standards first" section) - read it from there.
+            $artStyle = $xmp.SelectSingleNode('//Iptc4xmpExt:Genre//Iptc4xmpExt:CvTermName//rdf:li', $ns)?.InnerText
             $colorVariance = $desc.GetAttribute('ColorVariance', 'https://github.com/sherland/PictTag/ns/1.0/')
             $edgeDensity = $desc.GetAttribute('EdgeDensity', 'https://github.com/sherland/PictTag/ns/1.0/')
             $symmetry = $desc.GetAttribute('Symmetry', 'https://github.com/sherland/PictTag/ns/1.0/')
