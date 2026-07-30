@@ -58,6 +58,9 @@ public class ImageDetectionService
           or overall composition as if it were an object. For each detected object, give:
             - label: a short, specific, lowercase description (e.g. "golden retriever", not
               just "animal").
+            - group: a more general term for what kind of thing this specifically is - broader
+              than label, narrower than category (e.g. "golden retriever" -> "dog", "angel" ->
+              "religious figure"). Repeat the label if nothing more general genuinely applies.
             - category: the single broad category it belongs to - People, Animals, Vehicles,
               Buildings, Nature, Food, Objects, Text, Art, or Other.
             - its bounding box on a 0-1000 integer grid, where (0,0) is the top-left corner
@@ -103,7 +106,7 @@ public class ImageDetectionService
             ?? throw new InvalidOperationException("Model returned no parseable detections.");
 
         List<DetectedEntity> entities = parsed.Detections
-            .Select(d => new DetectedEntity(d.Label, d.Category, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)))
+            .Select(d => new DetectedEntity(d.Label, d.Group, d.Category, new BoundingBox(d.YMin, d.XMin, d.YMax, d.XMax)))
             .ToList();
 
         ImageComposition composition = new(
@@ -210,6 +213,7 @@ public class ImageDetectionService
 
     private record DetectionDto(
         string Label,
+        string Group,
         EntityCategory Category,
         [property: JsonPropertyName("ymin")] int YMin,
         [property: JsonPropertyName("xmin")] int XMin,

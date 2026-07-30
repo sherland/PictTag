@@ -157,7 +157,7 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            Console.WriteLine($"[{entity.Category}] {entity.Label}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
+            Console.WriteLine($"[{entity.Category}] {entity.Group} > {entity.Label}: ymin={entity.Box.YMin} xmin={entity.Box.XMin} ymax={entity.Box.YMax} xmax={entity.Box.XMax}");
         }
 
         Console.WriteLine($"Annotated image saved to {effectiveOutputPath}");

@@ -2,7 +2,7 @@ namespace PictTag.Core;
 
 public record BoundingBox(int YMin, int XMin, int YMax, int XMax);
 
-public record DetectedEntity(string Label, EntityCategory Category, BoundingBox Box);
+public record DetectedEntity(string Label, string Group, EntityCategory Category, BoundingBox Box);
 
 public record ImageMetadata(string Title, string Description, string AltText, ImageMedium Medium, string? ArtStyle, ImageSetting? Setting, List<SceneType> Scene, ImageComposition Composition);
 

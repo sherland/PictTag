@@ -163,17 +163,17 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*
         // properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTagArgs(args, "Medium", metadata.Medium.ToString());
+        AppendHierarchicalTagArgs(args, ["Medium", metadata.Medium.ToString()]);
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTagArgs(args, "ArtStyle", metadata.ArtStyle);
+            AppendHierarchicalTagArgs(args, ["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]);
         }
 
-        AppendHierarchicalTagArgs(args, "Symmetry", metadata.Composition.Symmetry.ToString());
+        AppendHierarchicalTagArgs(args, ["Symmetry", metadata.Composition.Symmetry.ToString()]);
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            AppendHierarchicalTagArgs(args, entity.Category.ToString(), entity.Label);
+            AppendHierarchicalTagArgs(args, HierarchicalTagPath.BuildSegments(entity.Category.ToString(), entity.Group, entity.Label));
         }
 
         if (result.Entities.Count > 0)
@@ -193,11 +193,11 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         return sidecarPath;
     }
 
-    private static void AppendHierarchicalTagArgs(List<string> args, string category, string leaf)
+    private static void AppendHierarchicalTagArgs(List<string> args, string[] segments)
     {
-        args.Add($"-XMP-dc:Subject+={leaf}");
-        args.Add($"-XMP-lr:HierarchicalSubject+={HierarchicalTagPath.Compose(category, leaf, '|')}");
-        args.Add($"-XMP-digiKam:TagsList+={HierarchicalTagPath.Compose(category, leaf, '/')}");
+        args.Add($"-XMP-dc:Subject+={segments[^1]}");
+        args.Add($"-XMP-lr:HierarchicalSubject+={HierarchicalTagPath.Compose('|', segments)}");
+        args.Add($"-XMP-digiKam:TagsList+={HierarchicalTagPath.Compose('/', segments)}");
     }
 
     private static string BuildRegionInfoStruct(ImageAnalysisResult result, int imageWidth, int imageHeight)

@@ -76,17 +76,17 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
 
         // Medium/ArtStyle/Symmetry are also surfaced as browsable tags (not just pictTag:*/
         // Genre properties) so they show up in digiKam's/Lightroom's tag panel like any other tag.
-        AppendHierarchicalTag(xmp, "Medium", metadata.Medium.ToString());
+        AppendHierarchicalTag(xmp, ["Medium", metadata.Medium.ToString()]);
         if (metadata.ArtStyle is not null)
         {
-            AppendHierarchicalTag(xmp, "ArtStyle", metadata.ArtStyle);
+            AppendHierarchicalTag(xmp, ["ArtStyle", HierarchicalTagPath.TitleCase(metadata.ArtStyle)]);
         }
 
-        AppendHierarchicalTag(xmp, "Symmetry", composition.Symmetry.ToString());
+        AppendHierarchicalTag(xmp, ["Symmetry", composition.Symmetry.ToString()]);
 
         foreach (DetectedEntity entity in result.Entities)
         {
-            AppendHierarchicalTag(xmp, entity.Category.ToString(), entity.Label);
+            AppendHierarchicalTag(xmp, HierarchicalTagPath.BuildSegments(entity.Category.ToString(), entity.Group, entity.Label));
         }
 
         if (result.Entities.Count > 0)
@@ -124,16 +124,16 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         }
     }
 
-    private static void AppendHierarchicalTag(IXmpMeta xmp, string category, string leaf)
+    private static void AppendHierarchicalTag(IXmpMeta xmp, string[] segments)
     {
-        xmp.AppendArrayItem(XmpConstants.NsDC, "subject", new PropertyOptions { IsArray = true }, leaf, null);
+        xmp.AppendArrayItem(XmpConstants.NsDC, "subject", new PropertyOptions { IsArray = true }, segments[^1], null);
         xmp.AppendArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", new PropertyOptions { IsArray = true },
-            HierarchicalTagPath.Compose(category, leaf, '|'), null);
+            HierarchicalTagPath.Compose('|', segments), null);
         // Per the exiv2 digiKam namespace reference, TagsList is XmpSeq (an ordered rdf:Seq),
         // unlike dc:subject/lr:hierarchicalSubject which are XmpBag - digiKam only builds its
         // tag tree from this field correctly when it's serialized as Seq, not Bag.
         xmp.AppendArrayItem(XmpNamespaces.DigiKam, "TagsList", new PropertyOptions { IsArray = true, IsArrayOrdered = true },
-            HierarchicalTagPath.Compose(category, leaf, '/'), null);
+            HierarchicalTagPath.Compose('/', segments), null);
     }
 
     private static void WriteRegions(IXmpMeta xmp, ImageAnalysisResult result, int imageWidth, int imageHeight)

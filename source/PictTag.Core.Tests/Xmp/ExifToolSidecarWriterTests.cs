@@ -29,8 +29,10 @@ public class ExifToolSidecarWriterTests : IDisposable
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(),
             [
-                new DetectedEntity("cat", EntityCategory.Animals, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
-                new DetectedEntity("sofa", EntityCategory.Objects, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
+                // group "Cat" title-cases equal to label "cat" -> collapses to a 2-level tag.
+                new DetectedEntity("cat", "Cat", EntityCategory.Animals, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
+                // group "furniture" is distinct from label "sofa" -> stays a 3-level tag.
+                new DetectedEntity("sofa", "furniture", EntityCategory.Objects, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
             ]);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
@@ -51,12 +53,12 @@ public class ExifToolSidecarWriterTests : IDisposable
         Assert.Equal(4, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
         Assert.Equal("Photograph", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 1).Value);
         Assert.Equal("Asymmetrical", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 2).Value);
-        Assert.Equal("cat", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
-        Assert.Equal("sofa", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 4).Value);
+        Assert.Equal("Cat", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
+        Assert.Equal("Sofa", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 4).Value);
 
         Assert.Equal(4, xmp.CountArrayItems(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject"));
-        Assert.Equal("Animals|cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
-        Assert.Equal("Objects/sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
+        Assert.Equal("Animals|Cat", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("Objects/Furniture/Sofa", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 4).Value);
 
         // digiKam only builds its tag hierarchy from TagsList when it's an ordered rdf:Seq -
         // exiftool's own tag table already gets this right natively, verified empirically.
@@ -151,10 +153,10 @@ public class ExifToolSidecarWriterTests : IDisposable
         // properties, so they show up in digiKam's/Lightroom's tag panel like any other tag.
         Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
         Assert.Equal("Painting", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 1).Value);
-        Assert.Equal("impressionism", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 2).Value);
+        Assert.Equal("Impressionism", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 2).Value);
         Assert.Equal("Asymmetrical", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
-        Assert.Equal("ArtStyle|impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
-        Assert.Equal("ArtStyle/impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
+        Assert.Equal("ArtStyle|Impressionism", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 2).Value);
+        Assert.Equal("ArtStyle/Impressionism", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 2).Value);
     }
 
     [Fact]
@@ -167,7 +169,7 @@ public class ExifToolSidecarWriterTests : IDisposable
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(),
             [
-                new DetectedEntity(trickyLabel, EntityCategory.Other, new BoundingBox(YMin: 0, XMin: 0, YMax: 500, XMax: 500)),
+                new DetectedEntity(trickyLabel, trickyLabel, EntityCategory.Other, new BoundingBox(YMin: 0, XMin: 0, YMax: 500, XMax: 500)),
             ]);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
@@ -194,12 +196,12 @@ public class ExifToolSidecarWriterTests : IDisposable
 
         await writer.WriteSidecarAsync(
             imagePath,
-            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity("cat", EntityCategory.Animals, new BoundingBox(0, 0, 500, 500))]),
+            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity("cat", "cat", EntityCategory.Animals, new BoundingBox(0, 0, 500, 500))]),
             XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
 
         string sidecarPath = await writer.WriteSidecarAsync(
             imagePath,
-            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity("dog", EntityCategory.Animals, new BoundingBox(0, 0, 500, 500))]),
+            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity("dog", "dog", EntityCategory.Animals, new BoundingBox(0, 0, 500, 500))]),
             XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
 
         IXmpMeta xmp;
@@ -210,11 +212,11 @@ public class ExifToolSidecarWriterTests : IDisposable
 
         // Medium/Symmetry tags (always written) must not accumulate across the two writes -
         // exactly 3 items (Medium, Symmetry, dog), not 6.
-        Assert.Equal("dog", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
+        Assert.Equal("Dog", xmp.GetArrayItem(XmpConstants.NsDC, "subject", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpConstants.NsDC, "subject"));
-        Assert.Equal("Animals|dog", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
+        Assert.Equal("Animals|Dog", xmp.GetArrayItem(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpNamespaces.LightroomHierarchical, "hierarchicalSubject"));
-        Assert.Equal("Animals/dog", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
+        Assert.Equal("Animals/Dog", xmp.GetArrayItem(XmpNamespaces.DigiKam, "TagsList", 3).Value);
         Assert.Equal(3, xmp.CountArrayItems(XmpNamespaces.DigiKam, "TagsList"));
         Assert.False(File.Exists(sidecarPath + "_original"), "exiftool should not leave an _original backup file behind");
     }
