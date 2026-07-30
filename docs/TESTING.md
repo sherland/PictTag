@@ -32,6 +32,11 @@ committed `data/wordnet/raw/*` line literals, `TaxonomyGraphBuilderTests` uses s
 WordNet fragments, and `NodeEmbedderTests`/`EmbeddingsBinWriterTests` use a fake embedding
 generator - none of it needs Ollama.
 
+`ExifOrientationMathTests` (pure integer arithmetic, no image/model at all) and most of
+`ImageOrientationCorrectorTests` (a fake `IImageOrientationClassifier` double, see
+[ORIENTATION.md](ORIENTATION.md)) are this tier too - only the two cases that actually assert an
+on-disk EXIF rewrite happened fall into the next tier instead.
+
 ## 2. `exiftool`-conditional tests — need `exiftool` on `PATH`
 
 Most of `ExifToolSidecarWriterTests` starts with:
@@ -49,6 +54,11 @@ These exist specifically to cross-check `XmpCoreSidecarWriter`'s hand-built XMP 
 own, independently-maintained tag tables — see
 [ARCHITECTURE.md](ARCHITECTURE.md#two-writer-engines) for why that's worth having.
 
+The same `IsExifToolAvailable` gate covers two `ImageOrientationCorrectorTests` cases that assert
+an actual EXIF rewrite happened on disk (`...FixEnabled_RewritesOriginalFileOrientation` and
+`...FixDisabled_LeavesOriginalFileUntouched` - the latter still needs `exiftool` available so the
+"disabled" assertion is meaningful rather than vacuously true because the tool was missing anyway).
+
 ## 3. Live-model tests — need a real Ollama server + downloaded fixtures
 
 `ArtStyleDetectionTests` runs the real detection pipeline against ~100 real, freely-licensed
@@ -57,7 +67,13 @@ art-style images (one theory case per downloaded fixture, sourced from
 contains one of each movement's expected keywords. `OllamaTaxonomyEmbeddingIndexTests` hits a real
 Ollama server too, but for the embedding model (`nomic-embed-text`) rather than the vision model -
 a handful of fixed paraphrase queries ("notebook pc", "wooden boat", ...) checked against real
-semantic-match output. Both use the same opt-in gate:
+semantic-match output. `OnnxImageOrientationClassifierTests` uses the same gate for a different
+reason - it doesn't need Ollama at all, but it does need the real ~80MB ONNX orientation model
+(auto-downloaded on first run, see [ORIENTATION.md](ORIENTATION.md)), so it's kept opt-in rather
+than in the always-run tier; it checks the real photo that originally exposed the orientation bug
+(`data/test-images/2025-02-08 17.56.14.jpg`) both after `AutoOrient()` (classifier should agree
+it's correct) and without it (classifier should detect the remaining rotation). All three use the
+same opt-in gate:
 
 ```csharp
 Assert.SkipUnless(LiveModelTestsEnabled, "set PICTTAG_RUN_LIVE_MODEL_TESTS=1 ...");
@@ -102,7 +118,7 @@ These are developer tools, not part of `dotnet test` — run them directly with 
 |---|---|
 | `Get-ArtStyleTestImages.ps1` | Downloads 2–3 freely-licensed images per art style from Wikimedia Commons (public domain / CC0 / CC-BY only, filtered by license string), resizes anything over 2000px, and skips images already downloaded. Feeds both `ArtStyleDetectionTests` and `Test-ArtStyleDetection.ps1`. |
 | `Test-ArtStyleDetection.ps1` | Runs the CLI's detection + XMP pipeline over every downloaded art-style fixture and prints a pass/fail-style summary table (style vs. detected medium/art-style/composition) plus a CSV (`art-style-detection-results.csv`, git-ignored). This is a human-readable accuracy report, not an assertion-based test — use it to eyeball detection quality across the whole style set, or after prompt changes, without editing test code. Pass `-Overwrite` to regenerate every sidecar instead of only images that don't have one yet. |
-| `Update-TestImageTags.ps1` | Regenerates the XMP sidecars for the small, **committed** fixture set under `data/test-images/*.xmp` (the non-art-style photos checked into git) by re-running the CLI against them with `--xmp-overwrite`. Run this after a change to the detection prompt or an XMP writer to refresh what's checked in — then review the resulting diff by hand, since the model's output is not byte-for-byte deterministic between runs. |
+| `Update-TestImageTags.ps1` | Regenerates the XMP sidecars for the small, **committed** fixture set under `data/test-images/*.xmp` (the non-art-style photos checked into git) by re-running the CLI against them with `--xmp-overwrite`. Run this after a change to the detection prompt or an XMP writer to refresh what's checked in — then review the resulting diff by hand, since the model's output is not byte-for-byte deterministic between runs. Also runs every fixture through orientation correction — see [ORIENTATION.md](ORIENTATION.md#fixture-regeneration-note) for what to check if a source JPEG's own EXIF tag ever changes as a result. |
 
 ### Reviewing a fixture diff after a taxonomy change
 

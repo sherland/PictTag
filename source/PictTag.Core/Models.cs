@@ -36,7 +36,14 @@ public record ImageMetadata(string Title, string Description, string AltText, Im
 
 public record ImageComposition(CompositionSymmetry Symmetry, bool RuleOfThirdsAdherence, double ColorVarianceEstimate, double EdgeDensityEstimate, string? Notes);
 
-public record ImageAnalysisResult(ImageMetadata Metadata, List<DetectedEntity> Entities);
+/// <summary>
+/// <see cref="ImageWidth"/>/<see cref="ImageHeight"/> are the image's final, orientation-corrected
+/// dimensions (see <see cref="PictTag.Core.Orientation.ImageOrientationCorrector"/>) - the
+/// dimensions a viewer actually displays, not necessarily the raw encoded pixel dimensions (which
+/// differ for any 90/270-degree-rotated photo). XMP writers use these directly rather than
+/// re-deriving dimensions from the file themselves.
+/// </summary>
+public record ImageAnalysisResult(ImageMetadata Metadata, List<DetectedEntity> Entities, int ImageWidth, int ImageHeight);
 
 public enum EntityCategory
 {

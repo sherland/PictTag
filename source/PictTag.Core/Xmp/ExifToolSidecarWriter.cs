@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using SixLabors.ImageSharp;
 
 namespace PictTag.Core.Xmp;
 
@@ -68,7 +67,6 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
         }
 
         string sidecarPath = SidecarPathResolver.Resolve(imagePath, namingConvention);
-        ImageInfo imageInfo = Image.Identify(imagePath);
         bool sidecarExists = File.Exists(sidecarPath);
 
         if (sidecarExists)
@@ -178,7 +176,7 @@ public class ExifToolSidecarWriter : IXmpSidecarWriter
 
         if (result.Entities.Count > 0)
         {
-            args.Add($"-RegionInfo={BuildRegionInfoStruct(result, imageInfo.Width, imageInfo.Height)}");
+            args.Add($"-RegionInfo={BuildRegionInfoStruct(result, result.ImageWidth, result.ImageHeight)}");
             args.Add($"-XMP-iptcExt:ImageRegion={BuildImageRegionStruct(result)}");
         }
 

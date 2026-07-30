@@ -1,5 +1,4 @@
 using System.Globalization;
-using SixLabors.ImageSharp;
 using XmpCore;
 using XmpCore.Options;
 
@@ -23,8 +22,6 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
         registry.RegisterNamespace(XmpNamespaces.IptcExt, "Iptc4xmpExt");
         registry.RegisterNamespace(XmpNamespaces.IptcCore, "Iptc4xmpCore");
         registry.RegisterNamespace(XmpNamespaces.PictTag, "pictTag");
-
-        ImageInfo imageInfo = Image.Identify(imagePath);
 
         IXmpMeta xmp = XmpMetaFactory.Create();
         xmp.SetProperty(XmpConstants.NsXmp, "CreatorTool", "PictTag");
@@ -91,7 +88,7 @@ public class XmpCoreSidecarWriter : IXmpSidecarWriter
 
         if (result.Entities.Count > 0)
         {
-            WriteRegions(xmp, result, imageInfo.Width, imageInfo.Height);
+            WriteRegions(xmp, result, result.ImageWidth, result.ImageHeight);
             WriteImageRegions(xmp, result);
         }
 

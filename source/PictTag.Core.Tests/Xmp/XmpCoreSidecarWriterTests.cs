@@ -33,7 +33,9 @@ public class XmpCoreSidecarWriterTests : IDisposable
                 new DetectedEntity(new RawDetection("cat", "Cat", EntityCategory.Animals), null, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
                 // group "furniture" is distinct from label "sofa" -> stays a 3-level tag.
                 new DetectedEntity(new RawDetection("sofa", "furniture", EntityCategory.Objects), null, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
-            ]);
+            ],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
@@ -109,7 +111,9 @@ public class XmpCoreSidecarWriterTests : IDisposable
             TaxonomyMatchQuality.Exact, 1.0, "golden retriever");
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(),
-            [new DetectedEntity(new RawDetection("golden retriever", "dog", EntityCategory.Animals), taxonomy, new BoundingBox(0, 0, 500, 500))]);
+            [new DetectedEntity(new RawDetection("golden retriever", "dog", EntityCategory.Animals), taxonomy, new BoundingBox(0, 0, 500, 500))],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
@@ -138,7 +142,9 @@ public class XmpCoreSidecarWriterTests : IDisposable
         string imagePath = CreateTestImage();
         ImageAnalysisResult result = new(
             new ImageMetadata("A Test Photo", "A description of the photo.", "A test photo.", ImageMedium.Photograph, ArtStyle: null, ImageSetting.Indoor, [SceneType.CloseUp], TestData.SampleComposition()),
-            []);
+            [],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
@@ -179,7 +185,9 @@ public class XmpCoreSidecarWriterTests : IDisposable
         string imagePath = CreateTestImage();
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(medium: ImageMedium.Painting, artStyle: "impressionism"),
-            []);
+            [],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
@@ -212,7 +220,7 @@ public class XmpCoreSidecarWriterTests : IDisposable
     public async Task WriteSidecarAsync_NoEntities_WritesNoRegions()
     {
         string imagePath = CreateTestImage();
-        ImageAnalysisResult result = new(TestData.SampleMetadata(), []);
+        ImageAnalysisResult result = new(TestData.SampleMetadata(), [], ImageWidth: 400, ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
@@ -232,7 +240,7 @@ public class XmpCoreSidecarWriterTests : IDisposable
     public async Task WriteSidecarAsync_UsesRequestedNamingConvention(XmpSidecarNamingConvention convention)
     {
         string imagePath = CreateTestImage();
-        ImageAnalysisResult result = new(TestData.SampleMetadata(), []);
+        ImageAnalysisResult result = new(TestData.SampleMetadata(), [], ImageWidth: 400, ImageHeight: 300);
 
         IXmpSidecarWriter writer = new XmpCoreSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(imagePath, result, convention, TestContext.Current.CancellationToken);

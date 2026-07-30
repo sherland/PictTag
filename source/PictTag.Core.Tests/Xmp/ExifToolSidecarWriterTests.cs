@@ -35,7 +35,9 @@ public class ExifToolSidecarWriterTests : IDisposable
                 new DetectedEntity(new RawDetection("cat", "Cat", EntityCategory.Animals), null, new BoundingBox(YMin: 100, XMin: 200, YMax: 300, XMax: 400)),
                 // group "furniture" is distinct from label "sofa" -> stays a 3-level tag.
                 new DetectedEntity(new RawDetection("sofa", "furniture", EntityCategory.Objects), null, new BoundingBox(YMin: 0, XMin: 0, YMax: 1000, XMax: 1000)),
-            ]);
+            ],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -91,7 +93,9 @@ public class ExifToolSidecarWriterTests : IDisposable
             TaxonomyMatchQuality.Exact, 1.0, "golden retriever");
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(),
-            [new DetectedEntity(new RawDetection("golden retriever", "dog", EntityCategory.Animals), taxonomy, new BoundingBox(0, 0, 500, 500))]);
+            [new DetectedEntity(new RawDetection("golden retriever", "dog", EntityCategory.Animals), taxonomy, new BoundingBox(0, 0, 500, 500))],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -120,7 +124,9 @@ public class ExifToolSidecarWriterTests : IDisposable
         string imagePath = CreateTestImage();
         ImageAnalysisResult result = new(
             new ImageMetadata("A Test Photo", "A description of the photo.", "A test photo.", ImageMedium.Photograph, ArtStyle: null, ImageSetting.Indoor, [SceneType.CloseUp], TestData.SampleComposition()),
-            []);
+            [],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -164,7 +170,9 @@ public class ExifToolSidecarWriterTests : IDisposable
         string imagePath = CreateTestImage();
         ImageAnalysisResult result = new(
             TestData.SampleMetadata(medium: ImageMedium.Painting, artStyle: "impressionism"),
-            []);
+            [],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -204,7 +212,9 @@ public class ExifToolSidecarWriterTests : IDisposable
             TestData.SampleMetadata(),
             [
                 new DetectedEntity(new RawDetection(trickyLabel, trickyLabel, EntityCategory.Other), null, new BoundingBox(YMin: 0, XMin: 0, YMax: 500, XMax: 500)),
-            ]);
+            ],
+            ImageWidth: 400,
+            ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -230,12 +240,12 @@ public class ExifToolSidecarWriterTests : IDisposable
 
         await writer.WriteSidecarAsync(
             imagePath,
-            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity(new RawDetection("cat", "cat", EntityCategory.Animals), null, new BoundingBox(0, 0, 500, 500))]),
+            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity(new RawDetection("cat", "cat", EntityCategory.Animals), null, new BoundingBox(0, 0, 500, 500))], ImageWidth: 400, ImageHeight: 300),
             XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
 
         string sidecarPath = await writer.WriteSidecarAsync(
             imagePath,
-            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity(new RawDetection("dog", "dog", EntityCategory.Animals), null, new BoundingBox(0, 0, 500, 500))]),
+            new ImageAnalysisResult(TestData.SampleMetadata(), [new DetectedEntity(new RawDetection("dog", "dog", EntityCategory.Animals), null, new BoundingBox(0, 0, 500, 500))], ImageWidth: 400, ImageHeight: 300),
             XmpSidecarNamingConvention.ReplaceExtension, TestContext.Current.CancellationToken);
 
         IXmpMeta xmp;
@@ -264,7 +274,7 @@ public class ExifToolSidecarWriterTests : IDisposable
         // write operations amount to no real content - guarded against by always writing
         // at least the Medium/Symmetry tags and pictTag:* properties, even with zero entities.
         string imagePath = CreateTestImage();
-        ImageAnalysisResult result = new(TestData.SampleMetadata(), []);
+        ImageAnalysisResult result = new(TestData.SampleMetadata(), [], ImageWidth: 400, ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
         string sidecarPath = await writer.WriteSidecarAsync(
@@ -287,7 +297,7 @@ public class ExifToolSidecarWriterTests : IDisposable
         Assert.SkipWhen(ExifToolSidecarWriter.IsExifToolAvailable, "this test only applies when exiftool is absent");
 
         string imagePath = CreateTestImage();
-        ImageAnalysisResult result = new(TestData.SampleMetadata(), []);
+        ImageAnalysisResult result = new(TestData.SampleMetadata(), [], ImageWidth: 400, ImageHeight: 300);
 
         IXmpSidecarWriter writer = new ExifToolSidecarWriter();
 

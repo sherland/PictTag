@@ -17,18 +17,18 @@
       pictTag:Setting="Indoor"
       pictTag:Symmetry="Asymmetrical"
       pictTag:RuleOfThirds="False"
-      pictTag:ColorVariance="0.700"
+      pictTag:ColorVariance="0.600"
       pictTag:EdgeDensity="0.900"
-      pictTag:CompositionNotes="The image is rotated 90 degrees clockwise."
+      pictTag:CompositionNotes="foreground focus"
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">Masquerade crowd in line</rdf:li>
+          <rdf:li xml:lang="x-default">Masquerade Ball Attendees</rdf:li>
         </rdf:Alt>
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people, including many children, are lined up wearing various decorative masks and elaborate costumes. They appear to be part of a masquerade event or parade, set within a grand indoor space with classical columns. The image is oriented sideways.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people gathered for a masquerade event, many wearing elaborate masks and costumes. In the foreground, two men pose for a photo, one wearing an ornate silver mask and another in a black eye mask and tuxedo. The background shows a dense crowd within a grand indoor space with classical columns.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -37,23 +37,25 @@
           <rdf:li>Asymmetrical</rdf:li>
           <rdf:li>Person</rdf:li>
           <rdf:li>Person</rdf:li>
-          <rdf:li>Child</rdf:li>
+          <rdf:li>Mask</rdf:li>
+          <rdf:li>Mask</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A group of people in festive masquerade attire and masks, lined up in an indoor hall with large columns.</rdf:li>
+          <rdf:li xml:lang="x-default">A group of people at a masquerade ball, featuring two men in masks prominently in the foreground.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A large group of people, including many children, are lined up wearing various decorative masks and elaborate costumes. They appear to be part of a masquerade event or parade, set within a grand indoor space with classical columns. The image is oriented sideways.</rdf:li>
+          <rdf:li xml:lang="x-default">A large group of people gathered for a masquerade event, many wearing elaborate masks and costumes. In the foreground, two men pose for a photo, one wearing an ornate silver mask and another in a black eye mask and tuxedo. The background shows a dense crowd within a grand indoor space with classical columns.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
         <rdf:Bag>
           <rdf:li>010900</rdf:li>
           <rdf:li>012100</rdf:li>
+          <rdf:li>011800</rdf:li>
           <rdf:li>011700</rdf:li>
         </rdf:Bag>
       </Iptc4xmpCore:Scene>
@@ -70,10 +72,10 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.438000"
-              Iptc4xmpExt:rbY="0.125000"
-              Iptc4xmpExt:rbW="0.562000"
-              Iptc4xmpExt:rbH="0.242000"/>
+              Iptc4xmpExt:rbX="0.000000"
+              Iptc4xmpExt:rbY="0.532000"
+              Iptc4xmpExt:rbW="0.574000"
+              Iptc4xmpExt:rbH="0.468000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -87,10 +89,10 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.534000"
-              Iptc4xmpExt:rbY="0.605000"
-              Iptc4xmpExt:rbW="0.441000"
-              Iptc4xmpExt:rbH="0.395000"/>
+              Iptc4xmpExt:rbX="0.500000"
+              Iptc4xmpExt:rbY="0.456000"
+              Iptc4xmpExt:rbW="0.500000"
+              Iptc4xmpExt:rbH="0.544000"/>
             </rdf:Description>
           </rdf:li>
           <rdf:li>
@@ -98,16 +100,33 @@
               Iptc4xmpExt:rId="3">
             <Iptc4xmpExt:Name>
               <rdf:Alt>
-                <rdf:li xml:lang="x-default">child</rdf:li>
+                <rdf:li xml:lang="x-default">silver mask</rdf:li>
               </rdf:Alt>
             </Iptc4xmpExt:Name>
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.368000"
-              Iptc4xmpExt:rbY="0.368000"
-              Iptc4xmpExt:rbW="0.274000"
-              Iptc4xmpExt:rbH="0.186000"/>
+              Iptc4xmpExt:rbX="0.084000"
+              Iptc4xmpExt:rbY="0.643000"
+              Iptc4xmpExt:rbW="0.294000"
+              Iptc4xmpExt:rbH="0.132000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="4">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">black eye mask</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.653000"
+              Iptc4xmpExt:rbY="0.516000"
+              Iptc4xmpExt:rbW="0.221000"
+              Iptc4xmpExt:rbH="0.089000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
@@ -118,7 +137,8 @@
           <rdf:li>PictTag|Symmetry|Asymmetrical</rdf:li>
           <rdf:li>PictTag|Person</rdf:li>
           <rdf:li>PictTag|Person</rdf:li>
-          <rdf:li>PictTag|Person|Juvenile|Child</rdf:li>
+          <rdf:li>PictTag|Artifact|Covering|Mask</rdf:li>
+          <rdf:li>PictTag|Artifact|Covering|Mask</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
@@ -127,13 +147,14 @@
           <rdf:li>PictTag/Symmetry/Asymmetrical</rdf:li>
           <rdf:li>PictTag/Person</rdf:li>
           <rdf:li>PictTag/Person</rdf:li>
-          <rdf:li>PictTag/Person/Juvenile/Child</rdf:li>
+          <rdf:li>PictTag/Artifact/Covering/Mask</rdf:li>
+          <rdf:li>PictTag/Artifact/Covering/Mask</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
         <mwg-rs:AppliedToDimensions
-          stDim:w="4000"
-          stDim:h="3000"
+          stDim:w="3000"
+          stDim:h="4000"
           stDim:unit="pixel"/>
         <mwg-rs:RegionList>
           <rdf:Bag>
@@ -141,10 +162,10 @@
               <rdf:Description
                 mwg-rs:Name="man">
               <mwg-rs:Area
-                stArea:x="0.719000"
-                stArea:y="0.246000"
-                stArea:w="0.562000"
-                stArea:h="0.242000"
+                stArea:x="0.287000"
+                stArea:y="0.766000"
+                stArea:w="0.574000"
+                stArea:h="0.468000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
@@ -152,21 +173,32 @@
               <rdf:Description
                 mwg-rs:Name="man">
               <mwg-rs:Area
-                stArea:x="0.754500"
-                stArea:y="0.802500"
-                stArea:w="0.441000"
-                stArea:h="0.395000"
+                stArea:x="0.750000"
+                stArea:y="0.728000"
+                stArea:w="0.500000"
+                stArea:h="0.544000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>
             <rdf:li>
               <rdf:Description
-                mwg-rs:Name="child">
+                mwg-rs:Name="silver mask">
               <mwg-rs:Area
-                stArea:x="0.505000"
-                stArea:y="0.461000"
-                stArea:w="0.274000"
-                stArea:h="0.186000"
+                stArea:x="0.231000"
+                stArea:y="0.709000"
+                stArea:w="0.294000"
+                stArea:h="0.132000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="black eye mask">
+              <mwg-rs:Area
+                stArea:x="0.763500"
+                stArea:y="0.560500"
+                stArea:w="0.221000"
+                stArea:h="0.089000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

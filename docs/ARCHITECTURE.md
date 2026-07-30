@@ -6,8 +6,16 @@
 image file
    │
    ▼
+ImageOrientationCorrector.CorrectAsync()     [source/PictTag.Core/Orientation/ImageOrientationCorrector.cs]
+   │  applies the file's EXIF Orientation tag, verifies the result with a purpose-built
+   │  ONNX classifier, and corrects further if confidently wrong - see "Orientation
+   │  correction" below and docs/ORIENTATION.md for the full picture
+   ▼
+a corrected, upright Image<Rgba32>
+   │
+   ▼
 ImageDetectionService.DetectAsync()          [source/PictTag.Core/ImageDetectionService.cs]
-   │  sends the image + DetectionPrompt to Ollama, requesting a JSON response
+   │  sends the corrected image + DetectionPrompt to Ollama, requesting a JSON response
    │  constrained to DetectionResponseDto's schema (ChatResponseFormat.ForJsonSchema)
    ▼
 one RawDetection per detected object       [Models.cs]
@@ -17,11 +25,12 @@ EntityTaxonomyResolver.ResolveAsync()        [source/PictTag.Core/Taxonomy/Entit
    │  resolves each RawDetection against the WordNet-derived taxonomy - see
    │  "Taxonomy resolution" below and docs/TAXONOMY.md for the full picture
    ▼
-ImageAnalysisResult { ImageMetadata, List<DetectedEntity> }     [Models.cs]
+ImageAnalysisResult { ImageMetadata, List<DetectedEntity>, ImageWidth, ImageHeight }     [Models.cs]
    │  each DetectedEntity carries both the raw LLM output and the resolved
-   │  TaxonomyMatch (or null, if nothing resolved confidently)
+   │  TaxonomyMatch (or null, if nothing resolved confidently); ImageWidth/ImageHeight are
+   │  the corrected (post-orientation) dimensions
    │
-   ├─▶ ProcessAndAnnotateAsync() draws bounding boxes + labels onto a copy of the
+   ├─▶ ProcessAndAnnotateAsync() draws bounding boxes + labels onto the same corrected
    │    image (ImageSharp) and saves it — the "annotated preview" the CLI produces.
    │
    ▼
@@ -71,15 +80,20 @@ tagged with it always fall back to the raw shape) - not a compile error, so it's
 
 ## The detection call
 
-`ImageDetectionService.DetectAsync`:
+`ImageDetectionService.DetectAsync` (really `DetectCoreAsync`, the shared implementation behind
+both `DetectAsync` and `ProcessAndAnnotateAsync` — see "Orientation correction" below):
 
-1. Reads the image bytes and picks a MIME type from the file extension.
+1. Runs the file through `ImageOrientationCorrector` first, then re-encodes the corrected image to
+   JPEG bytes (`EncodeToJpegBytesAsync`, quality 90) — always `image/jpeg` regardless of the
+   input's original format, since the bytes sent to Ollama are now a fresh in-memory encode of the
+   corrected pixels, not the original file's bytes.
 2. Sends one `ChatMessage` containing the fixed `DetectionPrompt` text plus the image as
    `DataContent`, via `Microsoft.Extensions.AI`'s `IChatClient` (backed by `OllamaSharp`).
 3. Constrains the response with `ChatResponseFormat.ForJsonSchema<DetectionResponseDto>()` —
    Ollama enforces the shape, so parsing is a straight `JsonSerializer.Deserialize`, not
    best-effort text scraping.
-4. Maps the DTO to `ImageMetadata` + `List<DetectedEntity>`.
+4. Maps the DTO to `ImageMetadata` + `List<DetectedEntity>`, and pairs it with the corrected
+   image's `Width`/`Height` to form `ImageAnalysisResult`.
 
 `DetectionPrompt` is the single source of truth for what the model is asked to produce — read it
 directly in the source rather than trusting a paraphrase, since it's the kind of thing that drifts
@@ -88,6 +102,31 @@ instruction in that prompt.
 
 Two things are currently hardcoded rather than configurable: the model name (`gemma4:26b`) and
 the JSON schema/prompt text. Only the Ollama server URL is a CLI option.
+
+## Orientation correction
+
+Cameras/phones often store landscape pixel data with an EXIF `Orientation` tag telling viewers to
+rotate it for display — but nothing in the detection pipeline used to account for that, so the
+model was sometimes handed a genuinely sideways image and correctly described it as such (see
+**[docs/ORIENTATION.md](ORIENTATION.md)** for the bug that exposed this and the full design). Since
+that EXIF tag can itself be wrong, correction isn't a blind "trust the tag and rotate" — it's
+gated on agreement from a purpose-built ONNX classifier, in `source/PictTag.Core/Orientation/`:
+
+- **`IImageOrientationClassifier`** / **`OnnxImageOrientationClassifier`** — runs a dedicated
+  EfficientNetV2-S orientation classifier (not a VLM — a trained classifier's softmax is a real
+  confidence signal, unlike an LLM's self-reported one) via ONNX Runtime, with DirectML GPU
+  acceleration on Windows and an automatic CPU fallback.
+- **`ImageOrientationCorrector`** — applies the file's current EXIF tag (`AutoOrient()`), verifies
+  with the classifier, and only applies (and optionally writes back) a further correction if the
+  classifier disagrees with high confidence (≥ 0.98 by default). Below that bar, the EXIF-based
+  result is trusted as-is.
+
+`ImageDetectionService`'s constructor takes an optional `IImageOrientationClassifier` (defaulting
+to the shared `OnnxImageOrientationClassifier.Shared` singleton) and `fixOriginalFileOrientation:
+bool = true`, threaded from the CLI's `--skip-orientation-fix` flag. The corrected image is always
+used internally for detection/preview/regions regardless of that flag — it only controls whether
+the *original file's* EXIF tag also gets rewritten (metadata-only, via `exiftool`, no backup kept
+since nothing lossy happens).
 
 ## Taxonomy resolution
 

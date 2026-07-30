@@ -19,6 +19,7 @@
       pictTag:RuleOfThirds="False"
       pictTag:ColorVariance="0.300"
       pictTag:EdgeDensity="0.700"
+      pictTag:CompositionNotes="dramatic cloud formations"
       Iptc4xmpExt:DigitalSourceType="https://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture">
       <dc:title>
         <rdf:Alt>
@@ -27,7 +28,7 @@
       </dc:title>
       <dc:description>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a sky filled with various cloud formations. Large, dark clouds contrast with lighter, more wispy clouds, with patches of blue sky visible in between.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic sky filled with large, billowing clouds in shades of dark grey and bright white. Small patches of blue sky are visible between the cloud formations. The very bottom of the frame shows a hint of treetops and a chimney.</rdf:li>
         </rdf:Alt>
       </dc:description>
       <dc:subject>
@@ -35,16 +36,17 @@
           <rdf:li>Photograph</rdf:li>
           <rdf:li>Asymmetrical</rdf:li>
           <rdf:li>Chimney</rdf:li>
+          <rdf:li>Tree</rdf:li>
         </rdf:Bag>
       </dc:subject>
       <Iptc4xmpCore:AltTextAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A wide shot of a cloudy sky featuring large, dark cumulus clouds and lighter white clouds against a blue background.</rdf:li>
+          <rdf:li xml:lang="x-default">Dramatic grey and white cumulus clouds filling an outdoor sky.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:AltTextAccessibility>
       <Iptc4xmpCore:ExtDescrAccessibility>
         <rdf:Alt>
-          <rdf:li xml:lang="x-default">A dramatic view of a sky filled with various cloud formations. Large, dark clouds contrast with lighter, more wispy clouds, with patches of blue sky visible in between.</rdf:li>
+          <rdf:li xml:lang="x-default">A dramatic sky filled with large, billowing clouds in shades of dark grey and bright white. Small patches of blue sky are visible between the cloud formations. The very bottom of the frame shows a hint of treetops and a chimney.</rdf:li>
         </rdf:Alt>
       </Iptc4xmpCore:ExtDescrAccessibility>
       <Iptc4xmpCore:Scene>
@@ -66,10 +68,27 @@
             <Iptc4xmpExt:RegionBoundary
               Iptc4xmpExt:rbShape="rectangle"
               Iptc4xmpExt:rbUnit="relative"
-              Iptc4xmpExt:rbX="0.906000"
-              Iptc4xmpExt:rbY="0.897000"
+              Iptc4xmpExt:rbX="0.905000"
+              Iptc4xmpExt:rbY="0.896000"
               Iptc4xmpExt:rbW="0.069000"
-              Iptc4xmpExt:rbH="0.103000"/>
+              Iptc4xmpExt:rbH="0.104000"/>
+            </rdf:Description>
+          </rdf:li>
+          <rdf:li>
+            <rdf:Description
+              Iptc4xmpExt:rId="2">
+            <Iptc4xmpExt:Name>
+              <rdf:Alt>
+                <rdf:li xml:lang="x-default">treetops</rdf:li>
+              </rdf:Alt>
+            </Iptc4xmpExt:Name>
+            <Iptc4xmpExt:RegionBoundary
+              Iptc4xmpExt:rbShape="rectangle"
+              Iptc4xmpExt:rbUnit="relative"
+              Iptc4xmpExt:rbX="0.618000"
+              Iptc4xmpExt:rbY="0.963000"
+              Iptc4xmpExt:rbW="0.107000"
+              Iptc4xmpExt:rbH="0.037000"/>
             </rdf:Description>
           </rdf:li>
         </rdf:Bag>
@@ -79,6 +98,7 @@
           <rdf:li>PictTag|Medium|Photograph</rdf:li>
           <rdf:li>PictTag|Symmetry|Asymmetrical</rdf:li>
           <rdf:li>PictTag|Artifact|Way|Passage|Conduit|Flue|Chimney</rdf:li>
+          <rdf:li>PictTag|Plant|Vascular Plant|Woody Plant|Tree</rdf:li>
         </rdf:Bag>
       </lr:hierarchicalSubject>
       <digiKam:TagsList>
@@ -86,6 +106,7 @@
           <rdf:li>PictTag/Medium/Photograph</rdf:li>
           <rdf:li>PictTag/Symmetry/Asymmetrical</rdf:li>
           <rdf:li>PictTag/Artifact/Way/Passage/Conduit/Flue/Chimney</rdf:li>
+          <rdf:li>PictTag/Plant/Vascular Plant/Woody Plant/Tree</rdf:li>
         </rdf:Seq>
       </digiKam:TagsList>
       <mwg-rs:Regions rdf:parseType="Resource">
@@ -99,10 +120,21 @@
               <rdf:Description
                 mwg-rs:Name="chimney">
               <mwg-rs:Area
-                stArea:x="0.940500"
-                stArea:y="0.948500"
+                stArea:x="0.939500"
+                stArea:y="0.948000"
                 stArea:w="0.069000"
-                stArea:h="0.103000"
+                stArea:h="0.104000"
+                stArea:unit="normalized"/>
+              </rdf:Description>
+            </rdf:li>
+            <rdf:li>
+              <rdf:Description
+                mwg-rs:Name="treetops">
+              <mwg-rs:Area
+                stArea:x="0.671500"
+                stArea:y="0.981500"
+                stArea:w="0.107000"
+                stArea:h="0.037000"
                 stArea:unit="normalized"/>
               </rdf:Description>
             </rdf:li>

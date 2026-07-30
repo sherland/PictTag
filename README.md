@@ -35,6 +35,10 @@ reference.
 - Two interchangeable **XMP writer engines**: a pure-.NET one (`xmpcore`, default, no external
   dependencies) and one that shells out to the real `exiftool` binary (`exiftool`, useful as a
   cross-check or if you already depend on exiftool elsewhere).
+- **Robust EXIF orientation correction** — a purpose-built ONNX classifier verifies the image is
+  actually upright (not just trusting a possibly-wrong EXIF tag), and confidently-wrong photos get
+  their original file's `Orientation` tag corrected in place (metadata-only, non-destructive) by
+  default. See [`docs/ORIENTATION.md`](docs/ORIENTATION.md).
 
 ## Prerequisites
 
@@ -51,7 +55,15 @@ reference.
   git-ignored on purpose — obtain your own from SixLabors and drop it there; `Directory.Build.props`
   already points every project at it.
 - Optional: [`exiftool`](https://exiftool.org/) on `PATH` if you want to use `--xmp-engine
-  exiftool` or run the exiftool-backed tests.
+  exiftool` or run the exiftool-backed tests. It's also used to correct a confidently-wrong EXIF
+  `Orientation` tag on the original file (see [`docs/ORIENTATION.md`](docs/ORIENTATION.md)) — if
+  it's missing, that correction is skipped (logged, not fatal) and the image is still used
+  correctly-oriented internally.
+- No setup needed for orientation correction itself: the ONNX classifier model (~80MB) is
+  downloaded automatically on first run into `data/models/orientation/` (git-ignored), or fetch it
+  ahead of time with [`Get-OrientationModel.ps1`](Get-OrientationModel.ps1). GPU acceleration
+  (DirectML, NVIDIA/AMD/Intel on Windows) is used automatically when available, falling back to
+  CPU otherwise.
 
 ## Quick start
 
@@ -108,6 +120,7 @@ dotnet run --project source/PictTag.Cli -- \
 | `--xmp-naming` | `replace` | `replace` → `photo.xmp` (Adobe/Lightroom convention) or `append` → `photo.jpg.xmp` (digiKam/darktable convention). |
 | `--xmp-engine` | `xmpcore` | `xmpcore` (pure .NET) or `exiftool` (shells out to the real binary). |
 | `--xmp-overwrite` | off | Regenerate the sidecar even if one already exists. Default is to skip files that already have one — cheap to re-run over a folder as you add new photos. |
+| `--skip-orientation-fix` | off | Don't correct a confidently-wrong EXIF `Orientation` tag on the original input file (metadata-only). The image is still used correctly-oriented for detection/preview/regions either way. |
 
 Run `dotnet run --project source/PictTag.Cli -- --help` for the full, generated help text.
 
@@ -115,9 +128,10 @@ Run `dotnet run --project source/PictTag.Cli -- --help` for the full, generated 
 
 ```
 source/
-  PictTag.Core/                 Detection service + taxonomy resolution + XMP sidecar writers
+  PictTag.Core/                 Detection service + orientation correction + taxonomy resolution + XMP sidecar writers
     ImageDetectionService.cs      Ollama call, prompt, JSON schema, entity/composition mapping
     Models.cs                     ImageMetadata, DetectedEntity, RawDetection/TaxonomyMatch, enums
+    Orientation/                   IImageOrientationClassifier + ImageOrientationCorrector (see docs/ORIENTATION.md)
     Taxonomy/                     ITaxonomyProvider/ITaxonomyEmbeddingIndex + EntityTaxonomyResolver
     Taxonomy/taxonomy.json,       Embedded, WordNet-derived taxonomy data (built offline, see below)
       taxonomy-embeddings.bin
@@ -130,14 +144,17 @@ data/
   test-images/              Checked-in fixture photos + their generated .xmp sidecars
   test-images/art-styles/   Bulk-downloaded art-style fixtures (git-ignored, regenerable)
   art-styles-manifest.json  37 art movements used to drive art-style fixture download + testing
+  models/orientation/       Downloaded ONNX orientation classifier (git-ignored, see docs/ORIENTATION.md)
   wordnet/raw/              Committed WordNet 3.0 + ImageNet-1k source data (see docs/TAXONOMY.md)
   wordnet/seeds/            Hand-authored seed/trim config for the taxonomy build
 Get-ArtStyleTestImages.ps1  Downloads freely-licensed art-style images from Wikimedia Commons
+Get-OrientationModel.ps1    Downloads/verifies the ONNX orientation classifier model
 Get-WordNetData.ps1         Downloads/verifies the WordNet + ImageNet-1k source data
 Test-ArtStyleDetection.ps1  Runs detection over the art-style fixtures and summarizes accuracy
 Update-TestImageTags.ps1    Regenerates the checked-in data/test-images/*.xmp fixtures
 docs/
   ARCHITECTURE.md           How detection and XMP writing fit together, and why
+  ORIENTATION.md            The EXIF-orientation bug, model choice, and correction design
   XMP-SCHEMA.md             Full field-by-field XMP reference, with the empirical gotchas
   TAXONOMY.md               Where the taxonomy data comes from, how to extend/retune it
   TESTING.md                Test categories, how to run each, and the fixture scripts
@@ -156,9 +173,12 @@ downloaded fixtures. See [`docs/TESTING.md`](docs/TESTING.md) for how to run the
 
 ## Further reading
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the detection → taxonomy resolution → metadata
-  → XMP pipeline, why there are two sidecar writer engines, and the project's "standards first"
-  design principle.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the orientation correction → detection →
+  taxonomy resolution → metadata → XMP pipeline, why there are two sidecar writer engines, and the
+  project's "standards first" design principle.
+- [`docs/ORIENTATION.md`](docs/ORIENTATION.md) — the EXIF-orientation bug that motivated this,
+  why a purpose-built ONNX classifier was chosen over a vision-language model, and how the
+  layered correct → verify → correct-again design works.
 - [`docs/XMP-SCHEMA.md`](docs/XMP-SCHEMA.md) — every XMP property PictTag writes, which namespace
   it lives in, and the non-obvious, empirically-verified quirks behind several of them (e.g. why
   `digiKam:TagsList` has to be an `rdf:Seq`, why `Iptc4xmpExt:Genre` has to be a struct, and why

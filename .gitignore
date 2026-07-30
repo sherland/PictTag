@@ -12,6 +12,10 @@ sixlabors.lic
 # Bulk-downloaded art-style test fixtures (regenerable via Get-ArtStyleTestImages.ps1)
 data/test-images/art-styles/
 
+# ONNX orientation classifier model (~80MB, regenerable via Get-OrientationModel.ps1 or
+# auto-downloaded on first use by OnnxImageOrientationClassifier)
+data/models/
+
 # Full-graph debug dumps from PictTag.TaxonomyBuilder --debug-out (regenerable, not source)
 data/wordnet/build-debug/
 

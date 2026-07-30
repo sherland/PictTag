@@ -59,6 +59,12 @@ Option<bool> xmpOverwriteOption = new("--xmp-overwrite")
     Description = "Regenerate the XMP sidecar even if one already exists for an input file. Default is to skip files that already have a sidecar.",
 };
 
+Option<bool> skipOrientationFixOption = new("--skip-orientation-fix")
+{
+    Description = "Don't correct a confidently-wrong EXIF Orientation tag on the original input file (metadata-only, non-destructive). "
+        + "The image is still used correctly-oriented for detection/preview/regions either way - this only controls whether the original file itself gets touched.",
+};
+
 RootCommand rootCommand = new("PictTag - detect and annotate objects in a photo using a local Ollama vision model.");
 rootCommand.Add(inputOption);
 rootCommand.Add(outputOption);
@@ -67,6 +73,7 @@ rootCommand.Add(xmpOption);
 rootCommand.Add(xmpNamingOption);
 rootCommand.Add(xmpEngineOption);
 rootCommand.Add(xmpOverwriteOption);
+rootCommand.Add(skipOrientationFixOption);
 
 rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
 {
@@ -77,6 +84,7 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
     XmpSidecarNamingConvention namingConvention = parseResult.GetValue(xmpNamingOption);
     string engine = parseResult.GetValue(xmpEngineOption)!;
     bool xmpOverwrite = parseResult.GetValue(xmpOverwriteOption);
+    bool skipOrientationFix = parseResult.GetValue(skipOrientationFixOption);
 
     IReadOnlyList<string> inputFiles = ResolveInputFiles(inputPattern);
     if (inputFiles.Count == 0)
@@ -91,7 +99,7 @@ rootCommand.SetAction(async (ParseResult parseResult, CancellationToken ct) =>
         Directory.CreateDirectory(outputPath);
     }
 
-    ImageDetectionService service = new();
+    ImageDetectionService service = new(fixOriginalFileOrientation: !skipOrientationFix);
     IXmpSidecarWriter? xmpWriter = writeXmp
         ? (engine == "exiftool" ? new ExifToolSidecarWriter() : new XmpCoreSidecarWriter())
         : null;

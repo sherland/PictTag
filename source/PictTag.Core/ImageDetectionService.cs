@@ -2,11 +2,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
+using PictTag.Core.Orientation;
 using PictTag.Core.Taxonomy;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using IoPath = System.IO.Path;
@@ -21,17 +23,30 @@ public class ImageDetectionService
     ];
 
     private readonly EntityTaxonomyResolver _taxonomyResolver;
+    private readonly ImageOrientationCorrector _orientationCorrector;
+    private readonly bool _fixOriginalFileOrientation;
 
     /// <summary>
     /// Defaults to the shared WordNet-derived taxonomy and its Ollama-backed embedding fallback
-    /// (see PictTag.Core.Taxonomy) - pass explicit instances to use a different/tuned dataset or
-    /// a non-default Ollama server without touching detection logic.
+    /// (see PictTag.Core.Taxonomy), and the shared ONNX-based orientation classifier (see
+    /// PictTag.Core.Orientation) - pass explicit instances to use a different/tuned taxonomy
+    /// dataset, a non-default Ollama server, or a different orientation classifier without
+    /// touching detection logic. <paramref name="fixOriginalFileOrientation"/> controls whether a
+    /// confidently-wrong EXIF Orientation tag gets corrected on the original file itself
+    /// (metadata-only, non-destructive) - the image is always used correctly-oriented internally
+    /// regardless of this setting.
     /// </summary>
-    public ImageDetectionService(ITaxonomyProvider? taxonomyProvider = null, ITaxonomyEmbeddingIndex? embeddingIndex = null)
+    public ImageDetectionService(
+        ITaxonomyProvider? taxonomyProvider = null,
+        ITaxonomyEmbeddingIndex? embeddingIndex = null,
+        IImageOrientationClassifier? orientationClassifier = null,
+        bool fixOriginalFileOrientation = true)
     {
         _taxonomyResolver = new EntityTaxonomyResolver(
             taxonomyProvider ?? WordNetTaxonomyProvider.Shared.Value,
             embeddingIndex ?? OllamaTaxonomyEmbeddingIndex.Shared.Value);
+        _orientationCorrector = new ImageOrientationCorrector(orientationClassifier ?? OnnxImageOrientationClassifier.Shared);
+        _fixOriginalFileOrientation = fixOriginalFileOrientation;
     }
 
     private const string DetectionPrompt = """
@@ -91,8 +106,62 @@ public class ImageDetectionService
         string ollamaUrl = "http://localhost:11434",
         CancellationToken ct = default)
     {
-        byte[] imageBytes = await File.ReadAllBytesAsync(inputPath, ct);
-        string mimeType = GetMimeType(inputPath);
+        (Image<Rgba32> image, ImageAnalysisResult result) = await DetectCoreAsync(inputPath, ollamaUrl, ct);
+        image.Dispose();
+        return result;
+    }
+
+    public async Task<ImageAnalysisResult> ProcessAndAnnotateAsync(
+        string inputPath,
+        string outputPath,
+        string ollamaUrl = "http://localhost:11434",
+        CancellationToken ct = default)
+    {
+        (Image<Rgba32> image, ImageAnalysisResult result) = await DetectCoreAsync(inputPath, ollamaUrl, ct);
+        using (image)
+        {
+            Font? labelFont = TryGetLabelFont(Math.Max(14f, image.Height / 60f));
+
+            Pen boxPen = Pens.Solid(Color.LimeGreen, 3f);
+            SolidBrush labelBrush = new(Color.LimeGreen);
+
+            image.Mutate(ctx => ctx.Paint(canvas =>
+            {
+                foreach (DetectedEntity entity in result.Entities)
+                {
+                    RectanglePolygon rect = ToPixelRectangle(entity.Box, image.Width, image.Height);
+                    canvas.Draw(boxPen, rect);
+
+                    if (labelFont is not null)
+                    {
+                        PointF labelPosition = new(rect.Location.X, Math.Max(0, rect.Location.Y - labelFont.Size - 4));
+                        RichTextOptions textOptions = new(labelFont) { Origin = labelPosition };
+                        canvas.DrawText(textOptions, entity.Raw.Label, labelBrush, pen: null);
+                    }
+                }
+            }));
+
+            Directory.CreateDirectory(IoPath.GetDirectoryName(IoPath.GetFullPath(outputPath))!);
+            await image.SaveAsync(outputPath, ct);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// The real work: correct orientation (see PictTag.Core.Orientation), send the corrected
+    /// image to the model, resolve taxonomy, and return the corrected <see cref="Image{Rgba32}"/>
+    /// alongside the result so <see cref="ProcessAndAnnotateAsync"/> can draw boxes on the exact
+    /// same image the model actually analyzed - without reloading the file or re-running the
+    /// orientation classifier a second time. The caller owns disposing the returned image.
+    /// </summary>
+    private async Task<(Image<Rgba32> Image, ImageAnalysisResult Result)> DetectCoreAsync(
+        string inputPath, string ollamaUrl, CancellationToken ct)
+    {
+        OrientationCorrectionResult orientation = await _orientationCorrector.CorrectAsync(inputPath, _fixOriginalFileOrientation, ct);
+        Image<Rgba32> image = orientation.Image;
+
+        byte[] imageBytes = await EncodeToJpegBytesAsync(image, ct);
 
         IChatClient client = new OllamaApiClient(new Uri(ollamaUrl), "gemma4:26b");
 
@@ -101,7 +170,7 @@ public class ImageDetectionService
             new ChatMessage(ChatRole.User,
             [
                 new TextContent(DetectionPrompt),
-                new DataContent(imageBytes, mimeType),
+                new DataContent(imageBytes, "image/jpeg"),
             ]),
         ];
 
@@ -142,44 +211,15 @@ public class ImageDetectionService
         ImageMetadata metadata = new(
             parsed.Title, parsed.Description, parsed.AltText, parsed.Medium, parsed.ArtStyle, parsed.Setting, parsed.Scene, composition);
 
-        return new ImageAnalysisResult(metadata, entities);
+        ImageAnalysisResult result = new(metadata, entities, image.Width, image.Height);
+        return (image, result);
     }
 
-    public async Task<ImageAnalysisResult> ProcessAndAnnotateAsync(
-        string inputPath,
-        string outputPath,
-        string ollamaUrl = "http://localhost:11434",
-        CancellationToken ct = default)
+    private static async Task<byte[]> EncodeToJpegBytesAsync(Image<Rgba32> image, CancellationToken ct)
     {
-        ImageAnalysisResult result = await DetectAsync(inputPath, ollamaUrl, ct);
-
-        using Image<Rgba32> image = await Image.LoadAsync<Rgba32>(inputPath, ct);
-
-        Font? labelFont = TryGetLabelFont(Math.Max(14f, image.Height / 60f));
-
-        Pen boxPen = Pens.Solid(Color.LimeGreen, 3f);
-        SolidBrush labelBrush = new(Color.LimeGreen);
-
-        image.Mutate(ctx => ctx.Paint(canvas =>
-        {
-            foreach (DetectedEntity entity in result.Entities)
-            {
-                RectanglePolygon rect = ToPixelRectangle(entity.Box, image.Width, image.Height);
-                canvas.Draw(boxPen, rect);
-
-                if (labelFont is not null)
-                {
-                    PointF labelPosition = new(rect.Location.X, Math.Max(0, rect.Location.Y - labelFont.Size - 4));
-                    RichTextOptions textOptions = new(labelFont) { Origin = labelPosition };
-                    canvas.DrawText(textOptions, entity.Raw.Label, labelBrush, pen: null);
-                }
-            }
-        }));
-
-        Directory.CreateDirectory(IoPath.GetDirectoryName(IoPath.GetFullPath(outputPath))!);
-        await image.SaveAsync(outputPath, ct);
-
-        return result;
+        using MemoryStream stream = new();
+        await image.SaveAsync(stream, new JpegEncoder { Quality = 90 }, ct);
+        return stream.ToArray();
     }
 
     private static RectanglePolygon ToPixelRectangle(BoundingBox box, int imageWidth, int imageHeight)
@@ -205,16 +245,6 @@ public class ImageDetectionService
             ? SystemFonts.Families.First().CreateFont(size, FontStyle.Bold)
             : null;
     }
-
-    private static string GetMimeType(string path) => IoPath.GetExtension(path).ToLowerInvariant() switch
-    {
-        ".jpg" or ".jpeg" => "image/jpeg",
-        ".png" => "image/png",
-        ".webp" => "image/webp",
-        ".gif" => "image/gif",
-        ".bmp" => "image/bmp",
-        _ => "image/jpeg",
-    };
 
     private record DetectionResponseDto(
         string Title,
